@@ -1,5 +1,5 @@
 
-.cards-cintainer{
+.cards-container{
     display: flex;
     justify-content: space-between;
     margin: 6%;
@@ -11,7 +11,14 @@
     margin-bottom: 20px;
 }
 
-
+.card-pressure{
+    display: flex;
+    box-shadow: 0 0px 3px 0 rgba(0,0,0,0.1);
+    transition: 0.3s;
+    margin-bottom: 20px;
+    border-radius: .25rem;
+    background-color: #ffffff;
+}
 /* Add some padding inside the card container */
 .container {
     padding: 2px 16px;
@@ -52,16 +59,17 @@
 }
 .static-details{
     color: #9e9d9d;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: normal;
 }
 .details{
     color:#333;
     font-weight: 600;
     font-size: 14px;
+
 }
 .right-side-Container{
-    flex: .8 1 30%;
+    flex: .8 1 20%;
 }
 .card-header{
     border-bottom: 1px solid #ccc;
@@ -96,3 +104,143 @@ li::before {
 .card-details{
     border-bottom:1px #ccc solid;
 }
+.progress{
+    height: 30px;
+    background-color: #dee1e4;
+    border-radius: 1.25rem;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.1) inset;
+}
+.progress-bar{
+    margin: 5px;
+    background-color: #33bdb8!important;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 0px #1bb3ad;
+}
+.age{
+    flex: 1 1 50%;
+    border-right: 1px #ccc solid;
+    padding: 15px;
+}
+
+.weight{
+    flex: 0.9 1 50%;
+    padding: 15px;
+}
+.age-weight-section{
+    border-right: 1px #ccc solid;
+    flex: 1 1 65%;
+}
+.age-weight-image{
+    display: flex;
+    flex: 1 1 35%;
+    padding: 15px;
+    margin-left: 40px;
+}
+.weight-age{
+    display: flex;
+    width: 100%;
+    border-bottom: 1px #ccc solid;
+}
+.pressure{
+    display: flex;
+    width: 100%;
+    border-bottom: 1px #ccc solid;
+    padding: 15px;
+    align-items: center;
+    padding-top: 30px;
+
+}
+.pressure-progress{
+    width: 100%;
+    margin-left: 15px;
+    flex: 1 1 30%;
+}
+@media only screen and (max-width : 560px) {
+    
+.cards-container{
+    display: block;
+    margin: 6%;
+}
+    }
+    .btn-edit{
+        margin-top: 9px;
+        height: 40px;
+        box-shadow: 0 1px 6px 0px #1991b7;
+        font-size: 15px;
+        color: #fff;
+        background-color: #1991b7;
+        border-color: #1991b7;
+    }
+    .btn-modal{
+        border: none;
+        border-right: 1px solid #ccc;
+        width: 50%;
+        border-radius: 0px;
+        cursor: pointer;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        box-shadow: none;
+        color:#948f8f;
+    }
+    hr{
+        margin-bottom: 0px;
+    }
+    .btn-details{
+        border-right: none
+    }
+    .body-image{
+        height: 235px;
+    }
+    .static-details-pressure{
+        margin-left: 60px;
+        color: #ccc;
+        font-size: 15px;
+        margin-top: 6px;
+        font-weight: normal;
+    }
+    .avg-pressure{
+        color: #9e9d9d;
+        font-size: 15px;
+        margin-top: 6px;
+        font-weight: normal;
+        margin-bottom: 6px;
+        margin-left: 40px;
+    }
+    .pressure-data{
+        margin-top: -6px;
+    }
+    .age-static{
+        color: #9e9d9d;
+        font-size: 14px;
+    }
+    .age-data{
+        font-weight: bold;
+        font-size: 30px;
+      
+    }
+    .weight-static{
+        ight: 600;
+        font-size: 20px;
+    }
+    .pressure:last-child{
+        border: none;
+        margin-bottom: 15px;
+    }
+    .vl {
+        border-left: 2px solid #ccc;
+        height: 30px;
+        position: absolute;
+        left: 24.1%;
+        margin-left: -3px;
+        top: 494px;
+        display: inline;
+    }
+    .vl2{
+        border-left: 2px solid #ccc;
+        height: 30px;
+        position: absolute;
+        left: 38.7%;
+        margin-left: -3px;
+        top: 494px;
+        display: inline;
+    }
