@@ -5,7 +5,8 @@ export const JSON_PATHS = {
       FULLNAME: '$.fullName',
       GENDER: '$.gender',
       CITY:'$.nameEn',
-      PATIENTCODE:'$.patientCode'
+      PATIENTCODE:'$.patientCode',
+      IMAGEURL:'$.imageURL'
      
     },
     PATIENTALLERGIES: {
@@ -23,6 +24,13 @@ export const JSON_PATHS = {
         DATE: '$.date',
         DIASTOLIC: '$.diastolic',
         SYSTOLIC: '$.systolic',
+        USERID: '$.userId',
+       
+      }, PATIENTBODY: {
+        ID: '$.humanBodyId',
+        DATE: '$.date',
+        HEIGHT: '$.height',
+        WEIGHT: '$.weight',
         USERID: '$.userId',
        
       }

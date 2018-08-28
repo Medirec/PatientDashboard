@@ -9,12 +9,14 @@ import { Gender } from '../enums/gender.enum';
 import { PatientAllergies } from '../model/patient-allergies.model';
 import { PatientConditions } from '../model/patient-conditions.model';
 import { PatientPressure } from '../model/patient-pressure.model';
+import { PatientBody } from '../model/patient-body.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService{
 patientDetails:PatientDetails=new PatientDetails();
+patientBody:PatientBody=new PatientBody();
 patientAllergies:PatientAllergies[]=[];
 patientConditions:PatientConditions[]=[];
 patientPressures:PatientPressure[]=[];
@@ -40,6 +42,7 @@ patientCalculatedPressure:PatientPressure=new PatientPressure()
         this.patientDetails.city=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.CITY) || '';
         this.patientDetails.areaName=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.AREANAME) || '';
         this.patientDetails.patienCode=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.PATIENTCODE) || '';
+        this.patientDetails.imageUrl=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.IMAGEURL) || '';
         if(JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.GENDER)){
           this.patientDetails.gender=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.GENDER).toLowerCase()==='m'?Gender.Male:Gender.Female;
   
@@ -126,21 +129,7 @@ this.PressureCalculaion()
     }
     ), catchError(e => throwError(e)) );
   }
-  GetPatientBodyInfo(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/HumanBodies/1';
-    let headers = new HttpHeaders();
-    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
-    const options = {
-      headers: headers
-    };
-    return this.http.get(url, options).pipe(map((res) => {
-   console.log(res);
-    
-      return res;
-    }
-    ), catchError(e => throwError(e)) );
-  }
   PressureCalculaion(){
     const maxSystolic=140;
     const minSystolic=90;
@@ -160,5 +149,60 @@ diastolicSUM+=+el.diastolic
   console.log(this.patientCalculatedPressure);
   
 }
+  }
+  GetPatientBodyInfo(userId?: string) {
+
+    let url = 'http://36765264api.medirec.me/api/HumanBodies/1'
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    const options = {
+      headers: headers
+    };
+    return this.http.get(url, options).pipe(map((res) => {
+     
+        this.patientBody.id=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.ID) || '';
+        this.patientBody.userId=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.USERID) || '';
+        this.patientBody.weight=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
+        this.patientBody.height=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
+        this.patientBody.date=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.DATE) || '';
+      return res;
+    }
+    ), catchError(e => throwError(e)) );
+  }
+  addAllergies(allergy) {
+    
+
+    const url = 'http://36765264api.medirec.me/api/Allergies'
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers = headers.append('Content-Type', 'application/json');
+    const options = {
+      headers: headers
+    };
+    return this.http.post(url, allergy, options).pipe(map((res) => 
+   { let allergyRes=new PatientAllergies()
+    allergyRes.allergiesName=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ALLERGYNAME) || '';
+    allergyRes.userId=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.USERID) || '';
+    allergyRes.allergiesId=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ID) || '';
+   this.patientAllergies.push(allergyRes)}
+  ))
+  }
+  addConditions(condition) {
+    
+
+    const url = 'http://36765264api.medirec.me/api/Condations'
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers = headers.append('Content-Type', 'application/json');
+    const options = {
+      headers: headers
+    };
+    return this.http.post(url, condition, options).pipe(map((res) => 
+   { let conditionRes=new PatientConditions()
+    conditionRes.name=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ALLERGYNAME) || '';
+    conditionRes.userId=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.USERID) || '';
+    conditionRes.id=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ID) || '';
+   this.patientConditions.push(conditionRes)}
+  ))
   }
 }

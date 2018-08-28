@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyRecordsResolver } from './my-records/my-records.resolver';
 import { ModalModule } from 'ngx-bootstrap';
 import { AppService } from './app.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     MyRecordsModule,
     ModalModule.forRoot(),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
     providers: [MyRecordsResolver,AppService],
   bootstrap: [AppComponent]

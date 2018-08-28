@@ -13,10 +13,15 @@ export class MyRecordsResolver implements Resolve<any> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         this.appService.showLoader=true
         return this.userService.GetPatientDetails().pipe(map(()=>{
-            this.userService.GetPatientAllergies().subscribe()
-            this.userService.GetPatientConditions().subscribe()
-            this.userService.GetPatientPressure().subscribe()
-            this.userService.GetPatientBodyInfo().subscribe()
+           return this.userService.GetPatientAllergies().subscribe(()=>
+       { return this.userService.GetPatientConditions().subscribe(()=>{
+      return  this.userService.GetPatientPressure().subscribe(()=>{
+        return  this.userService.GetPatientBodyInfo().subscribe()
+         
+      })
+       })
+        })
+           
         })) 
     }
 

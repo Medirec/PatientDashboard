@@ -134,7 +134,8 @@ li::before {
     display: flex;
     flex: 1 1 35%;
     padding: 15px;
-    margin-left: 40px;
+    margin-left: 20px;
+    align-items: center;
 }
 .weight-age{
     display: flex;
@@ -155,11 +156,17 @@ li::before {
     margin-left: 15px;
     flex: 1 1 30%;
 }
-@media only screen and (max-width : 560px) {
+@media only screen and (max-width : 830px) {
     
 .cards-container{
     display: block;
     margin: 6%;
+}
+.height-value-container{
+    left:23% !important;
+}
+.vl-container{
+    margin-right: 50px;
 }
     }
     .btn-edit{
@@ -181,6 +188,7 @@ li::before {
         padding-bottom: 7px;
         box-shadow: none;
         color:#948f8f;
+        background-color: #fff;
     }
     hr{
         margin-bottom: 0px;
@@ -192,7 +200,7 @@ li::before {
         height: 235px;
     }
     .static-details-pressure{
-        margin-left: 60px;
+        margin-left: 43%;
         color: #ccc;
         font-size: 15px;
         margin-top: 6px;
@@ -204,7 +212,7 @@ li::before {
         margin-top: 6px;
         font-weight: normal;
         margin-bottom: 6px;
-        margin-left: 40px;
+        margin-left: 40%;
     }
     .pressure-data{
         margin-top: -6px;
@@ -230,17 +238,72 @@ li::before {
         border-left: 2px solid #ccc;
         height: 30px;
         position: absolute;
-        left: 24.1%;
-        margin-left: -3px;
-        top: 494px;
-        display: inline;
+        left: 50%;
     }
-    .vl2{
-        border-left: 2px solid #ccc;
-        height: 30px;
+  .vl-container{
+position: relative;
+  }
+    .vl-height-top{
+        border-left: 1px solid #ccc;
+        height: 70px;
+        position: relative;
+        left: 123%;
+    }
+    .vl-height-bottom{
+        border-left: 1px solid #ccc;
+        height: 80px;
+        position: relative;
+        left: 125%;
+    }
+    .height-text{
+        font-size: 12px;
+    color: #9e9d9d;
+    }
+    .height-text-container{
+        left: 77%;
+    position: relative;
+        text-align: center;
+    }
+
+    .height-value{
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .height-type{
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .hr-bottom{
+        border-bottom: 1px solid #ccc;
+        width: 23px;
+        position: relative;
+        left: 114.1%;
+    }
+    .hr-top{
+        border-top: 1px solid #ccc;
+        width: 23px;
+        position: relative;
+        left: 114.1%;
+        top: 0px;
+
+    }
+    .error{
+        border-color: red;
+    }
+    .height-value-container{
         position: absolute;
-        left: 38.7%;
-        margin-left: -3px;
-        top: 494px;
-        display: inline;
+        left: 52%;
     }
+    @media only screen and (max-width : 1404px) {
+    
+        .card-pressure{
+            display: block;
+        }
+        .height-value-container{
+            left: 40%
+        }
+        .pressure:last-child{
+            border-bottom: 1px #ccc solid;
+            display:block;
+        }
+            }
