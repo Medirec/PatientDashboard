@@ -165,8 +165,8 @@ li::before {
 .height-value-container{
     left:23% !important;
 }
-.vl-container{
-    margin-right: 50px;
+.pressure-progress{
+    margin-left: 0px;
 }
     }
     .btn-edit{
@@ -305,5 +305,8 @@ position: relative;
         .pressure:last-child{
             border-bottom: 1px #ccc solid;
             display:block;
+        }
+        .pressure-progress{
+            margin-left: 0px;
         }
             }
