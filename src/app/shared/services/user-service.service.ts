@@ -122,7 +122,6 @@ patientCalculatedPressure:PatientPressure=new PatientPressure()
         pressure.systolic=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
        this.patientPressures.push(pressure)
        });
-       console.log(this.patientPressures);
        
 this.PressureCalculaion()
       return res;
@@ -146,7 +145,6 @@ diastolicSUM+=+el.diastolic
   this.patientCalculatedPressure.diastolicAVG=Math.ceil(diastolicSUM/this.patientPressures.length)
   this.patientCalculatedPressure.systolic=((systolicSUM/this.patientPressures.length)/maxSystolic)*100+"%"
   this.patientCalculatedPressure.diastolic=((diastolicSUM/this.patientPressures.length)/maxDiastolic)*100+"%"
-  console.log(this.patientCalculatedPressure);
   
 }
   }
