@@ -243,6 +243,7 @@ debugger
     }else{
       this.modalRef.hide()
       this.appService.showLoader=true 
+      this.editContant.userId="1";
 this.userService.addContact(this.editContant).subscribe(()=>{
   this.appService.showLoader=false 
 },()=>this.appService.showLoader=false )
