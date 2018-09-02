@@ -16,7 +16,7 @@ export const JSON_PATHS = {
        
       }, PATIENTCONDITIONS: {
         NAME: '$.name',
-        ID: '$.conditionsId',
+        ID: '$.condationsId',
         USERID: '$.userId',
        
       }, PATIENTPRESSURE: {
@@ -32,6 +32,34 @@ export const JSON_PATHS = {
         HEIGHT: '$.height',
         WEIGHT: '$.weight',
         USERID: '$.userId',
+       
+      }, PATIENTMEDICATION: {
+        NAME: '$.name',
+        ID: '$.medicationsId',
+        USERID: '$.userId',
+       
+      }, PATIENTMEDICALDEVICE: {
+        NAME: '$.name',
+        ID: '$.medicalDevicesId',
+        USERID: '$.userId',
+       
+      }, PATIENTCONTACTS: {
+        ID: '$.contactId',
+        EMAIL: '$.email',
+        USERID: '$.userId',
+        FULLNAME: '$.fullName',
+        PHONENUMBER01: '$.phoneNumber01',
+        PHONENUMBER02: '$.phoneNumber02',
+        RELATION: '$.typeOfRelation',
+       
+      }
+      , PATIENTIMMUNIZATION: {
+        ID: '$.immunizationId',
+        ADMINISTRATEDBY: '$.administratedBy',
+        USERID: '$.userId',
+        DATE: '$.dateGiven',
+        NEXTDATE: '$.nextDoesDate',
+        VACCINEID: '$.vaccineId',
        
       }
 }

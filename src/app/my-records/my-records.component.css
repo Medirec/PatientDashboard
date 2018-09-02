@@ -2,22 +2,28 @@
 .cards-container{
     display: flex;
     justify-content: space-between;
-    margin: 6%;
 }
 .card {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 0px 3px 0 rgba(0,0,0,0.1);
     transition: 0.3s;
     margin-bottom: 20px;
+    background-color: #ffffff;
+
 }
 
 .card-pressure{
-    display: flex;
     box-shadow: 0 0px 3px 0 rgba(0,0,0,0.1);
     transition: 0.3s;
     margin-bottom: 20px;
     border-radius: .25rem;
     background-color: #ffffff;
+    border: 1px #ccc solid;
+
+}
+.card-pressure-content{
+    display: flex;
+    justify-content: space-between;
 }
 /* Add some padding inside the card container */
 .container {
@@ -127,7 +133,7 @@ li::before {
     padding: 15px;
 }
 .age-weight-section{
-    border-right: 1px #ccc solid;
+
     flex: 1 1 65%;
 }
 .age-weight-image{
@@ -145,7 +151,6 @@ li::before {
 .pressure{
     display: flex;
     width: 100%;
-    border-bottom: 1px #ccc solid;
     padding: 15px;
     align-items: center;
     padding-top: 30px;
@@ -156,19 +161,7 @@ li::before {
     margin-left: 15px;
     flex: 1 1 30%;
 }
-@media only screen and (max-width : 830px) {
-    
-.cards-container{
-    display: block;
-    margin: 6%;
-}
-.height-value-container{
-    left:23% !important;
-}
-.pressure-progress{
-    margin-left: 0px;
-}
-    }
+
     .btn-edit{
         margin-top: 9px;
         height: 40px;
@@ -292,21 +285,170 @@ position: relative;
     }
     .height-value-container{
         position: absolute;
-        left: 52%;
+        left: 48%;
     }
-    @media only screen and (max-width : 1404px) {
-    
-        .card-pressure{
-            display: block;
-        }
-        .height-value-container{
-            left: 40%
-        }
-        .pressure:last-child{
-            border-bottom: 1px #ccc solid;
-            display:block;
-        }
-        .pressure-progress{
-            margin-left: 0px;
-        }
+
+            .contact-info{
+                margin: 8px 16px;
+    font-size: 14px;
+    margin-left: 16px;
+
             }
+            .periority{
+                color:#9e9d9d
+            }
+            .tele{
+                font-weight: 600;
+                color: #333;
+            }
+            .tele-text{
+                color: #6f6f6f;
+            }
+            .email{
+                color:#22a4de !important;
+            }
+            .contact-info div{
+                margin-bottom: 3px;
+
+            }
+            .chart-container{
+            
+              
+                padding: 15px;
+            
+            }
+            .chart{
+
+                background-color: #fff;
+                box-shadow: 0 0px 3px 0 rgba(0,0,0,0.1);
+                transition: 0.3s;
+                margin-bottom: 20px;
+                border: 1px #ccc solid;
+                border-radius: .25rem;
+            }
+            .AVG-pressure{
+                display: flex;
+            }
+            .left-side-pressure{
+                flex: 5 1 100%;
+                margin-top: 16px;
+                margin-left: 14px;
+            } 
+            .pressure-title{
+                text-align: center;
+                padding: 5px 10px;
+                border-bottom: 1px #ccc solid;
+                color:#5a5a5a;
+                font-weight: bold;
+            }  
+            .title-AVG{
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 6px;
+            } 
+            .immunization{
+                width: 49%;
+            }
+            @media only screen and (max-width : 830px) {
+                .AVG-pressure{
+                    display: block;
+                }
+                .immunization{
+                    width: 100%;
+                }
+            
+            .pressure-progress{
+                margin-left: 0px;
+            }
+                }
+            @media only screen and (max-width : 1304px) {
+                .immunization{
+                    width: 100%;
+                }
+                .cards-container{
+                    display: block;
+                }
+                .card-pressure-content{
+                    display: block;
+                }
+            
+                .pressure:last-child{
+                    display:block;
+                }
+                .pressure-progress{
+                    margin-left: 0px;
+                }
+                .AVG-pressure{
+                    display: block;
+                }
+                    }
+                    .btn-contact{
+                        width: 100%;
+                        border-top:1px #ccc solid; 
+                        border-right:none; 
+                    }
+                   .full-name{
+                    display: flex;
+                    justify-content: space-between;
+                   }
+                   .scrollable{
+                    box-shadow: 0px -3px 7px 3px rgba(146, 146, 146, 0.08) inset !important;
+                   }
+                   .timeline-header{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                   }
+                   @media only screen and (max-width : 558px) {
+                       .height-value-container{
+                        left: 28%;
+
+                       }
+.addText{
+    display: none;
+}
+                   }
+                   .count{
+                    margin-top: 16px;
+                    float: right;
+                    margin-right: 10px;
+                    color: #5a5a5a;
+                    font-size: 16px;
+                    clear: both;
+                   }
+                   .count-box{
+                    font-size: 12px;
+                    
+                    float: right;
+                    clear: both;
+                   }
+                   .dropzone{
+                       width: 86%;
+                    height: 210px;
+                    margin: 30px 7%;
+                    background: #fff;
+                    float: left;
+                    border: 2px #ccc dashed;
+                    border-radius: 10px;
+                    font-size: 15px;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .active{
+                    color: #22a4de !important;
+                }
+                .file-upload{
+                    margin: 7px;
+                    color: #404040;
+                    margin-left: 12px;
+                    font-weight: 500;
+                    font-size: 14px;
+                
+                }
+                .folder{
+                    font-size: 32px;
+                    margin-top: 13px;
+                    color: gray;
+                }

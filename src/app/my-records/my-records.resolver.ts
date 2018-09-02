@@ -11,18 +11,35 @@ export class MyRecordsResolver implements Resolve<any> {
 
     constructor(private userService:UserService,private appService:AppService) { }
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+     
         this.appService.showLoader=true
-        return this.userService.GetPatientDetails().pipe(map(()=>{
-           return this.userService.GetPatientAllergies().subscribe(()=>
-       { return this.userService.GetPatientConditions().subscribe(()=>{
-      return  this.userService.GetPatientPressure().subscribe(()=>{
-        return  this.userService.GetPatientBodyInfo().subscribe()
-         
-      })
-       })
-        })
-           
-        })) 
+
+            return this.userService.GetPatientDetails().pipe(map(()=>{
+                return this.userService.GetPatientAllergies().subscribe(()=>
+            { return this.userService.GetPatientConditions().subscribe(()=>{
+           return  this.userService.GetPatientPressure().subscribe(()=>{
+               this.userService.GetPatientBodyInfo().subscribe()
+               this.userService.GetPatientMedication().subscribe()
+               this.userService.GetPatientMedicalDevice().subscribe()
+               this.userService.GetPatientContacts().subscribe()
+               this.userService.GetPatientImmunization().subscribe()
+               this.userService.GetAllAllergies().subscribe()
+               this.userService.GetAllBloodPressure().subscribe()
+               this.userService.GetAllCondition().subscribe()
+               this.userService.GetAllContacts().subscribe()
+               this.userService.GetAllHumanBody().subscribe()
+               this.userService.GetAllImmunization().subscribe()
+               this.userService.GetAllMedicalDevice().subscribe()
+               this.userService.GetAllMedication().subscribe()
+               this.userService.GetAllResources().subscribe()
+               window.setTimeout(()=>this.appService.showLoader=false)
+           })
+            })
+             })
+                
+             })) 
+        
+       
     }
 
 

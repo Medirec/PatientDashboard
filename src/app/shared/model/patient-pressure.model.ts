@@ -5,7 +5,7 @@ export class PatientPressure {
     public diastolicAVG: number;
     public systolic: string;
     public systolicAVG: number;
-    public date: Date;
+    public date: string;
     public userId: string;
    
 }

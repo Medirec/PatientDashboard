@@ -1,0 +1,38 @@
+
+<section class="card" *ngIf="myRecordsService.dataSet.length">
+    <header class="card-header">
+  
+      <h2 class="card-title">Details</h2>
+    </header>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="mb-3">
+            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+      <div id="datatable-editable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+        <div class="row">
+          <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
+          <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">
+            <table class="table table-bordered table-striped mb-0 dataTable no-footer" id="datatable-editable" role="grid">
+        <thead>
+          <tr role="row"><th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">Name</th>
+            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 141px;">Actions</th></tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of myRecordsService.dataSet" data-item-id="25" role="row" >
+            <td *ngIf="editItem!==data" class="">{{data.name}}</td>
+            <td *ngIf="editItem===data" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
+            <td class="actions">
+              <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem===data" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
+              <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem===data" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
+              <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem!==data" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
+              <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem!==data" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table></div></div>
+    </div>
+  </section>

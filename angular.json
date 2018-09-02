@@ -23,10 +23,65 @@
               "src/assets"
             ],
             "styles": [
+              "src/vendor/animate/animate.css",
+
+              "src/vendor/magnific-popup/magnific-popup.css",
+              "src/vendor/jquery-ui/jquery-ui.css" ,
+              "src/vendor/jquery-ui/jquery-ui.theme.css" ,
+              "src/vendor/morris/morris.css" ,
+
+              "src/css/theme.css",
+              "src/css/skins/default.css" ,
+              "src/css/custom.css",
+              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              
+              "node_modules/font-awesome/css/font-awesome.css"
+
             ],
-            "scripts": []
+            "scripts": [
+              "src/vendor/modernizr/modernizr.js",
+              "src/vendor/jquery/jquery.js",
+              "src/vendor/jquery-browser-mobile/jquery.browser.mobile.js",
+              "src/vendor/popper/umd/popper.min.js",
+              "src/vendor/bootstrap/js/bootstrap.js",
+              "src/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js",
+              "src/vendor/common/common.js",
+              "src/vendor/nanoscroller/nanoscroller.js",
+              "src/vendor/magnific-popup/jquery.magnific-popup.js",
+              "src/vendor/jquery-ui/jquery-ui.js",
+              "src/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js",
+              "src/vendor/jquery-appear/jquery-appear.js",
+              "src/vendor/bootstrap-multiselect/bootstrap-multiselect.js",
+              "src/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js",
+              "src/vendor/flot/jquery.flot.js",
+              "src/vendor/flot/jquery.flot.pie.js",
+              "src/vendor/flot/jquery.flot.categories.js",
+              "src/vendor/flot/jquery.flot.resize.js",
+              "src/vendor/jquery-sparkline/jquery-sparkline.js",
+              "src/vendor/select2/js/select2.js",
+              "src/vendor/datatables/media/js/jquery.dataTables.min.js",
+              "src/vendor/datatables/media/js/dataTables.bootstrap4.min.js",
+              "src/vendor/raphael/raphael.js",
+              "src/vendor/morris/morris.js",
+              "src/vendor/gauge/gauge.js",
+              "src/vendor/snap.svg/snap.svg.js",
+              "src/vendor/liquid-meter/liquid.meter.js",
+              "src/vendor/jqvmap/jquery.vmap.js",
+              "src/vendor/jqvmap/data/jquery.vmap.sampledata.js",
+              "src/vendor/jqvmap/maps/jquery.vmap.world.js",
+              "src/vendor/jqvmap/maps/continents/jquery.vmap.africa.js",
+              "src/vendor/jqvmap/maps/continents/jquery.vmap.asia.js",
+              "src/vendor/jqvmap/maps/continents/jquery.vmap.australia.js",
+              "src/vendor/jqvmap/maps/continents/jquery.vmap.europe.js",
+              "src/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js",
+              "src/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js",
+              "src/js/theme.js",
+              "src/js/custom.js",
+              "src/js/theme.init.js",
+              "src/js/examples/examples.dashboard.js",
+              "src/js/examples/examples.datatables.editable.js"
+            ]
           },
           "configurations": {
             "production": {

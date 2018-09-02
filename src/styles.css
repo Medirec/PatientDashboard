@@ -1,6 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-body{
-    background-color: #cccccc26;
-    overflow-x: hidden;
-    width: 100%;
+body {
+    color: #777;
+    font-family: "Open Sans", Arial, sans-serif;
+    line-height: 22px;
+    margin: 0;
+    font-size: 13px;
+    background: #f1f2f3 !important;
 }

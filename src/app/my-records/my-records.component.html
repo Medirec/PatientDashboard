@@ -8,117 +8,268 @@
             <div class="static-details">Patient Code: <span class="details">{{userService.patientDetails?.patienCode}}</span> </div>
             <div class="details">{{userService.patientDetails?.age}} <span class="static-details">years old, </span>{{userService.patientDetails.gender}}</div>
             <div class="details"><span class="static-details">lives in </span >{{userService.patientDetails?.areaName}}, {{userService.patientDetails.city}}</div>
-              <button type="button" class="btn btn-lg btn-edit" >edit your details</button>
+              <button (click)="editUserProfile()" type="button" class="btn btn-lg btn-edit" >edit your details</button>
         </div>
     
       
     </div>  
     
     </div>
-    <div class=" card-pressure">
-<div class="age-weight-section">
-    <div class="weight-age">
-    <div class="age"> 
-        <div class="age-static">
-            Age
-          </div>
-        <div class="age-data">{{userService.patientDetails?.age}}</div>
-    </div>
-    <div class="weight"> 
-        <div class="age-static">
-            Weight
-          </div>
-        <div class="age-data">{{userService.patientBody?.weight}} <span class="weight-static">kg</span></div>
-    </div>
-  </div>
-  <div class="pressure">
-      <div class="pressure-data">
-          <div class="static-details">
-            Blood Pressure:
-          </div>
-          <div style="font-size: 14px;"> 
-             <b> {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</b>
-            </div>
-      </div>
-      <div class="pressure-progress">
-          <div  class="vl-container">
-          <div class="avg-pressure">National AVG</div>
-
-              <div class="vl"></div>
-
-              <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [ngStyle]="{'width': userService.patientCalculatedPressure?.systolic}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-    
-                </div>
-            <div class="static-details-pressure">(Systolic)</div>
-
-          </div>
+    <div >
+    <div class="card-pressure-content" >
+        <div  class="immunization img-fluid appear-animation animated fadeIn appear-animation-visible" >
+            <div >
+              <section class="card">
+                <header class="pressure-title" >
         
-      </div>
-      <div class="pressure-progress">
-         <div class="vl-container">
-          <div class="avg-pressure">National AVG</div>
-
-            <div class="vl"></div>
-
-          <div class="progress">
-              <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [ngStyle]="{'width': userService.patientCalculatedPressure?.diastolic}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                   <div class="timeline-header">
+                    <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
+        
+                     <div>Weight & Height</div>
+                    <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> More Details</span></a>
+                   </div>
+        
+        
+                </header>
+                <div class="card-body" style="
+                padding: 0;
+                height: 400px;
+            ">
+                    <div class="age-weight-section">
+                        <div class="weight-age">
+                        <div class="age"> 
+                            <div class="age-static">
+                                Age
+                              </div>
+                            <div class="age-data">{{userService.patientDetails?.age}}</div>
+                        </div>
+                        <div class="weight"> 
+                            <div class="age-static">
+                                Weight
+                              </div>
+                            <div class="age-data">{{userService.patientBody?.weight}} <span class="weight-static">kg</span></div>
+                        </div>
+                      </div>
+                      <!-- <div>
+                          <div class="static-details count" *ngIf="userService.bloodPressureCount"><i class="fa fa-plus"></i> <span class="details"> {{userService.bloodPressureCount}}</span> </div>
+                          <div class="pressure">
+                    
+                              <div class="pressure-data">
+                                  <div class="static-details">
+                                    Blood Pressure:
+                                  </div>
+                                  <div style="font-size: 14px;"> 
+                                     <b> {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</b>
+                                    </div>
+                              </div>
+                              <div class="pressure-progress">
+                                  <div  class="vl-container">
+                                  <div class="avg-pressure">National AVG</div>
+                        
+                                      <div class="vl"></div>
+                        
+                                      <div class="progress">
+                                          <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [ngStyle]="{'width': userService.patientCalculatedPressure?.systolic}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            
+                                        </div>
+                                    <div class="static-details-pressure">(Systolic)</div>
+                        
+                                  </div>
+                                
+                              </div>
+                              <div class="pressure-progress">
+                                 <div class="vl-container">
+                                  <div class="avg-pressure">National AVG</div>
+                        
+                                    <div class="vl"></div>
+                        
+                                  <div class="progress">
+                                      <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [ngStyle]="{'width': userService.patientCalculatedPressure?.diastolic}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                 <div class="static-details-pressure">(Diastolic)</div>
+                        
+                                 </div>
+                              </div>
+                            </div>
+                      </div> -->
+                      <div >
+                          <div class="static-details count"  *ngIf="userService.humanBodiesCount"><i class="fa fa-plus"> </i> <span class="details"> {{userService.humanBodiesCount}}</span> </div>
+                          <div class="age-weight-image">
+                        
+                              <img src="../../assets/images/body.jpg" class="body-image" >
+                              <div class="height-value-container" *ngIf="userService.patientBody?.height" >
+                                  <div class="hr-top"></div>
+                          
+                                  <div class="vl-height-top"></div>
+                                  <div class="height-text-container" >
+                                      <div class="height-text">Height:</div>
+                                      <div class="height-value">{{userService.patientBody?.height}} <span class="height-type">cm</span></div>
+                                  </div>
+                               
+                                  <div class="vl-height-bottom"></div>
+                                  <div class="hr-bottom"></div>
+                              </div>
+                             
+                          </div>  
+                      </div>
+                        
+                    </div>
+                </div>
+              </section>
             </div>
-         <div class="static-details-pressure">(Diastolic)</div>
+        
+        
+        
+        
+          </div>
 
+                <!-- <div >
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                  
+                </div>  -->
+
+                <div  class="immunization img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientImmunization.length">
+                    <div >
+                      <section class="card">
+                        <header class="pressure-title" >
+                
+                           <div class="timeline-header">
+                            <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
+                
+                             <div>IMMUNIZATION</div>
+                            <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> More Details</span></a>
+                           </div>
+                
+                
+                        </header>
+                        <div class="card-body" style="padding-bottom: 30px;">
+                          <div class="scrollable" data-plugin-scrollable="" style="height: 350px;">
+                            <div class="scrollable-content" tabindex="0">
+                              <div class="timeline timeline-simple mt-3 mb-3">
+                                <div class="tm-body">
+                                
+                                  <ol class="tm-items">
+                                    <li *ngFor="let immunization of userService.patientImmunization">
+                                      <div class="tm-box appear-animation animated fadeInRight appear-animation-visible ">
+                                          <p class="static-details">Administrated By: <span class="details">{{immunization?.administratedBy}}</span> </p>
+                                          <p class="static-details">Date: <span class="details">{{immunization?.date}}</span> </p>
+                                          <p class="static-details">Next Date: <span class="details">{{immunization?.nextDate}}</span> </p>
+                
+                                      </div>
+                                    </li>
+                                  
+                                  </ol>
+                                </div>
+                              </div>
+                            </div>
+                          <div class="scrollable-pane" style="opacity: 1; visibility: hidden;"><div class="scrollable-slider" style="height: 59px; transform: translate(0px, 238.999px);"></div></div></div>
+                        </div>
+                      </section>
+                    </div>
+                
+                
+                
+                
+                  </div>
+
+        </div>
+       
+          </div>
+      
+<div class="chart">
+    <header class="pressure-title" >
+
+        <div class="timeline-header">
+         <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i><span class="addText">  Add</span></a>
+
+          <div>Blood Pressure</div>
+         <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
+        </div>
+
+
+     </header>
+    <!-- <div><div class="card-header">ALLERGIES</div></div> -->
+
+    <div class="chart-container">
+     <div class="AVG-pressure">
+       <div class="left-side-pressure">     <div class="title-AVG" >
+          Blood Pressure: {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg
+        </div>
+        <div style="font-size: 13px;" class="static-details">AVG blood pressure last 7 days</div>
+        <div style="font-size: 13px;">Previous 7 days = {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</div>
+       </div>
+         <div class="pressure" style="padding-top:0px">
+             <div class="pressure-data">
+                 <div class="static-details">
+                   Blood Pressure:
+                 </div>
+                 <div style="font-size: 14px;"> 
+                    <b> {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</b>
+                   </div>
+             </div>
+             <div class="pressure-progress">
+                 <div  class="vl-container">
+                 <div class="avg-pressure">National AVG</div>
+       
+                     <div class="vl"></div>
+       
+                     <div class="progress">
+                         <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [ngStyle]="{'width': userService.patientCalculatedPressure?.systolic}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+           
+                       </div>
+                   <div class="static-details-pressure">(Systolic)</div>
+       
+                 </div>
+               
+             </div>
+             <div class="pressure-progress">
+                <div class="vl-container">
+                 <div class="avg-pressure">National AVG</div>
+       
+                   <div class="vl"></div>
+       
+                 <div class="progress">
+                     <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [ngStyle]="{'width': userService.patientCalculatedPressure?.diastolic}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>
+                <div class="static-details-pressure">(Diastolic)</div>
+       
+                </div>
+             </div>
+           </div>
+     </div>
+       <div style="display: block;">
+         <canvas baseChart #baseChart="base-chart" width="400" height="200"
+                     [datasets]="lineChartData"
+                     [labels]="lineChartLabels"
+                     [options]="lineChartOptions"
+                     [colors]="lineChartColors"
+                     [legend]="lineChartLegend"
+                     [chartType]="lineChartType"
+                     (chartHover)="chartHovered($event)"
+                     (chartClick)="chartClicked($event)"></canvas>
          </div>
       </div>
-    </div>
-    
 </div>
-                <!-- <div >
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                  
-                </div>  -->
 
-<div class="age-weight-image">
-    <img src="../../assets/images/body.jpg" class="body-image" >
-    <div class="height-value-container" *ngIf="userService.patientBody?.height" >
-        <div class="hr-top"></div>
-
-        <div class="vl-height-top"></div>
-        <div class="height-text-container" >
-            <div class="height-text">Height:</div>
-            <div class="height-value">{{userService.patientBody?.height}} <span class="height-type">cm</span></div>
-        </div>
-     
-        <div class="vl-height-bottom"></div>
-        <div class="hr-bottom"></div>
-    </div>
-
-                <!-- <div >
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                  
-                </div>  -->
-</div>  
-        </div>
- 
   </div>
   <div class="right-side-Container"> 
-    <div class="card" *ngIf="userService.patientAllergies.length">
+    <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientAllergies.length">
       <div >
-      <div class="card-header">ALLERGIES</div>
+      <div class="card-header">ALLERGIES <span class="badge count-box" *ngIf="userService.allergiesCount"><i class="fa fa-plus"> </i> {{userService.allergiesCount}}</span></div>
       <div class="card-details"> 
           <ul>
-              <li *ngFor="let allergy of userService.patientAllergies"> {{allergy?.allergiesName}}</li>
+              <li *ngFor="let allergy of userService.patientAllergies"> {{allergy?.name}}</li>
               
             </ul>
             <hr>
             <button type="button" class="btn-modal" (click)="openModal(template)">Add</button>
-            <button type="button" class="btn-modal btn-details" >Details</button>
+            <button type="button" class="btn-modal btn-details" (click)="details('allergy')" >Details</button>
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">ALLERGIES</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -138,9 +289,9 @@
    
       </div>
     </div>
-    <div class="card" *ngIf="userService.patientConditions.length">
+    <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientConditions.length">
         <div >
-        <div class="card-header">CONDITIONS</div>
+        <div class="card-header">CONDITIONS <span class="badge count-box" *ngIf="userService.conditionsCount"><i class="fa fa-plus"> </i> {{userService.conditionsCount}}</span></div>
         <div class="card-details"> 
             <ul>
                 <li *ngFor="let condition of userService.patientConditions"> {{condition?.name}}</li>
@@ -148,11 +299,11 @@
               </ul>
               <hr>
               <button type="button" class="btn-modal" (click)="openModal(condition)">Add</button>
-              <button type="button" class="btn-modal btn-details" >Details</button>
+              <button type="button" class="btn-modal btn-details" (click)="details('condition')" >Details</button>
               <ng-template #condition>
                   <div class="modal-header">
                     <h4 class="modal-title pull-left">CONDITIONS</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
@@ -171,6 +322,178 @@
      
         </div>
       </div>
+      <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientMedication.length" >
+          <div >
+          <div class="card-header">MEDICATION <span class="badge count-box" *ngIf="userService.medicationCount"><i class="fa fa-plus"> </i> {{userService.medicationCount}}</span></div>
+          <div class="card-details"> 
+              <ul>
+                  <li *ngFor="let medication of userService.patientMedication"> {{medication?.name}}</li>
+                  
+                </ul>
+                <hr>
+                <button type="button" class="btn-modal" (click)="openModal(medication)">Add</button>
+                <button type="button" class="btn-modal btn-details"  (click)="details('medication')">Details</button>
+                <ng-template #medication>
+                    <div class="modal-header">
+                      <h4 class="modal-title pull-left">MEDICATION</h4>
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="addMedicationForm" novalidate (ngSubmit)="submitMedication()">
+                            <div class="form-group">
+                              <label for="formGroupExampleInput">Name</label>
+                              <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                            </div>
+                        
+                            <button type="submit" class="btn btn-edit">Submit</button>
+                          </form>
+                    </div>
+                  </ng-template>
+          </div>
+       
+          </div>
+        </div>
+        <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientMedicalDevice.length">
+            <div >
+            <div class="card-header">MEDICAL DEVICES <span class="badge count-box" *ngIf="userService.medicalDeviceCount"><i class="fa fa-plus"> </i> {{userService.medicalDeviceCount}}</span></div>
+            <div class="card-details"> 
+                <ul>
+                    <li *ngFor="let medicalDevice of userService.patientMedicalDevice"> {{medicalDevice?.name}}</li>
+                    
+                  </ul>
+                  <hr>
+                  <button type="button" class="btn-modal" (click)="openModal(medicalDevice)">Add</button>
+                  <button type="button" class="btn-modal btn-details"(click)="details('device')" >Details</button>
+                  <ng-template #medicalDevice>
+                      <div class="modal-header">
+                        <h4 class="modal-title pull-left">MEDICAL DEVICES</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <form [formGroup]="addMedicalDeviceForm" novalidate (ngSubmit)="submitMedicalDevice()">
+                              <div class="form-group">
+                                <label for="formGroupExampleInput">Name</label>
+                                <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicalNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                              </div>
+                          
+                              <button type="submit" class="btn btn-edit">Submit</button>
+                            </form>
+                      </div>
+                    </ng-template>
+            </div>
+         
+            </div>
+          </div>
+          <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientMedicalDevice.length">
+            <div >
+            <div class="card-header">RESOURCES<span class="badge count-box" ><i class="fa fa-plus"> </i> {{userService.medicalDeviceCount}}</span></div>
+            <div class="card-details"> 
+                <!-- <div *ngIf="currentUpload">
+                    <progress class="progress is-success" min=1 max=100 value="{{ currentUpload?.progress }}"></progress>
+                    Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+                </div> -->
+                <div class="box" >
+                
+                    <div class="file-upload">File Uploads</div>
+                
+                    <div class="dropzone"
+                         fileDrop
+                         (filesDropped)="handleDrop($event)"
+                         (filesHovered)="dropzoneState($event)"
+                         >
+                
+                         <div>  Drag and drop files to upload them to your record or <a class="email">browes for files</a> <div class="folder" [ngClass]="{'active': dropzoneActive}"><i class="fa fa-folder-open"></i></div></div>
+                
+                    </div>
+                </div>
+                <!-- <ul>
+                    <li *ngFor="let medicalDevice of userService.patientMedicalDevice"> {{medicalDevice?.name}}</li>
+                    
+                  </ul>
+                  <hr>
+                  <button type="button" class="btn-modal" (click)="openModal(medicalDevice)">Add</button>
+                  <button type="button" class="btn-modal btn-details"(click)="details('device')" >Details</button> -->
+                  <ng-template #medicalDevice>
+                      <div class="modal-header">
+                        <h4 class="modal-title pull-left">MEDICAL DEVICES</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <form [formGroup]="addMedicalDeviceForm" novalidate (ngSubmit)="submitMedicalDevice()">
+                              <div class="form-group">
+                                <label for="formGroupExampleInput">Name</label>
+                                <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicalNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                              </div>
+                          
+                              <button type="submit" class="btn btn-edit">Submit</button>
+                            </form>
+                      </div>
+                    </ng-template>
+            </div>
+         
+            </div>
+          </div>
+          <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" *ngIf="userService.patientContacts.length">
+              <div class="card-header">CONTACT INFO <span class="badge count-box" *ngIf="userService.contactsCount"><i class="fa fa-plus"> </i> {{userService.contactsCount}}</span></div>
+      <div class="contact-info" *ngFor="let contact of userService.patientContacts; let i = index" > 
+<div class="full-name">
+    <div *ngIf="contact?.fullName">{{contact?.fullName}}</div>
+<div (click)="editContact(contact)" *ngIf="selectedContact===contact.id" class="static-details">Edit</div>
+</div>
+            <div  *ngIf="contact?.typeOfRelation" class="periority">{{contact?.typeOfRelation}}</div>
+            <div  *ngIf="contact?.phoneNumber01" class="tele-text"><span class="tele">T:</span> {{contact?.phoneNumber01}}</div>
+            <div  *ngIf="contact?.phoneNumber02" class="tele-text"><span class="tele">T:</span> {{contact?.phoneNumber02}}</div>
+            <div  *ngIf="contact?.email" class="email"><span class="tele">E:</span> {{contact?.email}}</div>
+            <hr *ngIf="i < userService.patientContacts.length-1">
+          </div>
+          <hr>
+          <div style="display: flex;">
+            <button type="button" class="btn-modal" (click)="openModal(contact)">Add</button>
+            <button type="button" class="btn-modal btn-details" >Details</button>
+          </div>
+ 
+
+          <ng-template #contact>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left">CONTACT INFO</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form [formGroup]="contactForm" novalidate (ngSubmit)="editContact()">
+                      <div class="form-group">
+                        <label for="formGroupExampleInput">Name</label>
+                        <input [ngClass]="{'error':!name.valid&&contactError}" #name [(ngModel)]="editContant.fullName"  formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                      </div>
+                      <div class="form-group">
+                          <label for="relation">Relation</label>
+                          <input [ngClass]="{'error':!relation.valid&&contactError}" #relation [(ngModel)]="editContant.typeOfRelation" formControlName="relation" type="text" class="form-control" id="relation" placeholder="Enter Relation">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input [ngClass]="{'error':!phone.valid&&contactError}" #phone [(ngModel)]="editContant.phoneNumber01" formControlName="phone" type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
+                          </div>
+                          <div class="form-group">
+                              <label for="phone2">Additional Phone Number</label>
+                              <input #phone2   formControlName="phone2" type="text" class="form-control" [(ngModel)]="editContant.phoneNumber02" id="phone2" placeholder="Enter Phone Number">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input [ngClass]="{'error':!email.valid&&contactError}" #email [(ngModel)]="editContant.email" formControlName="email" type="text" class="form-control" id="email" placeholder="Enter Email">
+                              </div>
+                  
+                      <button type="submit"  class="btn btn-edit">Submit</button>
+                    </form>
+              </div>
+            </ng-template>
+        </div>
   </div>
  
 </div>

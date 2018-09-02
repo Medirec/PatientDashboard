@@ -9,10 +9,15 @@ import { MyRecordsResolver } from './my-records/my-records.resolver';
 import { ModalModule } from 'ngx-bootstrap';
 import { AppService } from './app.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgDatepickerModule } from 'ng2-datepicker';
+import { SharedModule } from './shared/shared.module';
+import { MyRecordsService } from './my-records/my-records.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
   BrowserModule,
@@ -21,9 +26,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MyRecordsModule,
     ModalModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule,
+    AngularFontAwesomeModule,
+    NgDatepickerModule,
+    SharedModule
   ],
-    providers: [MyRecordsResolver,AppService],
+    providers: [MyRecordsResolver,AppService,MyRecordsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
