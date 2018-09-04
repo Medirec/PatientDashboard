@@ -8,4 +8,5 @@ export class PatientDetails {
     public city: string;
     public patienCode: string;
     public imageUrl: string;
+    public phoneNumber:string;
 }

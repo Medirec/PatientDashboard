@@ -19,6 +19,7 @@ import { PatientImmunization } from '../model/patient-immunization.model';
 export class UserService{
 patientDetails:PatientDetails;
 patientBody:PatientBody=new PatientBody();
+patientBodies:PatientBody[]=[]
 patientAllergies:PatientConditions[]=[];
 patientAllergiesDetails:PatientConditions[]=[];
 patientConditions:PatientConditions[]=[];
@@ -50,7 +51,7 @@ contactsCount:number;
    */
   GetPatientDetails(userId?: string) {
     this.patientDetails=new PatientDetails();
-    let url = 'http://36765264api.medirec.me/api/Patients/3'
+    let url = 'http://36765264api.medirec.me/api/GetPatientsDetails/3'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -65,6 +66,7 @@ contactsCount:number;
         this.patientDetails.areaName=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.AREANAME) || '';
         this.patientDetails.patienCode=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.PATIENTCODE) || '';
         this.patientDetails.imageUrl=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.IMAGEURL) || '';
+        this.patientDetails.phoneNumber=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.PHONENUMBER) || '';
         if(JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.GENDER)){
           this.patientDetails.gender=JsonQuery.value(res[0], JSON_PATHS.PATIENTDETAILS.GENDER).toLowerCase()==='m'?Gender.Male:Gender.Female;
   
@@ -119,6 +121,7 @@ contactsCount:number;
         immunization.date=moment(JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.DATE)).format('DD/MM/YYYY') || '';
         immunization.nextDate=moment(JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.NEXTDATE)).format('DD/MM/YYYY')  || '';
         immunization.vaccineId=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.VACCINEID) || '';
+        immunization.vaccineName=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.VACCINENAME) || '';
        this.patientImmunization.push(immunization)
        });
       return res;
@@ -521,11 +524,13 @@ diastolicSUM+=+el.diastolic
     }
     ), catchError(e => throwError(e)) );
   }
-  update(data:PatientConditions,type,userId?: string) {
+  update(data,type,userId?: string) {
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers =  headers.append('Content-Type', 'application/json');
     const options = {
-      headers: headers
+      headers: headers,
+      responseType: 'text'
     };
     let url
     if(type==='allergy'){
@@ -535,13 +540,16 @@ diastolicSUM+=+el.diastolic
   userId:data.userId,
   name:data.name
  }
-     return this.http.put(url, allergy,options).pipe(map((res) => {
+     return this.http.put(url, allergy,{
+      headers: headers,
+      responseType: 'text'
+    }).pipe(map((res) => {
        
        let allergy=this.patientAllergies.find(el=>el.id===data.id)
        let allergyAll=this.patientAllergiesDetails.find(el=>el.id===data.id)
        allergyAll.name=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ALLERGYNAME) || '';
        if(allergy){
-       allergy.name=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ALLERGYNAME) || '';
+       allergy.name=data.name;
    
        }
        return res;
@@ -555,13 +563,16 @@ diastolicSUM+=+el.diastolic
         userId:data.userId,
         name:data.name
        }
-      return this.http.put(url, condition,options).pipe(map((res) => {
+      return this.http.put(url, condition,{
+        headers: headers,
+        responseType: 'text'
+      }).pipe(map((res) => {
         
         let condition=this.patientConditions.find(el=>el.id===data.id)
         let conditionAll=this.patientConditionsDetails.find(el=>el.id===data.id)
-        conditionAll.name=JsonQuery.value(res, JSON_PATHS.PATIENTCONDITIONS.NAME) || '';
+        conditionAll.name=data.name
         if(condition){
-        condition.name=JsonQuery.value(res, JSON_PATHS.PATIENTCONDITIONS.NAME) || '';
+        condition.name=data.name;
   
         }
         return res;
@@ -575,13 +586,16 @@ diastolicSUM+=+el.diastolic
         userId:data.userId,
         name:data.name
        }
-      return this.http.put(url, medication,options).pipe(map((res) => {
+      return this.http.put(url, medication,{
+        headers: headers,
+        responseType: 'text'
+      }).pipe(map((res) => {
         
         let medication=this.patientMedication.find(el=>el.id===data.id)
         let medicationAll=this.patientMedicationDetails.find(el=>el.id===data.id)
         medicationAll.name=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICATION.NAME) || '';
         if(medication){
-          medication.name=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICATION.NAME) || '';
+          medication.name=data.name;
   
         }
         return res;
@@ -595,13 +609,16 @@ diastolicSUM+=+el.diastolic
         userId:data.userId,
         name:data.name
        }
-      return this.http.put(url, device,options).pipe(map((res) => {
+      return this.http.put(url, device,{
+        headers: headers,
+        responseType: 'text'
+      }).pipe(map((res) => {
         
         let device=this.patientMedicalDevice.find(el=>el.id===data.id)
         let deviceAll=this.patientMedicalDeviceDetails.find(el=>el.id===data.id)
-        deviceAll.name=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICALDEVICE.NAME) || '';
+        deviceAll.name=data.name
         if(device){
-        device.name=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICALDEVICE.NAME) || '';
+        device.name=data.name;
   
         }
         return res;
@@ -609,7 +626,31 @@ diastolicSUM+=+el.diastolic
       ), catchError(e => throwError(e)) );
     }
 
-   
+    if(type==='body'){
+      url = `http://36765264api.medirec.me/api/HumanBodies/${data.id}`;
+      debugger
+      let body={
+        humanBodyId:data.id,
+        userId:data.userId,
+        date:data.date,
+        height:data.height,
+        weight:data.weight,
+       }
+      return this.http.put(url, body,{
+        headers: headers,
+        responseType: 'text'
+      }).pipe(map((res) => {
+        
+        let human=this.patientBodies.find(el=>el.id===data.id)
+       
+        human.weight=data.weight
+        human.height=data.height
+        human.date=data.date
+      
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
   }
   getAllData(type){
     this.patientAllergiesDetails=[]
@@ -619,6 +660,7 @@ diastolicSUM+=+el.diastolic
     this.patientMedicalDeviceDetails=[]
     this.patientMedicationDetails=[]
     this.patientPressuresDetails=[]
+    this.patientBodies=[]
     if(type==='allergy'){
       let url = 'http://36765264api.medirec.me/api/GetAllergiesDetails/1'
       let headers = new HttpHeaders();
@@ -715,6 +757,58 @@ diastolicSUM+=+el.diastolic
       }
       ), catchError(e => throwError(e)) );
     }
+    if(type==='contact'){
+      let url = 'http://36765264api.medirec.me/api/GetContactsDetails/1';
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.get(url, options).pipe(map((res:any[]) => {
+        
+        res.forEach(element => {
+          let patientContact=new PatientContacts();
+          patientContact.fullName=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.FULLNAME) || '';
+          patientContact.userId=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.USERID) || '';
+          patientContact.id=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.ID) || '';
+          patientContact.phoneNumber01=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.PHONENUMBER01) || '';
+          patientContact.phoneNumber02=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.PHONENUMBER02) || '';
+          patientContact.typeOfRelation=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.RELATION) || '';
+          patientContact.email=JsonQuery.value(element, JSON_PATHS.PATIENTCONTACTS.EMAIL) || '';
+         this.patientContactsDetails.push(patientContact)
+         });
+       
+  
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
+    if(type==='body'){
+      let url = 'http://36765264api.medirec.me/api/GetHumanBodyDetails/1';
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.get(url, options).pipe(map((res:any[]) => {
+        
+        res.forEach(element => {
+          let patientBody=new PatientBody();
+          patientBody.id=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.ID) || '';
+    patientBody.userId=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.USERID) || '';
+     patientBody.weight=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
+     patientBody.height=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
+     patientBody.date=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.DATE) || '';
+
+    
+      this.patientBodies.push(patientBody)
+         });
+       
+  
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
   }
   DeleteData(type,data){
   
@@ -782,34 +876,75 @@ diastolicSUM+=+el.diastolic
       }
       ), catchError(e => throwError(e)) );
     }
+    if(type==='contact'){
+      let url = `http://36765264api.medirec.me/api/Contacts/${data.id}`;
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.delete(url, options).pipe(map((res) => {
+        const index= this.patientContactsDetails.findIndex(el=>el.id==data.id);
+        this.patientContactsDetails.splice(index,1)
+        this.patientContacts.splice(index,1)
+        this.contactsCount= this.patientContactsDetails.length
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
+    if(type==='body'){
+      let url = `http://36765264api.medirec.me/api/HumanBodies/${data.id}`;
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.delete(url, options).pipe(map((res) => {
+        const index= this.patientBodies.findIndex(el=>el.id==data.id);
+        this.patientBodies.splice(index,1)
+        this.humanBodiesCount= this.patientBodies.length
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
   }
-  editContact(contact){
+  editContact(contact:PatientContacts){
     const url = `http://36765264api.medirec.me/api/Contacts/${contact.id}`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
     const options = {
-      headers: headers
+      headers: headers,
+      responseType: 'text'
     };
-    return this.http.put(url, contact, options).pipe(map((res) => 
+    let contactData={
+      contactId:contact.id,
+      email:contact.email,
+      userId:contact.userId,
+      fullName:contact.fullName,
+      phoneNumber01:contact.phoneNumber01,
+      phoneNumber02:contact.phoneNumber02,
+      typeOfRelation:contact.typeOfRelation,
+    }
+    
+    return this.http.put(url, contactData, {
+      headers: headers,
+      responseType: 'text'
+    }).pipe(map((res) => 
    {
      let patientContactAll=this.patientContactsDetails.find(el=>el.id===contact.id)
      let patientContact=this.patientContacts.find(el=>el.id===contact.id)
-     patientContactAll.fullName=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.FULLNAME) || '';
-     patientContactAll.userId=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.USERID) || '';
-     patientContactAll.id=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.ID) || '';
-     patientContactAll.phoneNumber01=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.PHONENUMBER01) || '';
-     patientContactAll.phoneNumber02=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.PHONENUMBER02) || '';
-     patientContactAll.typeOfRelation=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.RELATION) || '';
-     patientContactAll.email=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.EMAIL) || '';
+     patientContactAll.fullName=contact.fullName
+     patientContactAll.phoneNumber01=contact.phoneNumber01
+     patientContactAll.phoneNumber02=contact.phoneNumber02
+     patientContactAll.typeOfRelation=contact.typeOfRelation
+     patientContactAll.email=contact.email
      if(patientContact){
-      patientContact.fullName=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.FULLNAME) || '';
-      patientContact.userId=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.USERID) || '';
-      patientContact.id=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.ID) || '';
-      patientContact.phoneNumber01=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.PHONENUMBER01) || '';
-      patientContact.phoneNumber02=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.PHONENUMBER02) || '';
-      patientContact.typeOfRelation=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.RELATION) || '';
-      patientContact.email=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.EMAIL) || '';
+      patientContact.fullName=contact.fullName
+      patientContact.phoneNumber01=contact.phoneNumber01
+      patientContact.phoneNumber02=contact.phoneNumber02
+      patientContact.typeOfRelation=contact.typeOfRelation
+      patientContact.email=contact.email
      }
     
    
@@ -842,4 +977,68 @@ diastolicSUM+=+el.diastolic
    
    }))
   }
+  editPatient(patient:PatientDetails){
+    const url = `http://36765264api.medirec.me/api/GetPatientsDetails/5`
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers = headers.append('Content-Type', 'application/json');
+    const options = {
+      headers: headers,
+      responseType: 'text'
+    };
+    
+    let patientData={
+      age:patient.age,
+      areaName:patient.areaName,
+      fullName:patient.fullName,
+      gender:patient.gender==='Male'?'m':'f',
+      imageURL:patient.imageUrl,
+      nameEn:patient.city,
+      phoneNumber:patient.phoneNumber,
+      PatientId:5
+    }
+    
+    return this.http.put(url, patientData, {
+      headers: headers,
+      responseType: 'text'
+    }).pipe(map((res) => 
+   {
+    this.patientDetails.age=patient.age
+    this.patientDetails.fullName=patient.fullName
+    this.patientDetails.areaName=patient.areaName
+    this.patientDetails.city=patient.city
+    this.patientDetails.imageUrl=patient.imageUrl
+    this.patientDetails.patienCode=patient.patienCode
+    this.patientDetails.phoneNumber=patient.phoneNumber
+   return res
+   }))
+  }
+  addBody(body){
+    const url = `http://36765264api.medirec.me/api/HumanBodies/1`
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers = headers.append('Content-Type', 'application/json');
+    const options = {
+      headers: headers
+    };
+    return this.http.post(url, body, options).pipe(map((res) => 
+   {
+    
+     let patientBody=new PatientBody()
+    
+
+    patientBody.id=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.ID) || '';
+    patientBody.userId=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.USERID) || '';
+     patientBody.weight=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
+     patientBody.height=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
+    patientBody.date=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.DATE) || '';
+
+    
+      this.patientBodies.push(patientBody)
+     this.humanBodiesCount+=1;
+     return res;
+    }
+    ), catchError(e => throwError(e)) );
+  }
+  
 }

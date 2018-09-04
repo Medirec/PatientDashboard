@@ -23,10 +23,10 @@
                 <header class="pressure-title" >
         
                    <div class="timeline-header">
-                    <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
+                    <a class="nav-link" (click)="openModal(body)"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
         
                      <div>Weight & Height</div>
-                    <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> More Details</span></a>
+                    <a class="nav-link"  style="color: #5a5a5a;"  href="#" (click)="details('body')"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> Details</span></a>
                    </div>
         
         
@@ -118,7 +118,28 @@
               </section>
             </div>
         
-        
+            <ng-template #body>
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">Weight & Height</h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="addBody" novalidate (ngSubmit)="submitBody()">
+                        <div class="form-group">
+                          <label for="formGroupExampleInput">Height</label>
+                          <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="height" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Weight</label>
+                            <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="weight" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                          </div>
+                    
+                        <button [disabled]="!addBody.valid" type="submit" class="btn btn-edit">Submit</button>
+                      </form>
+                </div>
+              </ng-template>
         
         
           </div>
@@ -139,7 +160,7 @@
                             <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
                 
                              <div>IMMUNIZATION</div>
-                            <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> More Details</span></a>
+                            <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> Details</span></a>
                            </div>
                 
                 
@@ -154,6 +175,7 @@
                                     <li *ngFor="let immunization of userService.patientImmunization">
                                       <div class="tm-box appear-animation animated fadeInRight appear-animation-visible ">
                                           <p class="static-details">Administrated By: <span class="details">{{immunization?.administratedBy}}</span> </p>
+                                          <p class="static-details">Vaccine: <span class="details">{{immunization?.vaccineName}}</span> </p>
                                           <p class="static-details">Date: <span class="details">{{immunization?.date}}</span> </p>
                                           <p class="static-details">Next Date: <span class="details">{{immunization?.nextDate}}</span> </p>
                 
@@ -169,7 +191,43 @@
                       </section>
                     </div>
                 
-                
+                    <!-- <ng-template #immunization>
+                        <div class="modal-header">
+                          <h4 class="modal-title pull-left">IMMUNIZATION</h4>
+                          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="addMedicationForm" novalidate (ngSubmit)="submitMedication()">
+                                <div class="form-group">
+                                  <label for="formGroupExampleInput">Name</label>
+                                  <input  (keyup)="medicationNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contry">Countries</label>
+                                    <select class="form-control" id="contry" formControlName="country">
+                                      <option *ngFor="let contry of Vaccine" [value]="contry.id">{{contry.name}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="contry">Countries</label>
+                                      <select class="form-control" id="contry" formControlName="country">
+                                        <option *ngFor="let contry of Vaccine" [value]="contry.id">{{contry.name}}</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contry">Countries</label>
+                                        <ng-datepicker [(ngModel)]="date" />
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="contry">Countries</label>
+                                          <ng-datepicker [(ngModel)]="date" />
+                                        </div>
+                                <button type="submit" class="btn btn-edit">Submit</button>
+                              </form>
+                        </div>
+                      </ng-template> -->
                 
                 
                   </div>
@@ -281,7 +339,7 @@
             
           </div>
       
-          <button type="submit" class="btn btn-edit">Submit</button>
+          <button [disabled]="!addAllergyForm.valid" type="submit" class="btn btn-edit">Submit</button>
         </form>
   </div>
 </ng-template>
@@ -314,7 +372,7 @@
                             <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="conditionNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
                           </div>
                       
-                          <button type="submit" class="btn btn-edit">Submit</button>
+                          <button [disabled]="!addConditionForm.valid" type="submit" class="btn btn-edit">Submit</button>
                         </form>
                   </div>
                 </ng-template>
@@ -347,7 +405,7 @@
                               <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
                             </div>
                         
-                            <button type="submit" class="btn btn-edit">Submit</button>
+                            <button [disabled]="!addMedicationForm.valid" type="submit" class="btn btn-edit">Submit</button>
                           </form>
                     </div>
                   </ng-template>
@@ -380,7 +438,7 @@
                                 <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicalNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
                               </div>
                           
-                              <button type="submit" class="btn btn-edit">Submit</button>
+                              <button [disabled]="!addMedicalDeviceForm.valid" type="submit" class="btn btn-edit">Submit</button>
                             </form>
                       </div>
                     </ng-template>
@@ -457,7 +515,7 @@
           <hr>
           <div style="display: flex;">
             <button type="button" class="btn-modal" (click)="openModal(contact)">Add</button>
-            <button type="button" class="btn-modal btn-details" >Details</button>
+            <button type="button" class="btn-modal btn-details" (click)="details('contact')">Details</button>
           </div>
  
 
@@ -491,7 +549,7 @@
                                 <input [ngClass]="{'error':!email.valid&&contactError}" #email [(ngModel)]="editContant.email" formControlName="email" type="text" class="form-control" id="email" placeholder="Enter Email">
                               </div>
                   
-                      <button type="submit"  class="btn btn-edit">Submit</button>
+                      <button type="submit" [disabled]="!contactForm.valid"  class="btn btn-edit">Submit</button>
                     </form>
               </div>
             </ng-template>

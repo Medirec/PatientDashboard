@@ -1,5 +1,5 @@
 
-<section class="card" *ngIf="myRecordsService.dataSet.length">
+<section class="card" *ngIf="myRecordsService.dataSet.length||myRecordsService.contactSet.length||myRecordsService.bodySet.length">
     <header class="card-header">
   
       <h2 class="card-title">Details</h2>
@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <div id="datatable-editable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+      <div id="datatable-editable_wrapper" *ngIf="myRecordsService.dataSet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
         <div class="row">
           <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
           <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">
@@ -23,16 +23,83 @@
         </thead>
         <tbody>
         <tr *ngFor="let data of myRecordsService.dataSet" data-item-id="25" role="row" >
-            <td *ngIf="editItem!==data" class="">{{data.name}}</td>
-            <td *ngIf="editItem===data" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
+            <td *ngIf="editItem.id!==data.id" class="">{{data.name}}</td>
+            <td *ngIf="editItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
             <td class="actions">
-              <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem===data" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
-              <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem===data" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
-              <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem!==data" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
-              <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem!==data" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
+              <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem.id===data.id" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
+              <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
+              <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem.id!==data.id" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
+              <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem.id!==data.id" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
             </td>
           </tr>
         </tbody>
-      </table></div></div>
+      </table>
+    </div>
+  </div>
+  <div id="datatable-editable_wrapper" *ngIf="myRecordsService.contactSet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+      <div class="row">
+        <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
+        <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">
+          <table class="table table-bordered table-striped mb-0 dataTable no-footer" id="datatable-editable" role="grid">
+      <thead>
+          <tr role="row"> <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">Full Name</th>
+          <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">Relation</th>
+            <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">First Phone Number</th>
+              <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">second Phone Number</th>
+            <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">Email</th>
+          <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 141px;">Actions</th></tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of myRecordsService.contactSet" data-item-id="25" role="row" >
+          <td *ngIf="editContact.id!==data.id" class="">{{data.fullName}}</td>
+          <td *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.fullName"   ></td>
+          <td *ngIf="editContact.id!==data.id" class="">{{data.typeOfRelation}}</td>
+          <td *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.typeOfRelation"   ></td>
+          <td *ngIf="editContact.id!==data.id" class="">{{data.phoneNumber01}}</td>
+          <td *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.phoneNumber01"   ></td>
+          <td *ngIf="editContact.id!==data.id" class="">{{data.phoneNumber02}}</td>
+          <td *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.phoneNumber02"   ></td>
+          <td *ngIf="editContact.id!==data.id" class="">{{data.email}}</td>
+          <td *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.email"   ></td>
+          <td class="actions">
+            <a style="font-size: 23px;margin-right: 25px"  *ngIf="editContact.id===data.id" class=" on-editing save-row" (click)="submitContact()"><i class="fa fa-save"></i></a>
+            <a style="font-size: 23px;margin-right: 25px" *ngIf="editContact.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
+            <a style="font-size: 23px;margin-right: 25px" *ngIf="editContact.id!==data.id" class="on-default edit-row" (click)="onClickContacts(data)"><i class="fa fa-pencil"></i></a>
+            <a style="font-size: 23px;margin-right: 25px"  *ngIf="editContact.id!==data.id" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="datatable-editable_wrapper" *ngIf="myRecordsService.bodySet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+    <div class="row">
+      <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
+      <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">
+        <table class="table table-bordered table-striped mb-0 dataTable no-footer" id="datatable-editable" role="grid">
+    <thead>
+        <tr role="row"> <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">height</th>
+          <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">Weight</th>
+             
+          <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 141px;">Actions</th></tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of myRecordsService.bodySet" data-item-id="25" role="row" >
+        <td *ngIf="bodyItem.id!==data.id" class="">{{data.height}}</td>
+        <td *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.height"   ></td>
+        <td *ngIf="bodyItem.id!==data.id" class="">{{data.weight}}</td>
+        <td *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.weight"   ></td>
+        
+        <td class="actions">
+          <a style="font-size: 23px;margin-right: 25px"  *ngIf="bodyItem.id===data.id" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
+          <a style="font-size: 23px;margin-right: 25px" *ngIf="bodyItem.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
+          <a style="font-size: 23px;margin-right: 25px" *ngIf="bodyItem.id!==data.id" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
+          <a style="font-size: 23px;margin-right: 25px"  *ngIf="bodyItem.id!==data.id" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
     </div>
   </section>

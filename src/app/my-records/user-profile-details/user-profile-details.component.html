@@ -4,11 +4,8 @@
     <section class="card">
       <div class="card-body">
         <div class="thumb-info mb-3">
-          <img style="min-height:255px" src="assets/images/!logged-user.jpg" class="rounded img-fluid" alt="John Doe">
-          <div class="thumb-info-title">
-            <span class="thumb-info-inner">John Doe</span>
-      
-          </div>
+          <img style="min-height:255px" [src]="user.imageUrl" class="rounded img-fluid" alt="image">
+        
         </div>
 
      
@@ -33,47 +30,47 @@
        
         <div id="edit" class="tab-pane active">
 
-          <form class="p-3">
+          <form [formGroup]="userForm" novalidate (ngSubmit)="submit()" class="p-3">
             <h4 class="mb-3">Personal Information</h4>
             <div class="form-group">
-              <label for="inputAddress">Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" formControlName="name"  [(ngModel)]="user.fullName" id="name" placeholder="Enter Your Name">
             </div>
             <div class="form-group">
-              <label for="inputAddress2">Address 2</label>
-              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="text" class="form-control" formControlName="phoneNumber" [(ngModel)]="user.phoneNumber" id="phoneNumber" placeholder="Enter Your Phone Number">
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" formControlName="age" [(ngModel)]="user.age" id="age" placeholder="Enter Your Age">
               </div>
-              <div class="form-group col-md-4">
-                <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
-                  <option selected="">Choose...</option>
-                  <option>...</option>
-                </select>
+            <div class="form-group">
+                <label for="area">Area Name</label>
+                <input type="text" formControlName="area" class="form-control" [(ngModel)]="user.areaName"  id="area" placeholder="Enter Your Area Name">
               </div>
-              <div class="form-group col-md-2">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
-              </div>
-            </div>
-
+              <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" formControlName="city"  class="form-control" [(ngModel)]="user.city" id="city" placeholder="Enter Your City">
+                </div>
+                <div class="form-group">
+                    <div class="radio">
+                        <label>
+                          <input formControlName="gender" type="radio" id="optionsRadios1" value="Female" checked="">
+                          Female
+                        </label>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="radio">
+                          <label>
+                            <input formControlName="gender" type="radio"  id="optionsRadios2" value="Male" checked="">
+                           Male
+                          </label>
+                        </div>
+                    </div>
             <hr class="dotted tall">
 
-            <h4 class="mb-3">Change Password</h4>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">New Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Re New Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-              </div>
-            </div>
+
 
             <div class="form-row">
               <div class="col-md-12 text-right mt-3">

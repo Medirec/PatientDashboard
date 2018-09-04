@@ -6,7 +6,8 @@ export const JSON_PATHS = {
       GENDER: '$.gender',
       CITY:'$.nameEn',
       PATIENTCODE:'$.patientCode',
-      IMAGEURL:'$.imageURL'
+      IMAGEURL:'$.imageURL',
+      PHONENUMBER:'$.phoneNumber'
      
     },
     PATIENTALLERGIES: {
@@ -60,6 +61,7 @@ export const JSON_PATHS = {
         DATE: '$.dateGiven',
         NEXTDATE: '$.nextDoesDate',
         VACCINEID: '$.vaccineId',
+        VACCINENAME:'$.vaccineName'
        
       }
 }

@@ -28,6 +28,13 @@ class Upload {
 })
 
 export class MyRecordsComponent implements OnInit {
+  adminstrated=[{
+    id:1,
+    value:'Hospital'
+  },{
+    id:1,
+    value:'Clinic'
+  }]
   contactError:boolean;
   editContant:PatientContacts=new PatientContacts();
   modalRef: BsModalRef;
@@ -36,13 +43,15 @@ export class MyRecordsComponent implements OnInit {
   public addMedicationForm: FormGroup;
   public addMedicalDeviceForm:FormGroup;
   public contactForm:FormGroup;
+  public addBody:FormGroup;
   showErrorMsg:boolean
   showErrorMsgMedication:boolean;
   showErrorMsgCondition:boolean
   showErrorMsgMedical:boolean
+  bodyError:boolean
   currentUpload:Upload;
   dropzoneActive:boolean = false;
-  constructor(private myRecordsService:MyRecordsService, private router: Router,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
+  constructor(private myRecordsService:MyRecordsService, private router: Router,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
     });
@@ -54,6 +63,10 @@ export class MyRecordsComponent implements OnInit {
     });
     this.addMedicalDeviceForm = formBuilder4.group({
       name: ['', [Validators.required]],
+    });
+    this.addBody = formBuilder6.group({
+      height: ['', [Validators.required]],
+      weight: ['', [Validators.required]],
     });
     this.contactForm = formBuilder5.group({
       name: ['', [Validators.required]],
@@ -124,6 +137,29 @@ debugger
       this.userService.addConditions({
         userId:1,
         name:this.addConditionForm.controls['name'].value,
+      }).subscribe(()=>{
+       this.appService.showLoader=false 
+      },()=>{
+       this.appService.showLoader=false 
+
+      })
+    }
+  }
+  submitBody(){
+    if (!this.addBody.valid) {
+      this.bodyError = true
+    }
+    else{
+      this.bodyError = false
+
+      this.modalRef.hide()
+      this.appService.showLoader=true 
+
+      this.userService.addBody({
+        userId:1,
+        height:this.addBody.controls['height'].value,
+        weight:this.addBody.controls['weight'].value,
+        date:new Date()
       }).subscribe(()=>{
        this.appService.showLoader=false 
       },()=>{
@@ -307,7 +343,34 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         })
         
         break;
-    
+        case 'contact':
+        this.appService.showLoader=true
+        this.userService.getAllData(type).subscribe(()=>{
+        this.appService.showLoader=false
+        this.router.navigate(['/Details']);
+
+          this.myRecordsService.contactSet=this.userService.patientContactsDetails
+
+        },()=>{
+        this.appService.showLoader=false
+
+        })
+        
+        break;
+        case 'body':
+        this.appService.showLoader=true
+        this.userService.getAllData(type).subscribe(()=>{
+        this.appService.showLoader=false
+        this.router.navigate(['/Details']);
+
+          this.myRecordsService.bodySet=this.userService.patientBodies
+
+        },()=>{
+        this.appService.showLoader=false
+
+        })
+        
+        break;
       default:
         break;
     }
