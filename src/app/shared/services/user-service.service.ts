@@ -12,6 +12,7 @@ import { PatientBody } from '../model/patient-body.model';
 import * as moment from 'moment';
 import { PatientContacts } from '../model/patient-contacts.model';
 import { PatientImmunization } from '../model/patient-immunization.model';
+import { MyRecordsService } from '../../my-records/my-records.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,7 @@ conditionsCount:number;
 bloodPressureCount:number;
 immunizationsCount:number;
 contactsCount:number;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private myRecordsService:MyRecordsService) {
 
    }
     /**
@@ -234,6 +235,8 @@ diastolicSUM+=+el.diastolic
     allergyRes.userId=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.USERID) || '';
     allergyRes.id=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ID) || '';
    this.patientAllergies.push(allergyRes)
+   this.patientAllergiesDetails.push(allergyRes)
+this.myRecordsService.dataSet=this.patientAllergiesDetails
   this.allergiesCount+=1
   return res;
   }
@@ -256,6 +259,9 @@ diastolicSUM+=+el.diastolic
     conditionRes.userId=JsonQuery.value(res, JSON_PATHS.PATIENTCONDITIONS.USERID) || '';
     conditionRes.id=JsonQuery.value(res, JSON_PATHS.PATIENTCONDITIONS.ID) || '';
    this.patientConditions.push(conditionRes)
+   this.patientConditionsDetails.push(conditionRes)
+this.myRecordsService.dataSet=this.patientConditionsDetails
+
    this.conditionsCount+=1
    return res;
   }
@@ -298,6 +304,9 @@ diastolicSUM+=+el.diastolic
     medicationRes.userId=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICATION.USERID) || '';
     medicationRes.id=JsonQuery.value(res,  JSON_PATHS.PATIENTMEDICATION.ID) || '';
    this.patientMedication.push(medicationRes)
+   this.patientMedicationDetails.push(medicationRes)
+this.myRecordsService.dataSet=this.patientMedicationDetails
+
    this.medicationCount+=1
    return res;}
   ))
@@ -339,6 +348,8 @@ diastolicSUM+=+el.diastolic
     medicalDevice.userId=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICALDEVICE.USERID) || '';
     medicalDevice.id=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICALDEVICE.ID) || '';
    this.patientMedicalDevice.push(medicalDevice)
+   this.patientMedicalDeviceDetails.push(medicalDevice)
+   this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
    this.medicalDeviceCount+=1
    return res;
    }))
