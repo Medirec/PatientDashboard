@@ -169,8 +169,8 @@ date:any[]=[];
       res.forEach(element => {
        let pressure=this.patientPressures.find(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM'))
         if(pressure){
-          pressure.diastolic=(+pressure.diastolic/+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC)) /2+""
-          pressure.systolic=(+pressure.systolic/+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC)) /2+""
+          pressure.diastolic=((+pressure.diastolic+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC)) /2)+""
+          pressure.systolic=((+pressure.systolic+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC)) /2)+""
         }
         else{
           pressure=new PatientPressure();
