@@ -8,6 +8,8 @@ import { PatientContacts } from '../shared/model/patient-contacts.model';
 import { Router } from '@angular/router';
 import { MyRecordsService } from "./my-records.service";
 import * as _ from "lodash";
+declare let alertify:any;
+
 class Upload {
 
   $key: string;
@@ -103,7 +105,7 @@ debugger
       this.editContant=new PatientContacts()
     
   }
-  submit() {
+  submitAllergy() {
     if (!this.addAllergyForm.valid) {
       this.showErrorMsg = true
     }
@@ -118,8 +120,11 @@ debugger
         name:this.addAllergyForm.controls['name'].value,
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }
@@ -139,8 +144,11 @@ debugger
         name:this.addConditionForm.controls['name'].value,
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }
@@ -162,8 +170,11 @@ debugger
         date:new Date()
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }

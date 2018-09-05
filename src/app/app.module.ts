@@ -14,13 +14,18 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from './shared/shared.module';
 import { MyRecordsService } from './my-records/my-records.service';
+import {SnackbarModule} from 'ngx-snackbar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material';;
+import { OverlayModule } from "@angular/cdk/overlay";
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
-  BrowserModule,
+    BrowserAnimationsModule,
+BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     MyRecordsModule,
@@ -30,9 +35,11 @@ import { MyRecordsService } from './my-records/my-records.service';
     ChartsModule,
     AngularFontAwesomeModule,
     NgDatepickerModule,
-    SharedModule
+    SharedModule,
+    SnackbarModule.forRoot(),
+    MatSnackBarModule
   ],
-    providers: [MyRecordsResolver,AppService,MyRecordsService],
+    providers: [MyRecordsResolver,AppService,MyRecordsService,MatSnackBar],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

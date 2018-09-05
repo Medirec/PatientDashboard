@@ -7,6 +7,8 @@ import { PatientBody } from '../../shared/model/patient-body.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../../app.service';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBarConfig } from '@angular/material';
+declare let alertify:any;
 
 @Component({
   selector: 'app-details',
@@ -44,7 +46,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.myRecordsService.immunizationtSet=[]
   }
   
-  constructor(private myRecordsService:MyRecordsService,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
+  constructor(public snackBar: MatSnackBar,private myRecordsService:MyRecordsService,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
     });
@@ -68,7 +70,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
       phone2: ['',[Validators.pattern("^[0-9]{11}$")]],
       email: ['', [Validators.required,Validators.email]],
     });
-   }
+  }
 
   ngOnInit() {
     switch (this.myRecordsService.type) {
@@ -162,8 +164,11 @@ this.name='ALLERGIES'
         name:this.addAllergyForm.controls['name'].value,
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }
@@ -183,8 +188,11 @@ this.name='ALLERGIES'
         name:this.addConditionForm.controls['name'].value,
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }
@@ -206,8 +214,11 @@ this.name='ALLERGIES'
         date:new Date()
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }
@@ -324,5 +335,21 @@ delete(data){
   this.editContact=new PatientContacts()
   this.bodyItem=new PatientBody()})
   
+}
+message: string = 'Snack Bar opened.';
+actionButtonLabel: string = 'Retry';
+action: boolean = true;
+setAutoHide: boolean = true;
+autoHide: number = 2000;
+horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+addExtraClass: boolean = false;
+
+
+ open() {
+  this.snackBar.open('Message archived', 'Undo', {
+    duration: 3000
+  });
 }
 }
