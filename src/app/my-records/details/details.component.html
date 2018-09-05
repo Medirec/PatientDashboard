@@ -26,9 +26,9 @@
         </thead>
         <tbody>
         <tr *ngFor="let data of myRecordsService.dataSet|filter:filterChar" data-item-id="25" role="row" >
-            <td style="padding: 2px 20px;" *ngIf="editItem.id!==data.id" class="">{{data.name}}</td>
-            <td style="padding: 2px 20px;" *ngIf="editItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
-            <td style="padding: 2px 20px;" class="actions">
+            <td style="padding: 7px 20px;" *ngIf="editItem.id!==data.id" class="">{{data.name}}</td>
+            <td style="padding: 7px 20px;" *ngIf="editItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
+            <td style="padding: 3px 20px;" class="actions">
               <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem.id===data.id" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
               <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
               <a style="font-size: 23px;margin-right: 25px" *ngIf="editItem.id!==data.id" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
@@ -54,17 +54,17 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of myRecordsService.contactSet" data-item-id="25" role="row" >
-          <td style="padding: 2px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.fullName}}</td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.fullName"   ></td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.typeOfRelation}}</td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.typeOfRelation"   ></td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.phoneNumber01}}</td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.phoneNumber01"   ></td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.phoneNumber02}}</td>
-          <td  style="padding: 2px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.phoneNumber02"   ></td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.email}}</td>
-          <td style="padding: 2px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.email"   ></td>
-          <td style="padding: 2px 20px;" class="actions">
+          <td style="padding: 7px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.fullName}}</td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.fullName"   ></td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.typeOfRelation}}</td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.typeOfRelation"   ></td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.phoneNumber01}}</td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.phoneNumber01"   ></td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.phoneNumber02}}</td>
+          <td  style="padding: 7px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.phoneNumber02"   ></td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id!==data.id" class="">{{data.email}}</td>
+          <td style="padding: 7px 20px;" *ngIf="editContact.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editContact.email"   ></td>
+          <td style="padding: 3px 20px;" class="actions">
             <a style="font-size: 23px;margin-right: 25px"  *ngIf="editContact.id===data.id" class=" on-editing save-row" (click)="submitContact()"><i class="fa fa-save"></i></a>
             <a style="font-size: 23px;margin-right: 25px" *ngIf="editContact.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
             <a style="font-size: 23px;margin-right: 25px" *ngIf="editContact.id!==data.id" class="on-default edit-row" (click)="onClickContacts(data)"><i class="fa fa-pencil"></i></a>
@@ -88,12 +88,12 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of myRecordsService.bodySet" data-item-id="25" role="row" >
-        <td style="padding: 2px 20px;" *ngIf="bodyItem.id!==data.id" class="">{{data.height}}</td>
-        <td style="padding: 2px 20px;" *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.height"   ></td>
-        <td style="padding: 2px 20px;" *ngIf="bodyItem.id!==data.id" class="">{{data.weight}}</td>
-        <td style="padding: 2px 20px;" *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.weight"   ></td>
+        <td style="padding: 7px 20px;" *ngIf="bodyItem.id!==data.id" class="">{{data.height}}</td>
+        <td style="padding: 7px 20px;" *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.height"   ></td>
+        <td style="padding: 7px 20px;" *ngIf="bodyItem.id!==data.id" class="">{{data.weight}}</td>
+        <td style="padding: 7px 20px;" *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.weight"   ></td>
         
-        <td style="padding: 2px 20px;" class="actions">
+        <td style="padding: 3px 20px;" class="actions">
           <a style="font-size: 23px;margin-right: 25px"  *ngIf="bodyItem.id===data.id" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
           <a style="font-size: 23px;margin-right: 25px" *ngIf="bodyItem.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
           <a style="font-size: 23px;margin-right: 25px" *ngIf="bodyItem.id!==data.id" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
@@ -104,7 +104,6 @@
   </table>
 </div>
 </div>
-<button mat-raised-button (click)="open()">OPEN</button>
 
     </div>
     <ng-template #template>
