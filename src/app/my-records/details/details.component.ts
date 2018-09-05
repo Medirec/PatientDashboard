@@ -297,6 +297,8 @@ if(this.editItem.id){
   this.userService.update(this.editItem,this.myRecordsService.type).subscribe(()=>{
     this.editItem=new PatientConditions()
     this.bodyItem=new PatientBody()
+    alertify.success('record successfully updated'); 
+
   },()=>   {this.editItem=new PatientConditions()
     this.bodyItem=new PatientBody()
     this.editContact=new PatientContacts()})
@@ -330,26 +332,12 @@ delete(data){
     this.editItem=new PatientConditions()
     this.editContact=new PatientContacts()
     this.bodyItem=new PatientBody()
+    alertify.success('record successfully deleted'); 
 
   },()=>   {this.editItem=new PatientConditions()
   this.editContact=new PatientContacts()
   this.bodyItem=new PatientBody()})
   
 }
-message: string = 'Snack Bar opened.';
-actionButtonLabel: string = 'Retry';
-action: boolean = true;
-setAutoHide: boolean = true;
-autoHide: number = 2000;
-horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-addExtraClass: boolean = false;
-
-
- open() {
-  this.snackBar.open('Message archived', 'Undo', {
-    duration: 3000
-  });
-}
 }
