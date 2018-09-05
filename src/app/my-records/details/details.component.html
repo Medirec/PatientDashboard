@@ -8,21 +8,24 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="mb-3">
-            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+            <button (click)="openModal()" id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
           </div>
         </div>
       </div>
       <div id="datatable-editable_wrapper" *ngIf="myRecordsService.dataSet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
         <div class="row">
           <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
-          <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">
+          <div class="col-lg-6">
+            <div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search"  [(ngModel)]="filterChar" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div>
+          </div></div>
+          <div class="table-responsive">
             <table class="table table-bordered table-striped mb-0 dataTable no-footer" id="datatable-editable" role="grid">
         <thead>
           <tr role="row"><th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">Name</th>
             <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 141px;">Actions</th></tr>
         </thead>
         <tbody>
-        <tr *ngFor="let data of myRecordsService.dataSet" data-item-id="25" role="row" >
+        <tr *ngFor="let data of myRecordsService.dataSet|filter:filterChar" data-item-id="25" role="row" >
             <td *ngIf="editItem.id!==data.id" class="">{{data.name}}</td>
             <td *ngIf="editItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
             <td class="actions">
@@ -102,4 +105,134 @@
 </div>
 </div>
     </div>
+    <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">ALLERGIES</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addAllergyForm" novalidate (ngSubmit)="submitAllergy()">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Name</label>
+                  <input (keyup)="allergiesNameChange()" [ngClass]="{'error':showErrorMsg}" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                  
+                </div>
+            
+                <button [disabled]="!addAllergyForm.valid" type="submit" class="btn btn-edit">Submit</button>
+              </form>
+        </div>
+      </ng-template>
+      <ng-template #condition>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">CONDITIONS</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addConditionForm" novalidate (ngSubmit)="submitCondition()">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Name</label>
+                  <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="conditionNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                </div>
+            
+                <button [disabled]="!addConditionForm.valid" type="submit" class="btn btn-edit">Submit</button>
+              </form>
+        </div>
+      </ng-template>
+      <ng-template #medication>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">MEDICATION</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addMedicationForm" novalidate (ngSubmit)="submitMedication()">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Name</label>
+                  <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                </div>
+            
+                <button [disabled]="!addMedicationForm.valid" type="submit" class="btn btn-edit">Submit</button>
+              </form>
+        </div>
+      </ng-template>
+      <ng-template #medicalDevice>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">MEDICAL DEVICES</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addMedicalDeviceForm" novalidate (ngSubmit)="submitMedicalDevice()">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Name</label>
+                  <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicalNameChange()" formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                </div>
+            
+                <button [disabled]="!addMedicalDeviceForm.valid" type="submit" class="btn btn-edit">Submit</button>
+              </form>
+        </div>
+      </ng-template>
+      <ng-template #contact>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">CONTACT INFO</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="contactForm" novalidate (ngSubmit)="editContact()">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Name</label>
+                  <input [ngClass]="{'error':!name.valid&&contactError}" #name [(ngModel)]="editContant.fullName"  formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <label for="relation">Relation</label>
+                    <input [ngClass]="{'error':!relation.valid&&contactError}" #relation [(ngModel)]="editContant.typeOfRelation" formControlName="relation" type="text" class="form-control" id="relation" placeholder="Enter Relation">
+                  </div>
+                  <div class="form-group">
+                      <label for="phone">Phone Number</label>
+                      <input [ngClass]="{'error':!phone.valid&&contactError}" #phone [(ngModel)]="editContant.phoneNumber01" formControlName="phone" type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone2">Additional Phone Number</label>
+                        <input #phone2   formControlName="phone2" type="text" class="form-control" [(ngModel)]="editContant.phoneNumber02" id="phone2" placeholder="Enter Phone Number">
+                      </div>
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input [ngClass]="{'error':!email.valid&&contactError}" #email [(ngModel)]="editContant.email" formControlName="email" type="text" class="form-control" id="email" placeholder="Enter Email">
+                        </div>
+            
+                <button type="submit" [disabled]="!contactForm.valid"  class="btn btn-edit">Submit</button>
+              </form>
+        </div>
+      </ng-template>
+      <ng-template #body>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Weight & Height</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addBody" novalidate (ngSubmit)="submitBody()">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Height</label>
+                  <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="height" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Weight</label>
+                    <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="weight" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                  </div>
+            
+                <button [disabled]="!addBody.valid" type="submit" class="btn btn-edit">Submit</button>
+              </form>
+        </div>
+      </ng-template>
   </section>
+  

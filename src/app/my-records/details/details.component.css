@@ -1,0 +1,9 @@
+.btn-edit{
+    margin-top: 9px;
+    height: 40px;
+    box-shadow: 0 1px 6px 0px #1991b7;
+    font-size: 15px;
+    color: #fff;
+    background-color: #1991b7;
+    border-color: #1991b7;
+}

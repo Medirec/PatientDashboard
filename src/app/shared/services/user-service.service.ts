@@ -628,7 +628,6 @@ diastolicSUM+=+el.diastolic
 
     if(type==='body'){
       url = `http://36765264api.medirec.me/api/HumanBodies/${data.id}`;
-      debugger
       let body={
         humanBodyId:data.id,
         userId:data.userId,
@@ -646,6 +645,36 @@ diastolicSUM+=+el.diastolic
         human.weight=data.weight
         human.height=data.height
         human.date=data.date
+      
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
+    if(type==='immunization'){
+      url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
+      let body={
+        immunizationId:data.id,
+        userId:data.userId,
+        administratedBy:data.administratedBy,
+        dateGiven:data.date,
+        nextDoesDate:data.nextDate,
+        vaccineId:data.vaccineId,
+        vaccineName:data.vaccineName,
+       }
+      return this.http.put(url, body,{
+        headers: headers,
+        responseType: 'text'
+      }).pipe(map((res) => {
+        
+        let immunization=this.patientImmunization.find(el=>el.id===data.id)
+       
+        immunization.administratedBy=data.administratedBy
+        immunization.date=data.date
+        immunization.nextDate=data.nextDate
+        immunization.vaccineId=data.vaccineId
+        immunization.vaccineName=data.vaccineName
+        immunization.id=data.id
+        immunization.userId=data.userId
       
         return res;
       }
@@ -978,7 +1007,7 @@ diastolicSUM+=+el.diastolic
    }))
   }
   editPatient(patient:PatientDetails){
-    const url = `http://36765264api.medirec.me/api/GetPatientsDetails/5`
+    const url = `http://36765264api.medirec.me/api/patients/5`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1040,5 +1069,31 @@ diastolicSUM+=+el.diastolic
     }
     ), catchError(e => throwError(e)) );
   }
-  
+  addImmunization(body){
+    const url = `http://36765264api.medirec.me/api/Immunizations/1`
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers = headers.append('Content-Type', 'application/json');
+    const options = {
+      headers: headers
+    };
+    return this.http.post(url, body, options).pipe(map((res) => 
+   {
+    
+     let patientBody=new PatientBody()
+    
+
+    patientBody.id=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.ID) || '';
+    patientBody.userId=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.USERID) || '';
+     patientBody.weight=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
+     patientBody.height=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
+    patientBody.date=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.DATE) || '';
+
+    
+      this.patientBodies.push(patientBody)
+     this.humanBodiesCount+=1;
+     return res;
+    }
+    ), catchError(e => throwError(e)) );
+  }
 }
