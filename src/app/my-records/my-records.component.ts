@@ -224,18 +224,18 @@ debugger
   }
   // lineChart
   public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Systolic'},
-    {data: [60, 48, 70, 50, 86, 60, 90], label: 'Diastolic'},
+    {data: this.userService.systolic, label: 'Systolic'},
+    {data:  this.userService.diastolic, label: 'Diastolic'},
   ];
-  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels:Array<any> = this.userService.date;
   public lineChartOptions:any = {
-    responsive: true, scales : { yAxes: [{ ticks: { steps : 40, stepValue : 40, max : 180,min:40 } }] } ,
+    responsive: true, scales : { yAxes: [{ ticks: { steps : 40, stepValue : 40, max : 180,min:0 } }] } ,
     tooltips: {
       callbacks: {
         label: function (tooltipItem, data) {
           
           const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-          return  datasetLabel + ': ' + tooltipItem.yLabel + '%';
+          return  datasetLabel + ': ' + tooltipItem.yLabel ;
         }
       }
     },

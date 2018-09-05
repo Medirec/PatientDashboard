@@ -44,6 +44,9 @@ conditionsCount:number;
 bloodPressureCount:number;
 immunizationsCount:number;
 contactsCount:number;
+diastolic:number[]=[];
+systolic:number[]=[];
+date:any[]=[];
   constructor(private http: HttpClient,private myRecordsService:MyRecordsService) {
 
    }
@@ -164,14 +167,27 @@ contactsCount:number;
     };
     return this.http.get(url, options).pipe(map((res:any[]) => {
       res.forEach(element => {
-        let pressure=new PatientPressure();
-        pressure.id=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.ID) || '';
-        pressure.userId=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
-        pressure.date=moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM') || '';
-        pressure.diastolic=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
-        pressure.systolic=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
-       this.patientPressures.push(pressure)
+       let pressure=this.patientPressures.find(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM'))
+        if(pressure){
+          pressure.diastolic=(+pressure.diastolic/+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC)) /2+""
+          pressure.systolic=(+pressure.systolic/+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC)) /2+""
+        }
+        else{
+          pressure=new PatientPressure();
+          pressure.id=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.ID) || '';
+          pressure.userId=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
+          pressure.date=moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM') || '';
+          pressure.diastolic=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
+          pressure.systolic=JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
+         
+          this.date.push(pressure.date)
+          this.patientPressures.push(pressure)
+        }
+       
+    
+       
        });
+      
        
 this.PressureCalculaion()
       return res;
@@ -191,7 +207,13 @@ if(this.patientPressures.length){
   this.patientPressures.map(el=>{
 systolicSUM+=+el.systolic
 diastolicSUM+=+el.diastolic
+this.systolic.push( +el.systolic)
+ 
+this.diastolic.push( +el.diastolic)
   })
+
+  
+
   this.patientCalculatedPressure.systolicAVG=Math.ceil(systolicSUM/this.patientPressures.length)
   this.patientCalculatedPressure.diastolicAVG=Math.ceil(diastolicSUM/this.patientPressures.length)
   this.patientCalculatedPressure.systolic=((systolicSUM/this.patientPressures.length)/maxSystolic)*100+"%"
@@ -558,7 +580,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
        
        let allergy=this.patientAllergies.find(el=>el.id===data.id)
        let allergyAll=this.patientAllergiesDetails.find(el=>el.id===data.id)
-       allergyAll.name=JsonQuery.value(res, JSON_PATHS.PATIENTALLERGIES.ALLERGYNAME) || '';
+       allergyAll.name=data.name || '';
        if(allergy){
        allergy.name=data.name;
    
@@ -604,7 +626,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         
         let medication=this.patientMedication.find(el=>el.id===data.id)
         let medicationAll=this.patientMedicationDetails.find(el=>el.id===data.id)
-        medicationAll.name=JsonQuery.value(res, JSON_PATHS.PATIENTMEDICATION.NAME) || '';
+        medicationAll.name=data.name || '';
         if(medication){
           medication.name=data.name;
   
