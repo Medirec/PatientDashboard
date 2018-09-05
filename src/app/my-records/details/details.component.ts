@@ -37,6 +37,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   @ViewChild('medicalDevice') medicalDevice;
   @ViewChild('contact') contact;
   @ViewChild('body') body;
+  name:string;
   ngOnDestroy(): void {
     this.myRecordsService.dataSet=[]
     this.myRecordsService.contactSet=[]
@@ -70,7 +71,38 @@ export class DetailsComponent implements OnInit ,OnDestroy{
    }
 
   ngOnInit() {
+    switch (this.myRecordsService.type) {
+      case 'allergy':
+this.name='ALLERGIES'     
+        break;
+        case 'condition':
+    
+        this.name='CONDITIONS'     
+        
+        break;
+        case 'medication':
    
+        this.name='MEDICATIONS'     
+   
+        
+        break;
+        case 'device':
+        this.name='MEDICAL DEVICES'  
+   
+        
+        break;
+        case 'contact':
+        this.name='CONTACT INFO'  
+    
+        
+        break;
+        case 'body':
+        this.name='HUMAN BODY'  
+        
+        break;
+      default:
+        break;
+    }
     
   }
   openModal() {
