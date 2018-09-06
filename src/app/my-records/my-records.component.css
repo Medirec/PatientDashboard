@@ -452,7 +452,7 @@ position: relative;
                     margin-top: 13px;
                     color: gray;
                 }
-              .button.btn-modal.btn-details[disabled]{
+              .btn-details[disabled]{
                   background: #ccc;
                   color: #fff;
               }

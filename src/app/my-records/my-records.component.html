@@ -356,7 +356,7 @@
               </ul>
               <hr *ngIf="userService.patientConditions.length">
               <button type="button" class="btn-modal" (click)="openModal(condition)">Add</button>
-              <button type="button" class="btn-modal btn-details" [disabled]="!userService.patientConditions.length" (click)="details('condition')" >Details</button>
+              <button type="button"  class="btn-modal btn-details" [disabled]="!userService.patientConditions.length" (click)="details('condition')" >Details</button>
               <ng-template #condition>
                   <div class="modal-header">
                     <h4 class="modal-title pull-left">CONDITIONS</h4>
