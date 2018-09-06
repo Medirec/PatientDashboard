@@ -91,7 +91,7 @@ export class MyRecordsComponent implements OnInit {
     this.dropzoneActive = $event;
   }
   handleDrop(fileList: FileList) {
-debugger
+
     let filesIndex = _.range(fileList.length)
     _.each(filesIndex, (idx) => {
       this.currentUpload = new Upload(fileList[idx]);

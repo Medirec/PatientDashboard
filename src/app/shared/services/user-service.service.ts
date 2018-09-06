@@ -245,7 +245,7 @@ this.diastolic.push( +el.diastolic)
   addAllergies(allergy) {
     
 
-    const url = 'http://36765264api.medirec.me/api/Allergies'
+    const url = 'http://36765264api.medirec.me/api/Allergies/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -269,7 +269,7 @@ this.myRecordsService.dataSet=this.patientAllergiesDetails
   addConditions(condition) {
     
 
-    const url = 'http://36765264api.medirec.me/api/Condations'
+    const url = 'http://36765264api.medirec.me/api/Condations/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');

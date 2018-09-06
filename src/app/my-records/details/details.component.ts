@@ -7,7 +7,6 @@ import { PatientBody } from '../../shared/model/patient-body.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../../app.service';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBarConfig } from '@angular/material';
 import { PatientImmunization } from '../../shared/model/patient-immunization.model';
 declare let alertify:any;
 
@@ -48,7 +47,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.myRecordsService.immunizationtSet=[]
   }
   
-  constructor(public snackBar: MatSnackBar,private myRecordsService:MyRecordsService,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
+  constructor(private myRecordsService:MyRecordsService,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
     });
