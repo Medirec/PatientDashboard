@@ -452,3 +452,6 @@ position: relative;
                     margin-top: 13px;
                     color: gray;
                 }
+                .ngx-datepicker-container[_ngcontent-c2] .ngx-datepicker-calendar-container[_ngcontent-c2]{
+                    z-index: 1000 !important;
+                }

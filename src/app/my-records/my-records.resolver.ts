@@ -32,6 +32,7 @@ export class MyRecordsResolver implements Resolve<any> {
                this.userService.GetAllMedicalDevice().subscribe()
                this.userService.GetAllMedication().subscribe()
                this.userService.GetAllResources().subscribe()
+               this.userService.GetVaccines().subscribe()
                window.setTimeout(()=>this.appService.showLoader=false)
            })
             })

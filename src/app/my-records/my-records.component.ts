@@ -37,9 +37,12 @@ export class MyRecordsComponent implements OnInit {
     id:1,
     value:'Clinic'
   }]
+  dateNext= new Date();
+  date=new Date();
   contactError:boolean;
   editContant:PatientContacts=new PatientContacts();
   modalRef: BsModalRef;
+  addImmunization:FormGroup
   public addAllergyForm: FormGroup;
   public addConditionForm: FormGroup;
   public addMedicationForm: FormGroup;
@@ -69,6 +72,12 @@ export class MyRecordsComponent implements OnInit {
     this.addBody = formBuilder6.group({
       height: ['', [Validators.required]],
       weight: ['', [Validators.required]],
+    });
+    this.addImmunization = formBuilder6.group({
+      vaccines: ['', [Validators.required]],
+      adminstrated: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      dateNext: ['', [Validators.required]],
     });
     this.contactForm = formBuilder5.group({
       name: ['', [Validators.required]],
@@ -375,6 +384,20 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         this.router.navigate(['/Details']);
 
           this.myRecordsService.bodySet=this.userService.patientBodies
+
+        },()=>{
+        this.appService.showLoader=false
+
+        })
+        
+        break;
+        case 'immunization':
+        this.appService.showLoader=true
+        this.userService.getAllData(type).subscribe(()=>{
+        this.appService.showLoader=false
+        this.router.navigate(['/Details']);
+
+          this.myRecordsService.immunizationtSet=this.userService.patientImmunization
 
         },()=>{
         this.appService.showLoader=false

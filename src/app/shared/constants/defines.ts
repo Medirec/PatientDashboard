@@ -63,5 +63,9 @@ export const JSON_PATHS = {
         VACCINEID: '$.vaccineId',
         VACCINENAME:'$.vaccineName'
        
+      }, VACCINES: {
+        ID: '$.vaccineId',
+        NAME: '$.name',
+        CODE: '$.vaccineCode',
       }
 }

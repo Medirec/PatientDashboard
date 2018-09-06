@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../../app.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBarConfig } from '@angular/material';
+import { PatientImmunization } from '../../shared/model/patient-immunization.model';
 declare let alertify:any;
 
 @Component({
@@ -20,6 +21,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   editItem:PatientConditions=new PatientConditions()
   editContact:PatientContacts=new PatientContacts()
   bodyItem:PatientBody=new PatientBody()
+  immunizationtem:PatientImmunization=new PatientImmunization()
   contactError:boolean;
   modalRef: BsModalRef;
   public addAllergyForm: FormGroup;
@@ -75,31 +77,35 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   ngOnInit() {
     switch (this.myRecordsService.type) {
       case 'allergy':
-this.name='ALLERGIES'     
+this.name='Allergies'     
         break;
         case 'condition':
     
-        this.name='CONDITIONS'     
+        this.name='Condition'     
         
         break;
         case 'medication':
    
-        this.name='MEDICATIONS'     
+        this.name='Medication'     
    
         
         break;
         case 'device':
-        this.name='MEDICAL DEVICES'  
+        this.name='Medical Device'  
    
         
         break;
         case 'contact':
-        this.name='CONTACT INFO'  
+        this.name='Contact Info'  
     
         
         break;
         case 'body':
-        this.name='HUMAN BODY'  
+        this.name='Human Body'  
+        
+        break;
+        case 'immunization':
+        this.name='Immunization'  
         
         break;
       default:
@@ -250,8 +256,12 @@ this.name='ALLERGIES'
         name:this.addMedicationForm.controls['name'].value,
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
+
 
       })
     }
@@ -269,10 +279,15 @@ this.name='ALLERGIES'
       this.userService.addMedicalDevice({
         userId:1,
         name:this.addMedicalDeviceForm.controls['name'].value,
+        
       }).subscribe(()=>{
        this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
       },()=>{
        this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
+       
 
       })
     }
@@ -301,7 +316,9 @@ if(this.editItem.id){
 
   },()=>   {this.editItem=new PatientConditions()
     this.bodyItem=new PatientBody()
-    this.editContact=new PatientContacts()})
+    this.editContact=new PatientContacts()
+    alertify.error('sorry, somthing went wrong'); 
+  })
 }
   else{
     this.userService.update(this.bodyItem,this.myRecordsService.type).subscribe(()=>{
@@ -316,8 +333,12 @@ submitContact(){
   event.stopPropagation()
   this.userService.editContact(this.editContact).subscribe(()=>{
     this.editContact=new PatientContacts()
+    alertify.success('record successfully updated'); 
+
   },()=>   {this.editItem=new PatientConditions()
-    this.editContact=new PatientContacts()})
+    this.editContact=new PatientContacts()
+    alertify.error('sorry, somthing went wrong'); 
+  })
 }
 cancel(){
   event.stopPropagation()
@@ -336,7 +357,9 @@ delete(data){
 
   },()=>   {this.editItem=new PatientConditions()
   this.editContact=new PatientContacts()
-  this.bodyItem=new PatientBody()})
+  this.bodyItem=new PatientBody()
+  alertify.error('sorry, somthing went wrong'); 
+})
   
 }
 

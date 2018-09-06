@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { PatientContacts } from '../model/patient-contacts.model';
 import { PatientImmunization } from '../model/patient-immunization.model';
 import { MyRecordsService } from '../../my-records/my-records.service';
+import { PatientVaccines } from '../model/patient-vaccines.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ import { MyRecordsService } from '../../my-records/my-records.service';
 export class UserService{
 patientDetails:PatientDetails;
 patientBody:PatientBody=new PatientBody();
+vaccines:PatientVaccines[]=[]
 patientBodies:PatientBody[]=[]
 patientAllergies:PatientConditions[]=[];
 patientAllergiesDetails:PatientConditions[]=[];
@@ -969,6 +971,36 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       }
       ), catchError(e => throwError(e)) );
     }
+    if(type==='immunization'){
+      let url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.delete(url, options).pipe(map((res) => {
+        const index= this.patientImmunization.findIndex(el=>el.id==data.id);
+        this.patientImmunization.splice(index,1)
+        this.immunizationsCount= this.patientImmunization.length
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
+    if(type==='pressure'){
+      let url = `http://36765264api.medirec.me/api/BloodPressure/${data.id}`;
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.delete(url, options).pipe(map((res) => {
+        const index= this.patientPressures.findIndex(el=>el.id==data.id);
+        this.patientPressures.splice(index,1)
+        this.bloodPressureCount= this.patientPressures.length
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
   }
   editContact(contact:PatientContacts){
     const url = `http://36765264api.medirec.me/api/Contacts/${contact.id}`
@@ -1102,7 +1134,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     }
     ), catchError(e => throwError(e)) );
   }
-  addImmunization(body){
+  addImmunization(immunization:PatientImmunization){
     const url = `http://36765264api.medirec.me/api/Immunizations/1`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
@@ -1110,23 +1142,85 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     const options = {
       headers: headers
     };
-    return this.http.post(url, body, options).pipe(map((res) => 
+    let immunizationRes={
+      nextDoesDate:immunization.nextDate,
+      dateGiven:immunization.nextDate,
+      userId:immunization.nextDate,
+      administratedBy:immunization.administratedBy,
+      vaccineId:immunization.vaccineId,
+      vaccineName:immunization.vaccineName,
+    }
+    return this.http.post(url, immunizationRes, options).pipe(map((res) => 
    {
     
-     let patientBody=new PatientBody()
+     let immunization=new PatientImmunization()
     
 
-    patientBody.id=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.ID) || '';
-    patientBody.userId=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.USERID) || '';
-     patientBody.weight=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
-     patientBody.height=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
-    patientBody.date=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.DATE) || '';
+     immunization.id=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.ID) || '';
+     immunization.userId=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.USERID) || '';
+     immunization.vaccineId=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.VACCINEID) || '';
+     immunization.vaccineName=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.VACCINENAME) || '';
+     immunization.administratedBy=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.ADMINISTRATEDBY) || '';
+     immunization.date=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.DATE) || '';
+     immunization.nextDate=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.NEXTDATE) || '';
 
     
-      this.patientBodies.push(patientBody)
-     this.humanBodiesCount+=1;
+      this.patientImmunization.push(immunization)
+     this.immunizationsCount+=1;
      return res;
     }
     ), catchError(e => throwError(e)) );
+  }
+  addPressure(pressure:PatientPressure){
+    const url = `http://36765264api.medirec.me/api/BloodPressure/1`
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    headers = headers.append('Content-Type', 'application/json');
+    const options = {
+      headers: headers
+    };
+
+    return this.http.post(url, pressure, options).pipe(map((res) => 
+   {
+    
+     let pressure=new PatientPressure()
+    
+
+     pressure.id=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.ID) || '';
+     pressure.userId=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
+     pressure.diastolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
+     pressure.systolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
+     pressure.date=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DATE) || '';
+     
+
+    
+      this.patientPressures.push(pressure)
+     this.bloodPressureCount+=1;
+     return res;
+    }
+    ), catchError(e => throwError(e)) );
+  }
+  GetVaccines(userId?: string) {
+
+    let url = 'http://36765264api.medirec.me/api/Vaccines';
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    const options = {
+      headers: headers
+    };
+    return this.http.get(url, options).pipe(map((res:any[]) => {
+    res.map(el=>{
+      let vaccine=new PatientVaccines()
+      vaccine.name=JsonQuery.value(el, JSON_PATHS.VACCINES.NAME) || '';
+      vaccine.vaccineCode=JsonQuery.value(el, JSON_PATHS.VACCINES.CODE) || '';
+      vaccine.vaccineId=JsonQuery.value(el, JSON_PATHS.VACCINES.ID) || '';
+      this.vaccines.push(vaccine)
+    })
+
+
+      return res;
+    }
+    ), catchError(e => throwError(e)) );
+    
   }
 }

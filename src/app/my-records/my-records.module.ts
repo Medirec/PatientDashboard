@@ -8,6 +8,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailsComponent } from './details/details.component';
 import { UserProfileDetailsComponent } from './user-profile-details/user-profile-details.component';
 import { SharedModule } from '../shared/shared.module';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    ChartsModule
+    ChartsModule,
+    NgDatepickerModule
   ],
   declarations: [MyRecordsComponent, DetailsComponent, UserProfileDetailsComponent, ]
 })
