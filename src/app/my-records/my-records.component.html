@@ -316,13 +316,13 @@
       <div >
       <div class="card-header">ALLERGIES <span class="badge count-box" *ngIf="userService.allergiesCount"><i class="fa fa-plus"> </i> {{userService.allergiesCount}}</span></div>
       <div class="card-details"> 
-          <ul>
+          <ul *ngIf="userService.patientAllergies.length">
               <li *ngFor="let allergy of userService.patientAllergies"> {{allergy?.name}}</li>
               
             </ul>
             <hr *ngIf="userService.patientAllergies.length">
             <button type="button" class="btn-modal" (click)="openModal(template)">Add</button>
-            <button type="button" class="btn-modal btn-details" (click)="details('allergy')" >Details</button>
+            <button type="button" class="btn-modal btn-details" [disabled]="!userService.patientAllergies.length" (click)="details('allergy')" >Details</button>
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">ALLERGIES</h4>
@@ -350,13 +350,13 @@
         <div >
         <div class="card-header">CONDITIONS <span class="badge count-box" *ngIf="userService.conditionsCount"><i class="fa fa-plus"> </i> {{userService.conditionsCount}}</span></div>
         <div class="card-details"> 
-            <ul>
+            <ul *ngIf="userService.patientConditions.length">
                 <li *ngFor="let condition of userService.patientConditions"> {{condition?.name}}</li>
                 
               </ul>
               <hr *ngIf="userService.patientConditions.length">
               <button type="button" class="btn-modal" (click)="openModal(condition)">Add</button>
-              <button type="button" class="btn-modal btn-details" (click)="details('condition')" >Details</button>
+              <button type="button" class="btn-modal btn-details" [disabled]="!userService.patientConditions.length" (click)="details('condition')" >Details</button>
               <ng-template #condition>
                   <div class="modal-header">
                     <h4 class="modal-title pull-left">CONDITIONS</h4>
@@ -383,13 +383,13 @@
           <div >
           <div class="card-header">MEDICATION <span class="badge count-box" *ngIf="userService.medicationCount"><i class="fa fa-plus"> </i> {{userService.medicationCount}}</span></div>
           <div class="card-details"> 
-              <ul>
+              <ul *ngIf="userService.patientMedication.length">
                   <li *ngFor="let medication of userService.patientMedication"> {{medication?.name}}</li>
                   
                 </ul>
                 <hr *ngIf="userService.patientMedication.length">
                 <button type="button" class="btn-modal" (click)="openModal(medication)">Add</button>
-                <button type="button" class="btn-modal btn-details"  (click)="details('medication')">Details</button>
+                <button type="button" class="btn-modal btn-details" [disabled]="!userService.patientMedication.length" (click)="details('medication')">Details</button>
                 <ng-template #medication>
                     <div class="modal-header">
                       <h4 class="modal-title pull-left">MEDICATION</h4>
@@ -416,13 +416,13 @@
             <div >
             <div class="card-header">MEDICAL DEVICES <span class="badge count-box" *ngIf="userService.medicalDeviceCount"><i class="fa fa-plus"> </i> {{userService.medicalDeviceCount}}</span></div>
             <div class="card-details"> 
-                <ul>
+                <ul *ngIf="userService.patientMedicalDevice.length">
                     <li *ngFor="let medicalDevice of userService.patientMedicalDevice"> {{medicalDevice?.name}}</li>
                     
                   </ul>
                   <hr  *ngIf="userService.patientMedicalDevice.length">
                   <button type="button" class="btn-modal" (click)="openModal(medicalDevice)">Add</button>
-                  <button type="button" class="btn-modal btn-details"(click)="details('device')" >Details</button>
+                  <button type="button" class="btn-modal btn-details" [disabled]="!userService.patientMedicalDevice.length" (click)="details('device')" >Details</button>
                   <ng-template #medicalDevice>
                       <div class="modal-header">
                         <h4 class="modal-title pull-left">MEDICAL DEVICES</h4>
@@ -514,7 +514,7 @@
           <hr *ngIf="userService.patientContacts.length">
           <div style="display: flex;">
             <button type="button" class="btn-modal" (click)="openModal(contact)">Add</button>
-            <button type="button" class="btn-modal btn-details" (click)="details('contact')">Details</button>
+            <button type="button" class="btn-modal btn-details" [disabled]="!userService.patientContacts.length" (click)="details('contact')">Details</button>
           </div>
  
 
