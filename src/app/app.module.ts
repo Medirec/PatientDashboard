@@ -14,10 +14,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from './shared/shared.module';
 import { MyRecordsService } from './my-records/my-records.service';
-import {SnackbarModule} from 'ngx-snackbar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material';;
-import { OverlayModule } from "@angular/cdk/overlay";
 
 @NgModule({
   declarations: [
@@ -36,10 +33,8 @@ BrowserModule,
     AngularFontAwesomeModule,
     NgDatepickerModule,
     SharedModule,
-    SnackbarModule.forRoot(),
-    MatSnackBarModule
   ],
-    providers: [MyRecordsResolver,AppService,MyRecordsService,MatSnackBar],
+    providers: [MyRecordsResolver,AppService,MyRecordsService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
