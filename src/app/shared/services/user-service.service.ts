@@ -1182,6 +1182,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
     
       this.patientBodies.push(patientBody)
+      this.myRecordsService.bodySet=this.patientBodies
      this.humanBodiesCount+=1;
      return res;
     }
