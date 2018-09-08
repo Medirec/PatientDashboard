@@ -9,6 +9,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../../app.service';
 import { PatientImmunization } from '../../shared/model/patient-immunization.model';
 import { PatientPressure } from '../../shared/model/patient-pressure.model';
+import * as moment from 'moment';
+
 declare let alertify:any;
 
 @Component({
@@ -18,6 +20,7 @@ declare let alertify:any;
 })
 export class DetailsComponent implements OnInit ,OnDestroy{
   filterChar:string
+  searchDate;
   editItem:PatientConditions=new PatientConditions()
   editContact:PatientContacts=new PatientContacts()
   bodyItem:PatientBody=new PatientBody()
@@ -67,6 +70,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.addBody = formBuilder6.group({
       height: ['', [Validators.required]],
       weight: ['', [Validators.required]],
+      date: ['', [Validators.required]],
     });
     this.contactForm = formBuilder5.group({
       name: ['', [Validators.required]],
@@ -217,12 +221,14 @@ this.name='Allergies'
 
       this.modalRef.hide()
       this.appService.showLoader=true 
-
+      let date=moment(this.addBody.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=date.split('/')
+      date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
       this.userService.addBody({
         userId:1,
         height:this.addBody.controls['height'].value,
         weight:this.addBody.controls['weight'].value,
-        date:new Date()
+        date:new Date(date)
       }).subscribe(()=>{
        this.appService.showLoader=false 
     alertify.success('record successfully added'); 
@@ -337,12 +343,23 @@ if(this.editItem.id){
   })
 }
   else{
+    let date=moment(this.bodyItem.date, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+    const dateRes=date.split('/')
+    this.bodyItem.date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
     this.userService.update(this.bodyItem,this.myRecordsService.type).subscribe(()=>{
       this.editItem=new PatientConditions()
       this.bodyItem=new PatientBody()
+      this.appService.showLoader=false 
+
+    alertify.success('record successfully updated'); 
+
     },()=>   {this.editItem=new PatientConditions()
       this.bodyItem=new PatientBody()
-      this.editContact=new PatientContacts()})
+      this.editContact=new PatientContacts()
+      this.appService.showLoader=false 
+      alertify.error('sorry, somthing went wrong'); 
+    
+    })
   }
 }
 

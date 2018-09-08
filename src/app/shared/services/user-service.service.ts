@@ -714,7 +714,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       let body={
         humanBodyId:data.id,
         userId:data.userId,
-        date:data.date,
+        date:new Date(data.date),
         height:data.height,
         weight:data.weight,
        }
@@ -724,11 +724,11 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       }).pipe(map((res) => {
         
         let human=this.patientBodies.find(el=>el.id===data.id)
-       
+        let date=moment(data.date, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
         human.weight=data.weight
         human.height=data.height
-        human.date=data.date
-      
+        human.date=date
+      this.myRecordsService.bodySet=this.patientBodies
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -910,7 +910,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     patientBody.userId=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.USERID) || '';
      patientBody.weight=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
      patientBody.height=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
-     patientBody.date=JsonQuery.value(element, JSON_PATHS.PATIENTBODY.DATE) || '';
+     patientBody.date=moment(JsonQuery.value(element, JSON_PATHS.PATIENTBODY.DATE)).format("DD/MM/YYYY") || '';
 
     
       this.patientBodies.push(patientBody)
@@ -1015,6 +1015,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         const index= this.patientBodies.findIndex(el=>el.id==data.id);
         this.patientBodies.splice(index,1)
         this.humanBodiesCount= this.patientBodies.length
+        this.myRecordsService.bodySet=this.patientBodies
         return res;
       }
       ), catchError(e => throwError(e)) );

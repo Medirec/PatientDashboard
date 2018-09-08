@@ -78,7 +78,10 @@
 <div id="datatable-editable_wrapper" *ngIf="myRecordsService.bodySet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
     <div class="row">
       <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
-      <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">
+      <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label>
+        <input type="search" [(ngModel)]="searchDate" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable">
+      
+      </label></div></div></div><div class="table-responsive">
         <table class="table table-bordered table-striped mb-0 dataTable no-footer" id="datatable-editable" role="grid">
     <thead>
         <tr role="row"> <th class="sorting" tabindex="0" aria-controls="datatable-editable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 277px;">height</th>
@@ -88,7 +91,7 @@
           <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 141px;">Actions</th></tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of myRecordsService.bodySet" data-item-id="25" role="row" >
+    <tr *ngFor="let data of myRecordsService.bodySet|filter:searchDate" data-item-id="25" role="row" >
         <td style="padding: 5px 20px;" *ngIf="bodyItem.id!==data.id" class="">{{data.height}}</td>
         <td style="padding: 5px 20px;" *ngIf="bodyItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="bodyItem.height"   ></td>
         <td style="padding: 5px 20px;" *ngIf="bodyItem.id!==data.id" class="">{{data.weight}}</td>
@@ -289,16 +292,22 @@
             <form [formGroup]="addBody" novalidate (ngSubmit)="submitBody()">
                 <div class="form-group">
                   <label for="formGroupExampleInput">Height</label>
-                  <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="height" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                  <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="height" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Your Height">
                 </div>
                 <div class="form-group">
                     <label for="formGroupExampleInput">Weight</label>
-                    <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="weight" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                    <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="weight" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Your Weight">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput">Date</label>
+    <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="date" [(ngModel)]="date" required />
+
                   </div>
             
                 <button [disabled]="!addBody.valid" type="submit" class="btn btn-edit">Submit</button>
               </form>
         </div>
       </ng-template>
+
   </section>
   

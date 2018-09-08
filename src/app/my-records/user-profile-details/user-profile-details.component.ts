@@ -38,7 +38,6 @@ this.userService.GetAreas( event.target.value).subscribe()
   }
   submit(){
     this.appService.showLoader=true
-  debugger
 this.user.birthDate=moment(this.user.birthDate, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
 const date=this.user.birthDate.split('/')
 this.user.birthDate=date[1]+'/'+date[0]+'/'+date[2]

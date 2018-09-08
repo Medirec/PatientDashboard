@@ -183,15 +183,16 @@ export class MyRecordsComponent implements OnInit {
     }
     else{
       this.bodyError = false
-
       this.modalRef.hide()
       this.appService.showLoader=true 
-
+      let date=moment(this.addBody.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=date.split('/')
+      date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
       this.userService.addBody({
         userId:1,
         height:this.addBody.controls['height'].value,
         weight:this.addBody.controls['weight'].value,
-        date:new Date(moment(this.addBody.controls['date'].value).format("MM/DD/YYYY"))
+        date:new Date(date)
       }).subscribe(()=>{
        this.appService.showLoader=false 
     alertify.success('record successfully added'); 
