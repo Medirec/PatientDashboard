@@ -32,9 +32,12 @@ public userForm: FormGroup;
   ngOnInit() {
   }
   selectChangeHandler(event){
-    this.userService.area=[]
+this.user.areaId="";
+this.userService.GetAreas( event.target.value).subscribe(()=>{
 
-this.userService.GetAreas( event.target.value).subscribe()
+},()=>{
+
+})
   }
   submit(){
     this.appService.showLoader=true

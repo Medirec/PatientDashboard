@@ -195,7 +195,9 @@ date:any[]=[];
     ), catchError(e => throwError(e)) );
   }
   GetPatientPressure(userId?: string) {
-
+    this.patientPressures=[]
+    this.patientPressuresDetails=[]
+    this.date=[]
     let url = 'http://36765264api.medirec.me/api/BloodPressure/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
@@ -203,9 +205,6 @@ date:any[]=[];
       headers: headers
     };
     return this.http.get(url, options).pipe(map((res:any[]) => {
-      this.patientPressures=[]
-      this.patientPressuresDetails=[]
-      this.date=[]
       
       res.forEach(element => {
         let pressureDetails=new PatientPressure()
@@ -399,6 +398,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       medicalDevice.userId=JsonQuery.value(element, JSON_PATHS.PATIENTMEDICALDEVICE.USERID) || '';
       medicalDevice.id=JsonQuery.value(element, JSON_PATHS.PATIENTMEDICALDEVICE.ID) || '';
      this.patientMedicalDevice.push(medicalDevice)
+   
+
      });
 
       return res;
@@ -635,6 +636,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
        allergy.name=data.name;
    
        }
+      this.myRecordsService.dataSet=this.patientAllergiesDetails
+
        return res;
      }
      ), catchError(e => throwError(e)) );
@@ -658,6 +661,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         condition.name=data.name;
   
         }
+      this.myRecordsService.dataSet=this.patientConditionsDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -681,6 +686,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
           medication.name=data.name;
   
         }
+      this.myRecordsService.dataSet=this.patientMedicationDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -704,6 +711,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         device.name=data.name;
   
         }
+      this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -758,6 +767,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         immunization.vaccineName=data.vaccineName
         immunization.id=data.id
         immunization.userId=data.userId
+        this.myRecordsService.immunizationtSet=this.patientImmunization
       
         return res;
       }
@@ -936,6 +946,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     this.patientAllergiesDetails.splice(index,1)
     this.patientAllergies.splice(index,1)
     this.allergiesCount=this.patientAllergiesDetails.length
+    this.myRecordsService.dataSet=this.patientAllergiesDetails
+
     return res
       }
       ), catchError(e => throwError(e)) );
@@ -952,6 +964,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         this.patientConditionsDetails.splice(index,1)
         this.patientConditions.splice(index,1)
         this.conditionsCount= this.patientConditionsDetails.length
+    this.myRecordsService.dataSet=this.patientConditionsDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -968,6 +982,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         this.patientMedicationDetails.splice(index,1)
         this.patientMedication.splice(index,1)
         this.medicationCount= this.patientMedicationDetails.length
+    this.myRecordsService.dataSet=this.patientMedicationDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -984,6 +1000,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         this.patientMedicalDeviceDetails.splice(index,1)
         this.patientMedicalDevice.splice(index,1)
         this.medicalDeviceCount= this.patientMedicalDeviceDetails.length
+    this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -1000,6 +1018,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         this.patientContactsDetails.splice(index,1)
         this.patientContacts.splice(index,1)
         this.contactsCount= this.patientContactsDetails.length
+    this.myRecordsService.contactSet=this.patientContactsDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -1031,6 +1051,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         const index= this.patientImmunization.findIndex(el=>el.id==data.id);
         this.patientImmunization.splice(index,1)
         this.immunizationsCount= this.patientImmunization.length
+        this.myRecordsService.immunizationtSet=this.patientImmunization
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -1046,6 +1068,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         const index= this.patientPressures.findIndex(el=>el.id==data.id);
         this.patientPressures.splice(index,1)
         this.bloodPressureCount= this.patientPressures.length
+        this.myRecordsService.pressureSet=this.patientPressuresDetails
+
         return res;
       }
       ), catchError(e => throwError(e)) );
@@ -1089,6 +1113,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       patientContact.typeOfRelation=contact.typeOfRelation
       patientContact.email=contact.email
      }
+     this.myRecordsService.contactSet=this.patientContactsDetails
     
    
    }))
@@ -1115,7 +1140,10 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       patientContact.typeOfRelation=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.RELATION) || '';
       patientContact.email=JsonQuery.value(res, JSON_PATHS.PATIENTCONTACTS.EMAIL) || '';
       this.patientContacts.push(patientContact)
+      this.patientContactsDetails.push(patientContact)
      this.contactsCount+=1;
+     this.myRecordsService.contactSet=this.patientContactsDetails
+
      return res;
    
    }))
@@ -1135,7 +1163,6 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       "userId": 6,
       "fullName": patient.fullName,
       "insuranceId": 1,
-"countryId": patient.countryId,
 "cityId": patient.cityId,
 "areaId": patient.areaId,
 "phoneNumber": patient.phoneNumber,
@@ -1221,6 +1248,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     
       this.patientImmunization.push(immunization)
      this.immunizationsCount+=1;
+     this.myRecordsService.immunizationtSet=this.patientImmunization
+
      return res;
     }
     ), catchError(e => throwError(e)) );
@@ -1249,13 +1278,16 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
     
       this.patientPressures.push(pressure)
+      this.patientPressuresDetails.push(pressure)
      this.bloodPressureCount+=1;
+     this.myRecordsService.pressureSet=this.patientPressuresDetails
+
      return res;
     }
     ), catchError(e => throwError(e)) );
   }
   GetVaccines(userId?: string) {
-
+    this.vaccines=[]
     let url = 'http://36765264api.medirec.me/api/Vaccines';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
@@ -1313,6 +1345,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       headers: headers
     };
     return this.http.get(url, options).pipe(map((res:any[]) => {
+      this.cities=[];
       res.map(el=>{
         let city=new City()
         city.nameEn=JsonQuery.value(el, JSON_PATHS.CITY.NAME) || '';

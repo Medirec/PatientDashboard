@@ -53,13 +53,13 @@
                 
                 <div class="form-group">
                   <label for="contry">City</label>
-                  <select (change)="selectChangeHandler($event)" class="form-control" id="contry" formControlName="city">
-                    <option *ngFor="let city of userService.cities" [value]="city.cityId">{{city.nameEn}}</option>
+                  <select (change)="selectChangeHandler($event)" [(ngModel)]="user.cityId"  class="form-control" id="contry" formControlName="city">
+                    <option *ngFor="let city of userService.cities"  [value]="city.cityId">{{city.nameEn}}</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="contry">Area Name</label>
-                  <select class="form-control" id="contry" [disabled]="userService.area.length"  formControlName="area">
+                  <select class="form-control" id="contry" [(ngModel)]="user.areaId"  [disabled]="!userService.area.length"  formControlName="area">
                     <option *ngFor="let area of userService.area" [value]="area.areaId">{{area.nameEn}}</option>
                   </select>
                 </div>

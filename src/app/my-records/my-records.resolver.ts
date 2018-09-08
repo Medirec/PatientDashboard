@@ -18,8 +18,6 @@ export class MyRecordsResolver implements Resolve<any> {
                 return this.userService.GetPatientAllergies().subscribe(()=>
             { 
                 return this.userService.GetPatientConditions().subscribe(()=>{
-                this.userService.patientPressures=[]
-                this.userService.patientPressuresDetails=[]
            return  this.userService.GetPatientPressure().subscribe(()=>{
                this.userService.GetPatientBodyInfo().subscribe()
               this.userService.GetPatientMedication().subscribe()

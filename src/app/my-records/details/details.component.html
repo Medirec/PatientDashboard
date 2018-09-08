@@ -248,39 +248,39 @@
         </div>
       </ng-template>
       <ng-template #contact>
-        <div class="modal-header">
-          <h4 class="modal-title pull-left">CONTACT INFO</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="contactForm" novalidate (ngSubmit)="editContact()">
-                <div class="form-group">
-                  <label for="formGroupExampleInput">Name</label>
-                  <input [ngClass]="{'error':!name.valid&&contactError}" #name [(ngModel)]="editContant.fullName"  formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
-                </div>
-                <div class="form-group">
-                    <label for="relation">Relation</label>
-                    <input [ngClass]="{'error':!relation.valid&&contactError}" #relation [(ngModel)]="editContant.typeOfRelation" formControlName="relation" type="text" class="form-control" id="relation" placeholder="Enter Relation">
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">CONTACT INFO</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="contactForm" novalidate (ngSubmit)="editContacts()">
+                  <div class="form-group">
+                    <label for="formGroupExampleInput">Name</label>
+                    <input [ngClass]="{'error':!name.valid&&contactError}" #name [(ngModel)]="editContact.fullName"  formControlName="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
                   </div>
                   <div class="form-group">
-                      <label for="phone">Phone Number</label>
-                      <input [ngClass]="{'error':!phone.valid&&contactError}" #phone [(ngModel)]="editContant.phoneNumber01" formControlName="phone" type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
+                      <label for="relation">Relation</label>
+                      <input [ngClass]="{'error':!relation.valid&&contactError}" #relation [(ngModel)]="editContact.typeOfRelation" formControlName="relation" type="text" class="form-control" id="relation" placeholder="Enter Relation">
                     </div>
                     <div class="form-group">
-                        <label for="phone2">Additional Phone Number</label>
-                        <input #phone2   formControlName="phone2" type="text" class="form-control" [(ngModel)]="editContant.phoneNumber02" id="phone2" placeholder="Enter Phone Number">
+                        <label for="phone">Phone Number</label>
+                        <input [ngClass]="{'error':!phone.valid&&contactError}" #phone [(ngModel)]="editContact.phoneNumber01" formControlName="phone" type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
                       </div>
                       <div class="form-group">
-                          <label for="email">Email</label>
-                          <input [ngClass]="{'error':!email.valid&&contactError}" #email [(ngModel)]="editContant.email" formControlName="email" type="text" class="form-control" id="email" placeholder="Enter Email">
+                          <label for="phone2">Additional Phone Number</label>
+                          <input #phone2   formControlName="phone2" type="text" class="form-control" [(ngModel)]="editContact.phoneNumber02" id="phone2" placeholder="Enter Phone Number">
                         </div>
-            
-                <button type="submit" [disabled]="!contactForm.valid"  class="btn btn-edit">Submit</button>
-              </form>
-        </div>
-      </ng-template>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input [ngClass]="{'error':!email.valid&&contactError}" #email [(ngModel)]="editContact.email" formControlName="email" type="text" class="form-control" id="email" placeholder="Enter Email">
+                          </div>
+              
+                  <button type="submit" [disabled]="!contactForm.valid"  class="btn btn-edit">Submit</button>
+                </form>
+          </div>
+        </ng-template>
       <ng-template #body>
         <div class="modal-header">
           <h4 class="modal-title pull-left">Weight & Height</h4>

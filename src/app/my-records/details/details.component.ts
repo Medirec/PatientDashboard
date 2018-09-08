@@ -54,7 +54,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.myRecordsService.bodySet=[]
   }
   
-  constructor(private myRecordsService:MyRecordsService,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
+  constructor(private myRecordsService:MyRecordsService,private formBuilder8: FormBuilder,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
     });
@@ -67,10 +67,22 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.addMedicalDeviceForm = formBuilder4.group({
       name: ['', [Validators.required]],
     });
-    this.addBody = formBuilder6.group({
+    this.addBody = formBuilder7.group({
       height: ['', [Validators.required]],
       weight: ['', [Validators.required]],
+      date: [new Date(), [Validators.required]],
+
+    });
+    this.addPressure = formBuilder8.group({
+      diastolic: ['', [Validators.required]],
+      systolic: ['', [Validators.required]],
+      date: [new Date(), [Validators.required]],
+    });
+    this.addImmunization = formBuilder6.group({
+      vaccines: ['', [Validators.required]],
+      adminstrated: ['', [Validators.required]],
       date: ['', [Validators.required]],
+      dateNext: ['', [Validators.required]],
     });
     this.contactForm = formBuilder5.group({
       name: ['', [Validators.required]],
@@ -363,6 +375,19 @@ if(this.editItem.id){
   }
 }
 
+public editContacts(){
+  if (!this.contactForm.valid) {
+    this.contactError = true
+  }else{
+    this.modalRef.hide()
+    this.appService.showLoader=true 
+    this.editContact.userId="1";
+this.userService.addContact(this.editContact).subscribe(()=>{
+this.appService.showLoader=false 
+},()=>this.appService.showLoader=false )
+  }
+
+}
 submitContact(){
   event.stopPropagation()
   this.appService.showLoader=true
