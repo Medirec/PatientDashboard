@@ -11,7 +11,7 @@ export class FilterPipe implements PipeTransform {
 
   result: any[];
   transform(data: any[], str: string = '') {
-    debugger
+    
 
     this.result = data.filter(e => {
       if(e.name){
