@@ -9,6 +9,7 @@ import { DetailsComponent } from './details/details.component';
 import { UserProfileDetailsComponent } from './user-profile-details/user-profile-details.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgDatepickerModule } from 'ng2-datepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { NgDatepickerModule } from 'ng2-datepicker';
     ReactiveFormsModule,
     SharedModule,
     ChartsModule,
-    NgDatepickerModule
+    NgDatepickerModule,
+    BsDatepickerModule.forRoot(),
   ],
   declarations: [MyRecordsComponent, DetailsComponent, UserProfileDetailsComponent, ]
 })

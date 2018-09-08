@@ -40,22 +40,33 @@
               <label for="phoneNumber">Phone Number</label>
               <input type="text" class="form-control" formControlName="phoneNumber" [(ngModel)]="user.phoneNumber" id="phoneNumber" placeholder="Enter Your Phone Number">
             </div>
+   
             <div class="form-group">
-                <label for="age">Age</label>
-                <input type="text" class="form-control" formControlName="age" [(ngModel)]="user.age" id="age" placeholder="Enter Your Age">
-              </div>
-            <div class="form-group">
-                <label for="area">Area Name</label>
-                <input type="text" formControlName="area" class="form-control" [(ngModel)]="user.areaName"  id="area" placeholder="Enter Your Area Name">
+                <label for="area">Birth Date</label>
+                <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="birthDate" [(ngModel)]="user.birthDate" required />
+
               </div>
               <div class="form-group">
-                  <label for="city">City</label>
-                  <input type="text" formControlName="city"  class="form-control" [(ngModel)]="user.city" id="city" placeholder="Enter Your City">
+                <label for="age">Address</label>
+                <input type="text" class="form-control" formControlName="address" [(ngModel)]="user.address" id="age" placeholder="Enter Your Address">
+              </div>
+                
+                <div class="form-group">
+                  <label for="contry">City</label>
+                  <select (change)="selectChangeHandler($event)" class="form-control" id="contry" formControlName="city">
+                    <option *ngFor="let city of userService.cities" [value]="city.cityId">{{city.nameEn}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="contry">Area Name</label>
+                  <select class="form-control" id="contry" [disabled]="userService.area.length"  formControlName="area">
+                    <option *ngFor="let area of userService.area" [value]="area.areaId">{{area.nameEn}}</option>
+                  </select>
                 </div>
                 <div class="form-group">
                     <div class="radio">
                         <label>
-                          <input formControlName="gender" type="radio" id="optionsRadios1" value="Female" checked="">
+                          <input formControlName="gender" type="radio" id="optionsRadios1" [(ngModel)]="user.gender" value="Female" >
                           Female
                         </label>
                       </div>
@@ -63,7 +74,7 @@
                   <div class="form-group">
                       <div class="radio">
                           <label>
-                            <input formControlName="gender" type="radio"  id="optionsRadios2" value="Male" checked="">
+                            <input [(ngModel)]="user.gender" formControlName="gender" type="radio"  id="optionsRadios2" value="Male" >
                            Male
                           </label>
                         </div>

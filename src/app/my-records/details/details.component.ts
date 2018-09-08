@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../../app.service';
 import { PatientImmunization } from '../../shared/model/patient-immunization.model';
+import { PatientPressure } from '../../shared/model/patient-pressure.model';
 declare let alertify:any;
 
 @Component({
@@ -20,6 +21,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   editItem:PatientConditions=new PatientConditions()
   editContact:PatientContacts=new PatientContacts()
   bodyItem:PatientBody=new PatientBody()
+  pressureItem:PatientPressure=new PatientPressure()
   immunizationtem:PatientImmunization=new PatientImmunization()
   contactError:boolean;
   modalRef: BsModalRef;
@@ -45,6 +47,8 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.myRecordsService.dataSet=[]
     this.myRecordsService.contactSet=[]
     this.myRecordsService.immunizationtSet=[]
+    this.myRecordsService.pressureSet=[]
+    this.myRecordsService.bodySet=[]
   }
   
   constructor(private myRecordsService:MyRecordsService,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
@@ -71,6 +75,8 @@ export class DetailsComponent implements OnInit ,OnDestroy{
       phone2: ['',[Validators.pattern("^[0-9]{11}$")]],
       email: ['', [Validators.required,Validators.email]],
     });
+
+
   }
 
   ngOnInit() {
@@ -295,8 +301,13 @@ onClick(condition){
   event.stopPropagation()
   if(this.myRecordsService.bodySet.length){
     this.bodyItem={...condition}
-  }else{
+  }else if(this.myRecordsService.pressureSet.length){
+    this.pressureItem={...condition}
+
+  }
+  else {
     this.editItem={...condition}
+
   }
 
 }
@@ -307,15 +318,21 @@ onClickContacts(contact){
 }
 submit(){
   event.stopPropagation()
+  this.appService.showLoader=true
+
 if(this.editItem.id){
   this.userService.update(this.editItem,this.myRecordsService.type).subscribe(()=>{
     this.editItem=new PatientConditions()
     this.bodyItem=new PatientBody()
+    this.appService.showLoader=false
+
     alertify.success('record successfully updated'); 
 
   },()=>   {this.editItem=new PatientConditions()
     this.bodyItem=new PatientBody()
     this.editContact=new PatientContacts()
+    this.appService.showLoader=false
+
     alertify.error('sorry, somthing went wrong'); 
   })
 }
@@ -328,14 +345,21 @@ if(this.editItem.id){
       this.editContact=new PatientContacts()})
   }
 }
+
 submitContact(){
   event.stopPropagation()
+  this.appService.showLoader=true
+
   this.userService.editContact(this.editContact).subscribe(()=>{
     this.editContact=new PatientContacts()
+    this.appService.showLoader=false
+
     alertify.success('record successfully updated'); 
 
   },()=>   {this.editItem=new PatientConditions()
     this.editContact=new PatientContacts()
+    this.appService.showLoader=false
+
     alertify.error('sorry, somthing went wrong'); 
   })
 }
@@ -344,19 +368,25 @@ cancel(){
   this.editItem=new PatientConditions()
   this.editContact=new PatientContacts()
   this.bodyItem=new PatientBody()
+  this.pressureItem=new PatientPressure()
 }
 delete(data){
   event.stopPropagation()
+  this.appService.showLoader=true
 
   this.userService.DeleteData(this.myRecordsService.type,data).subscribe(()=>{
     this.editItem=new PatientConditions()
     this.editContact=new PatientContacts()
     this.bodyItem=new PatientBody()
+    this.appService.showLoader=false
+
     alertify.success('record successfully deleted'); 
 
   },()=>   {this.editItem=new PatientConditions()
   this.editContact=new PatientContacts()
   this.bodyItem=new PatientBody()
+  this.appService.showLoader=false
+
   alertify.error('sorry, somthing went wrong'); 
 })
   

@@ -129,11 +129,16 @@
                     <form [formGroup]="addBody" novalidate (ngSubmit)="submitBody()">
                         <div class="form-group">
                           <label for="formGroupExampleInput">Height</label>
-                          <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="height" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                          <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="height" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Your Height">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput">Weight</label>
-                            <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="weight" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+                            <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="weight" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Your Weight">
+                          </div>
+                          <div class="form-group">
+                            <label for="formGroupExampleInput">Date</label>
+            <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="date" [(ngModel)]="date" required />
+
                           </div>
                     
                         <button [disabled]="!addBody.valid" type="submit" class="btn btn-edit">Submit</button>
@@ -199,7 +204,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                            <form [formGroup]="addImmunization" novalidate (ngSubmit)="submitMedication()">
+                            <form [formGroup]="addImmunization" novalidate (ngSubmit)="submitImmunization()">
                               <div class="form-group">
                                 <label for="adminstrated">Administrated By:</label>
                                 <select class="form-control" id="adminstrated" formControlName="adminstrated">
@@ -213,14 +218,15 @@
                                     </select>
                                   </div>
                                   
-                                    <div class="row">
+                                    <div class="row" style="justify-content: space-between;padding: 20px;">
                                       <div class="form-group">
                                         <label for="contry">Date</label>
-                                        <ng-datepicker style="z-index: 1000;" formControlName="date" [(ngModel)]="date"></ng-datepicker>
+                                        <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="date" [(ngModel)]="date" required />
                                       </div>
+                                      
                                       <div class="form-group">
                                           <label for="contry">Next Date</label>
-                                          <ng-datepicker style="z-index: 1000;" formControlName="dateNext" [(ngModel)]="dateNext" ></ng-datepicker>
+                                          <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="dateNext" [(ngModel)]="dateNext" required />
                                         </div>
                                     </div>
                                 <button type="submit" class="btn btn-edit">Submit</button>
@@ -239,15 +245,38 @@
     <header class="pressure-title" >
 
         <div class="timeline-header">
-         <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-plus"></i><span class="addText">  Add</span></a>
+         <a class="nav-link" (click)="openModal(pressure)" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-plus"></i><span class="addText">  Add</span></a>
 
           <div>Blood Pressure</div>
-         <a class="nav-link"  style="color: #5a5a5a;"  href="#"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
+         <a class="nav-link" (click)="details('pressure')" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
         </div>
 
 
      </header>
-    <!-- <div><div class="card-header">ALLERGIES</div></div> -->
+    <div><div class="card-header">
+      
+      <div class="row pressure-date">
+        <div class="col-lg-4 btn-pressure-container">
+          <button class="btn-pressure" style="border-radius: 6px 0px 0px 6px;">7 days</button><button style="border-radius: 0px 6px 6px 0px;" class="btn-pressure">14 days</button>
+        </div>
+        <div class="form-group pressure-top" >
+          <div class="input-container">
+              <label class="label-pressure" for="contry">from</label>
+            <input class="input-pressure" type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="from" required />
+
+          </div>
+          <div class="input-container">
+              <label class="label-pressure" for="contry">to</label>
+              <input class="input-pressure" type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="to" required />
+  
+          </div>
+          
+            <button class="btn-pressure go">Go!</button>
+          </div>
+      </div>
+      
+    
+    </div></div>
 
     <div class="chart-container">
      <div class="AVG-pressure">
@@ -309,7 +338,32 @@
          </div>
       </div>
 </div>
-
+<ng-template #pressure>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Blood Pressure</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form [formGroup]="addPressure" novalidate (ngSubmit)="submitPressure()">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Systolic</label>
+            <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="systolic" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Systolic">
+          </div>
+          <div class="form-group">
+              <label for="formGroupExampleInput">Diastolic</label>
+              <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="diastolic" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Diastolic">
+            </div>
+            <div class="form-group">
+              <label for="formGroupExampleInput">Date</label>
+            <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="date" [(ngModel)]="date" required />
+            </div>
+      
+          <button [disabled]="!addPressure.valid" type="submit" class="btn btn-edit">Submit</button>
+        </form>
+  </div>
+</ng-template>
   </div>
   <div class="right-side-Container"> 
     <div class="card img-fluid appear-animation animated fadeIn appear-animation-visible" >

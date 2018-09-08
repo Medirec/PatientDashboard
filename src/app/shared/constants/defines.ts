@@ -7,7 +7,12 @@ export const JSON_PATHS = {
       CITY:'$.nameEn',
       PATIENTCODE:'$.patientCode',
       IMAGEURL:'$.imageURL',
-      PHONENUMBER:'$.phoneNumber'
+      PHONENUMBER:'$.phoneNumber',
+      COUNTRYID:'$.countryId',
+      CITYID:'$.cityId',
+      AREAID:'$.areaId',
+      ADDRESS:'$.address',
+      BIRTHDATE:'$.birthDate',
      
     },
     PATIENTALLERGIES: {
@@ -67,5 +72,19 @@ export const JSON_PATHS = {
         ID: '$.vaccineId',
         NAME: '$.name',
         CODE: '$.vaccineCode',
+      },
+      CITY: {
+        ID: '$.cityId',
+        NAME: '$.nameEn',
+        NAMEAR: '$.nameAr',
+        COUNTRYID: '$.countryId',
+        CODE: '$.countryCode',
+      },
+      AREA: {
+        ID: '$.areaId',
+        NAME: '$.nameEn',
+        NAMEAR: '$.nameAr',
+        CITYID: '$.cityId',
+        CODE: '$.areaCode',
       }
 }

@@ -16,12 +16,15 @@ export class MyRecordsResolver implements Resolve<any> {
 
             return this.userService.GetPatientDetails().pipe(map(()=>{
                 return this.userService.GetPatientAllergies().subscribe(()=>
-            { return this.userService.GetPatientConditions().subscribe(()=>{
+            { 
+                return this.userService.GetPatientConditions().subscribe(()=>{
+                this.userService.patientPressures=[]
+                this.userService.patientPressuresDetails=[]
            return  this.userService.GetPatientPressure().subscribe(()=>{
                this.userService.GetPatientBodyInfo().subscribe()
-               this.userService.GetPatientMedication().subscribe()
-               this.userService.GetPatientMedicalDevice().subscribe()
-               this.userService.GetPatientContacts().subscribe()
+              this.userService.GetPatientMedication().subscribe()
+              this.userService.GetPatientMedicalDevice().subscribe()
+              this.userService.GetPatientContacts().subscribe()
                this.userService.GetPatientImmunization().subscribe()
                this.userService.GetAllAllergies().subscribe()
                this.userService.GetAllBloodPressure().subscribe()
@@ -33,6 +36,7 @@ export class MyRecordsResolver implements Resolve<any> {
                this.userService.GetAllMedication().subscribe()
                this.userService.GetAllResources().subscribe()
                this.userService.GetVaccines().subscribe()
+               this .userService.GetCities().subscribe()
                window.setTimeout(()=>this.appService.showLoader=false)
            })
             })

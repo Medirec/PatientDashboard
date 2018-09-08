@@ -8,6 +8,8 @@ import { PatientContacts } from '../shared/model/patient-contacts.model';
 import { Router } from '@angular/router';
 import { MyRecordsService } from "./my-records.service";
 import * as _ from "lodash";
+import * as moment from 'moment';
+
 declare let alertify:any;
 
 class Upload {
@@ -30,6 +32,7 @@ class Upload {
 })
 
 export class MyRecordsComponent implements OnInit {
+
   adminstrated=[{
     id:1,
     value:'Hospital'
@@ -49,6 +52,7 @@ export class MyRecordsComponent implements OnInit {
   public addMedicalDeviceForm:FormGroup;
   public contactForm:FormGroup;
   public addBody:FormGroup;
+  public addPressure:FormGroup;
   showErrorMsg:boolean
   showErrorMsgMedication:boolean;
   showErrorMsgCondition:boolean
@@ -56,7 +60,11 @@ export class MyRecordsComponent implements OnInit {
   bodyError:boolean
   currentUpload:Upload;
   dropzoneActive:boolean = false;
-  constructor(private myRecordsService:MyRecordsService, private router: Router,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
+  from=new Date();
+  to=new Date();
+  sevenDays:boolean;
+  FourteenDays:boolean;
+  constructor(private myRecordsService:MyRecordsService, private router: Router,private formBuilder8: FormBuilder,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
     });
@@ -69,9 +77,16 @@ export class MyRecordsComponent implements OnInit {
     this.addMedicalDeviceForm = formBuilder4.group({
       name: ['', [Validators.required]],
     });
-    this.addBody = formBuilder6.group({
+    this.addBody = formBuilder7.group({
       height: ['', [Validators.required]],
       weight: ['', [Validators.required]],
+      date: [new Date(), [Validators.required]],
+
+    });
+    this.addPressure = formBuilder8.group({
+      diastolic: ['', [Validators.required]],
+      systolic: ['', [Validators.required]],
+      date: [new Date(), [Validators.required]],
     });
     this.addImmunization = formBuilder6.group({
       vaccines: ['', [Validators.required]],
@@ -176,7 +191,7 @@ export class MyRecordsComponent implements OnInit {
         userId:1,
         height:this.addBody.controls['height'].value,
         weight:this.addBody.controls['weight'].value,
-        date:new Date()
+        date:new Date(moment(this.addBody.controls['date'].value).format("MM/DD/YYYY"))
       }).subscribe(()=>{
        this.appService.showLoader=false 
     alertify.success('record successfully added'); 
@@ -238,6 +253,32 @@ export class MyRecordsComponent implements OnInit {
        this.appService.showLoader=false 
       },()=>{
        this.appService.showLoader=false 
+
+      })
+    }
+  }
+  submitPressure(){
+    if (!this.addPressure.valid) {
+  
+    }
+    else{
+      
+
+      this.modalRef.hide()
+      this.appService.showLoader=true 
+
+      this.userService.addPressure({
+        userId:1,
+        diastolic:this.addPressure.controls['diastolic'].value,
+        systolic:this.addPressure.controls['systolic'].value,
+        date:new Date(moment(this.addPressure.controls['date'].value).format("MM/DD/YYYY"))
+      }).subscribe(()=>{
+       this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
+      },()=>{
+       this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
 
       })
     }
@@ -405,12 +446,31 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         })
         
         break;
+        case 'pressure':
+
+        this.router.navigate(['/Details']);
+
+          this.myRecordsService.pressureSet=this.userService.patientPressuresDetails
+        
+        break;
       default:
         break;
     }
   }
   editUserProfile(){
-    this.router.navigate(['/DetailsProfile']);
+    this.appService.showLoader=true
+    this.userService.GetPatientMoreDetails().subscribe(()=>{
+      
+    this.appService.showLoader=false
+this.userService.GetAreas(this.userService.patientMoreDetails.cityId).subscribe()
+      this.router.navigate(['/DetailsProfile']);
 
+    },()=>this.appService.showLoader=false)
+
+  }
+  getSeven(){
+  }
+  getFourteen(){
+    
   }
 }

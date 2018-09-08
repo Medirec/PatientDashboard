@@ -9,4 +9,10 @@ export class PatientDetails {
     public patienCode: string;
     public imageUrl: string;
     public phoneNumber:string;
+    public address:string;
+    public birthDate:string;
+    public cityId:string;
+    public areaId:string;
+    public countryId:string;
+
 }

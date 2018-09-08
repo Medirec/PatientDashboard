@@ -456,3 +456,51 @@ position: relative;
                   background: #ccc;
                   color: #fff;
               }
+              .ngx-datepicker-container[_ngcontent-c2] .ngx-datepicker-calendar-container[_ngcontent-c2]{
+                  z-index: 100;
+              }
+              .btn-pressure{
+                /* background: linear-gradient(to bottom, #8be8f703 0%, #66ccff42 200%); */
+                background: #f7f7f7;
+                padding: 5px;
+                width: 40%;
+                box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.05);
+            
+              }
+              .pressure-date{
+
+                margin-top: 13px;
+                padding-bottom: 12px;
+              }
+              .input-pressure{
+                margin-right: 7px;
+              }
+              .label-pressure{
+                margin-right: 15px;
+              }
+              .input-container{
+                display: flex;
+                align-items: center;
+                margin-right: 8px;
+              }
+              .go{
+                width: 20%;
+                height: 100%;
+                border-radius: 5px;
+                padding: 0px;
+              }
+              .pressure-top{
+                display: flex;
+                align-items: center;
+                margin: 13px;
+                margin-bottom: 0px;
+              }
+              .btn-pressure-container{
+                text-align: center;
+                margin-top: 14px;
+              }
+              .clicked{
+                background: linear-gradient(to bottom, #8be8f703 0%, #66ccff42 200%);
+                box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.05) inset;
+
+              }
