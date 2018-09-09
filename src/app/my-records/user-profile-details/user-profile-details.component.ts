@@ -18,6 +18,7 @@ user:PatientDetails;
 public userForm: FormGroup;
   constructor(private router: Router,private myRecordsService:MyRecordsService,private userService:UserService,formBuilder: FormBuilder,private appService:AppService) { 
     this.user={...userService.patientMoreDetails}
+    this.appService.showLoader=false
     this.userForm = formBuilder.group({
       name: [this.user.fullName, [Validators.required]],
       birthDate: [this.user.birthDate, [Validators.required]],

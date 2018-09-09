@@ -28,12 +28,14 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   immunizationtem:PatientImmunization=new PatientImmunization()
   contactError:boolean;
   modalRef: BsModalRef;
+  addImmunization:FormGroup
   public addAllergyForm: FormGroup;
   public addConditionForm: FormGroup;
   public addMedicationForm: FormGroup;
   public addMedicalDeviceForm:FormGroup;
   public contactForm:FormGroup;
   public addBody:FormGroup;
+  public addPressure:FormGroup;
   showErrorMsg:boolean
   showErrorMsgMedication:boolean;
   showErrorMsgCondition:boolean

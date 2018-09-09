@@ -15,6 +15,8 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from './shared/shared.module';
 import { MyRecordsService } from './my-records/my-records.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { UserProfileResolver } from './my-records/user-profile.resolver';
+import { DetailsResolver } from './my-records/details.resolver';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,7 @@ BrowserModule,
     NgDatepickerModule,
     SharedModule,
   ],
-    providers: [MyRecordsResolver,AppService,MyRecordsService,],
+    providers: [MyRecordsResolver,AppService,MyRecordsService,UserProfileResolver,DetailsResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
