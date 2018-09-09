@@ -89,7 +89,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
     this.contactForm = formBuilder5.group({
       name: ['', [Validators.required]],
       relation: ['', [Validators.required]],
-      phone: ['', [Validators.required,Validators.pattern("^[0-9]{11}$/")]],
+      phone: ['', [Validators.required,Validators.pattern("^[0-9]{11}$")]],
       phone2: ['',[Validators.pattern("^[0-9]{11}$")]],
       email: ['', [Validators.required,Validators.email]],
     });
