@@ -266,11 +266,11 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input [ngClass]="{'error':!phone.valid&&contactError}" #phone [(ngModel)]="editContact.phoneNumber01" formControlName="phone" type="number" class="form-control" id="phone" placeholder="Enter Phone Number">
+                        <input [ngClass]="{'error':!phone.valid&&contactError}" #phone [(ngModel)]="editContact.phoneNumber01" formControlName="phone" type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
                       </div>
                       <div class="form-group">
                           <label for="phone2">Additional Phone Number</label>
-                          <input #phone2   formControlName="phone2" type="number" class="form-control" [(ngModel)]="editContact.phoneNumber02" id="phone2" placeholder="Enter Phone Number">
+                          <input #phone2   formControlName="phone2" type="text" class="form-control" [(ngModel)]="editContact.phoneNumber02" id="phone2" placeholder="Enter Phone Number">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>

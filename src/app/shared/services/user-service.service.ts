@@ -978,7 +978,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       const options = {
         headers: headers
       };
-      return this.http.get(url, options).pipe(map((res) => {
+      return this.http.delete(url, options).pipe(map((res) => {
         const index= this.patientMedicationDetails.findIndex(el=>el.id==data.id);
         this.patientMedicationDetails.splice(index,1)
         this.patientMedication.splice(index,1)
