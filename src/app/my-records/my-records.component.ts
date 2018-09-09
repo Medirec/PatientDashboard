@@ -267,12 +267,14 @@ export class MyRecordsComponent implements OnInit {
 
       this.modalRef.hide()
       this.appService.showLoader=true 
-
+      let date=moment(this.addPressure.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=date.split('/')
+      date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
       this.userService.addPressure({
         userId:1,
         diastolic:this.addPressure.controls['diastolic'].value,
         systolic:this.addPressure.controls['systolic'].value,
-        date:new Date(moment(this.addPressure.controls['date'].value).format("MM/DD/YYYY"))
+        date:new Date(date)
       }).subscribe(()=>{
        this.appService.showLoader=false 
     alertify.success('record successfully added'); 
@@ -291,7 +293,7 @@ export class MyRecordsComponent implements OnInit {
   ];
   public lineChartLabels:Array<any> = this.userService.date;
   public lineChartOptions:any = {
-    responsive: true, scales : { yAxes: [{ ticks: { steps : 40, stepValue : 40, max : 180,min:0 } }] } ,
+    responsive: true, scales : { yAxes: [{ ticks: { steps : 40, stepValue : 40, max : 140,min:0 } }] } ,
     tooltips: {
       callbacks: {
         label: function (tooltipItem, data) {

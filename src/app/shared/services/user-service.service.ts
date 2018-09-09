@@ -242,6 +242,7 @@ this.PressureCalculaion()
     ), catchError(e => throwError(e)) );
   }
 
+  
   PressureCalculaion(){
     const maxSystolic=140;
     const minSystolic=90;
@@ -1195,17 +1196,18 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     const options = {
       headers: headers
     };
+    
+
     return this.http.post(url, body, options).pipe(map((res) => 
    {
     
      let patientBody=new PatientBody()
-    
 
     patientBody.id=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.ID) || '';
     patientBody.userId=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.USERID) || '';
      patientBody.weight=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.WEIGHT) || '';
      patientBody.height=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.HEIGHT) || '';
-    patientBody.date=JsonQuery.value(res, JSON_PATHS.PATIENTBODY.DATE) || '';
+    patientBody.date=moment(body.date).subtract(1,'day').format("DD/MM/YYYY") || '';
 
     
       this.patientBodies.push(patientBody)
@@ -1273,12 +1275,13 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
      pressure.userId=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
      pressure.diastolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
      pressure.systolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
-     pressure.date=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DATE) || '';
+     pressure.date=moment(JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DATE)).format("DD/MM/YYYY") || '';
      
 
     
       this.patientPressures.push(pressure)
       this.patientPressuresDetails.push(pressure)
+      this.PressureCalculaion()
      this.bloodPressureCount+=1;
      this.myRecordsService.pressureSet=this.patientPressuresDetails
 

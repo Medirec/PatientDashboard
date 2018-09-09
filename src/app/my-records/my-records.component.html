@@ -229,7 +229,7 @@
                                           <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="dateNext" [(ngModel)]="dateNext" required />
                                         </div>
                                     </div>
-                                <button type="submit" class="btn btn-edit">Submit</button>
+                                <button type="submit" [disabled]="!addImmunization.valid" class="btn btn-edit">Submit</button>
                               </form>
                         </div>
                       </ng-template> 
