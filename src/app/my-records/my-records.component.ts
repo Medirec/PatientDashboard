@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MyRecordsService } from "./my-records.service";
 import * as _ from "lodash";
 import * as moment from 'moment';
+import { PatientImmunization } from '../shared/model/patient-immunization.model';
 
 declare let alertify:any;
 
@@ -194,6 +195,37 @@ export class MyRecordsComponent implements OnInit {
         weight:this.addBody.controls['weight'].value,
         date:new Date(date)
       }).subscribe(()=>{
+       this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
+      },()=>{
+       this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
+
+      })
+    }
+  }
+  submitImmunization(){
+    if (!this.addBody.valid) {
+      this.bodyError = true
+    }
+    else{
+      this.bodyError = false
+      this.modalRef.hide()
+      this.appService.showLoader=true 
+      let date=moment(this.addImmunization.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=date.split('/')
+      date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
+      let _dateNext=moment(this.addImmunization.controls['dateNext'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateResNext=date.split('/')
+      _dateNext=dateResNext[1]+'/'+dateResNext[0]+'/'+dateResNext[2]
+      let immunization=new PatientImmunization()
+     immunization.date=date;
+     immunization.nextDate=_dateNext;
+     immunization.administratedBy=_dateNext;
+      this.userService.addImmunization(
+        immunization
+      ).subscribe(()=>{
        this.appService.showLoader=false 
     alertify.success('record successfully added'); 
 

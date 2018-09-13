@@ -43,15 +43,15 @@ patientContacts:PatientContacts[]=[];
 patientContactsDetails:PatientContacts[]=[];
 patientImmunization:PatientImmunization[]=[];
 patientCalculatedPressure:PatientPressure=new PatientPressure();
-resourcesCount:number;
-medicalDeviceCount:number;
-medicationCount:number;
-humanBodiesCount:number;
-allergiesCount:number;
-conditionsCount:number;
-bloodPressureCount:number;
-immunizationsCount:number;
-contactsCount:number;
+resourcesCount:number=0;
+medicalDeviceCount:number=0;
+medicationCount:number=0;
+humanBodiesCount:number=0;
+allergiesCount:number=0;
+conditionsCount:number=0;
+bloodPressureCount:number=0;
+immunizationsCount:number=0;
+contactsCount:number=0;
 diastolic:number[]=[];
 systolic:number[]=[];
 date:any[]=[];
@@ -466,7 +466,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.resourcesCount=res;
+      this.resourcesCount=res||0;
       
 
       return res;
@@ -483,7 +483,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.contactsCount=res;
+      this.contactsCount=res||0;
       
 
       return res;
@@ -500,7 +500,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.medicationCount=res;
+      this.medicationCount=res||0;
       
 
       return res;
@@ -517,7 +517,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.medicalDeviceCount=res;
+      this.medicalDeviceCount=res||0;
       
 
       return res;
@@ -534,7 +534,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.humanBodiesCount=res;
+      this.humanBodiesCount=res||0;
       
 
       return res;
@@ -551,7 +551,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.conditionsCount=res;
+      this.conditionsCount=res||0;
       
 
       return res;
@@ -568,7 +568,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.bloodPressureCount=res;
+      this.bloodPressureCount=res||0;
       
 
       return res;
@@ -585,7 +585,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.allergiesCount=res;
+      this.allergiesCount=res||0;
       
 
       return res;
@@ -602,7 +602,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     return this.http.get(url, options).pipe(map((res:number) => {
       
-      this.immunizationsCount=res;
+      this.immunizationsCount=res||0;
       
 
       return res;
@@ -784,6 +784,11 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     this.patientMedicationDetails=[]
     this.patientPressuresDetails=[]
     this.patientBodies=[]
+    this.myRecordsService.bodySet=[]
+    this.myRecordsService.immunizationtSet=[]
+    this.myRecordsService.dataSet=[]
+    this.myRecordsService.pressureSet=[]
+    this.myRecordsService.contactSet=[]
     if(type==='allergy'){
       let url = 'http://36765264api.medirec.me/api/GetAllergiesDetails/1'
       let headers = new HttpHeaders();
@@ -1227,8 +1232,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     let immunizationRes={
       nextDoesDate:immunization.nextDate,
-      dateGiven:immunization.nextDate,
-      userId:immunization.nextDate,
+      dateGiven:immunization.date,
+      userId:1,
       administratedBy:immunization.administratedBy,
       vaccineId:immunization.vaccineId,
       vaccineName:immunization.vaccineName,
