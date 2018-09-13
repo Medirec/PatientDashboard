@@ -195,7 +195,14 @@ export class MyRecordsComponent implements OnInit {
         weight:this.addBody.controls['weight'].value,
         date:new Date(date)
       }).subscribe(()=>{
+        this.userService.GetPatientBodyInfo().subscribe(()=>{
+          this.appService.showLoader=false 
+
+        },()=>{
        this.appService.showLoader=false 
+
+        })
+
     alertify.success('record successfully added'); 
 
       },()=>{
