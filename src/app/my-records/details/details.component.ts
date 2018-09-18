@@ -372,7 +372,6 @@ onClick(condition){
     this.pressureItem={...condition}
 
   }else if(this.myRecordsService.immunizationtSet.length){
-    debugger
     this.immunizationItem={...condition}
     this.immunizationItem.vaccineId=this.userService.vaccines.find(el=>el.name==this.immunizationItem.vaccineName).vaccineId
 this.administratedBy=this.adminstrated.find(el=>el.value==this.immunizationItem.administratedBy).id; 
@@ -409,7 +408,6 @@ if(this.editItem.id){
   })
 }
 else if(this.immunizationItem.id){
-  debugger
    let _date=moment(this.immunizationItem.date, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
       const dateRes=_date.split('/')
       _date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]

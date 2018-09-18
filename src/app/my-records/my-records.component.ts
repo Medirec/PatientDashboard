@@ -463,6 +463,7 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         
         break;
         case 'body':
+         if(this.userService.patientBody){
         this.appService.showLoader=true
         this.userService.getAllData(type).subscribe(()=>{
         this.appService.showLoader=false
@@ -474,7 +475,7 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         this.appService.showLoader=false
 
         })
-        
+         }
         break;
         case 'immunization':
      if(this.userService.patientImmunization.length){

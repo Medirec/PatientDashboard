@@ -745,7 +745,6 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     }
     if(type==='immunization'){
       url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
-      debugger
       let body={
         immunizationId:data.id,
         userId:1,
