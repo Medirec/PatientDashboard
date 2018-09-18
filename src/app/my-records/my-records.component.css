@@ -504,3 +504,13 @@ position: relative;
                 box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.05) inset;
 
               }
+              a.email input.link {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  opacity: 0 !important;
+}
+.dimmed{
+        color: #ffffff !important;
+    background-color: #ccc!important;
+}

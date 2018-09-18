@@ -24,7 +24,7 @@ export class UserService{
 
 patientDetails:PatientDetails;
 patientMoreDetails:PatientDetails;
-patientBody:PatientBody=new PatientBody();
+patientBody:PatientBody
 vaccines:PatientVaccines[]=[]
 cities:City[]=[]
 area:Area[]=[]
@@ -293,7 +293,7 @@ this.diastolic.push( +el.diastolic)
   addAllergies(allergy) {
     
 
-    const url = 'http://36765264api.medirec.me/api/Allergies/1'
+    const url = 'http://36765264api.medirec.me/api/Allergies'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -317,7 +317,7 @@ this.myRecordsService.dataSet=this.patientAllergiesDetails
   addConditions(condition) {
     
 
-    const url = 'http://36765264api.medirec.me/api/Condations/1'
+    const url = 'http://36765264api.medirec.me/api/Condations'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -745,12 +745,13 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     }
     if(type==='immunization'){
       url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
+      debugger
       let body={
         immunizationId:data.id,
-        userId:data.userId,
+        userId:1,
         administratedBy:data.administratedBy,
-        dateGiven:data.date,
-        nextDoesDate:data.nextDate,
+        dateGiven:new Date(data.date),
+        nextDoesDate:new Date(data.nextDate),
         vaccineId:data.vaccineId,
         vaccineName:data.vaccineName,
        }
@@ -762,8 +763,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         let immunization=this.patientImmunization.find(el=>el.id===data.id)
        
         immunization.administratedBy=data.administratedBy
-        immunization.date=data.date
-        immunization.nextDate=data.nextDate
+        immunization.date=moment(data.date, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
+        immunization.nextDate=moment(data.nextDate, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
         immunization.vaccineId=data.vaccineId
         immunization.vaccineName=data.vaccineName
         immunization.id=data.id
@@ -1125,7 +1126,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
    }))
   }
   addContact(contact){
-    const url = `http://36765264api.medirec.me/api/Contacts/1`
+    const url = `http://36765264api.medirec.me/api/Contacts`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1194,7 +1195,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
    }))
   }
   addBody(body){
-    const url = `http://36765264api.medirec.me/api/HumanBodies/1`
+    const url = `http://36765264api.medirec.me/api/HumanBodies`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1223,7 +1224,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     ), catchError(e => throwError(e)) );
   }
   addImmunization(immunization:PatientImmunization){
-    const url = `http://36765264api.medirec.me/api/Immunizations/1`
+    const url = `http://36765264api.medirec.me/api/Immunizations`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1231,8 +1232,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       headers: headers
     };
     let immunizationRes={
-      nextDoesDate:immunization.nextDate,
-      dateGiven:immunization.date,
+      nextDoesDate:new Date(immunization.nextDate),
+      dateGiven:new Date(immunization.date),
       userId:1,
       administratedBy:immunization.administratedBy,
       vaccineId:immunization.vaccineId,
@@ -1242,15 +1243,13 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
    {
     
      let immunization=new PatientImmunization()
-    
-
      immunization.id=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.ID) || '';
      immunization.userId=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.USERID) || '';
      immunization.vaccineId=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.VACCINEID) || '';
-     immunization.vaccineName=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.VACCINENAME) || '';
+     immunization.vaccineName=this.vaccines.find(el=>el.vaccineId==immunization.vaccineId).name
      immunization.administratedBy=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.ADMINISTRATEDBY) || '';
-     immunization.date=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.DATE) || '';
-     immunization.nextDate=JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.NEXTDATE) || '';
+     immunization.date=moment(JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.DATE)).subtract(1,'day').format("DD/MM/YYYY") || '';
+     immunization.nextDate=moment(JsonQuery.value(res, JSON_PATHS.PATIENTIMMUNIZATION.NEXTDATE) ).subtract(1,'day').format("DD/MM/YYYY")|| '';
 
     
       this.patientImmunization.push(immunization)
@@ -1262,7 +1261,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     ), catchError(e => throwError(e)) );
   }
   addPressure(pressure){
-    const url = `http://36765264api.medirec.me/api/BloodPressure/1`
+    const url = `http://36765264api.medirec.me/api/BloodPressure`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1280,12 +1279,13 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
      pressure.userId=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
      pressure.diastolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
      pressure.systolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
-     pressure.date=moment(JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DATE)).format("DD/MM/YYYY") || '';
+     pressure.date=moment(pressure.date).format("DD/MM/YYYY") || '';
      
 
     
       this.patientPressures.push(pressure)
       this.patientPressuresDetails.push(pressure)
+       this.date.push(pressure.date)
       this.PressureCalculaion()
      this.bloodPressureCount+=1;
      this.myRecordsService.pressureSet=this.patientPressuresDetails

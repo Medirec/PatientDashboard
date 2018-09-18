@@ -38,7 +38,7 @@ export class MyRecordsComponent implements OnInit {
     id:1,
     value:'Hospital'
   },{
-    id:1,
+    id:2,
     value:'Clinic'
   }]
   dateNext= new Date();
@@ -213,23 +213,25 @@ export class MyRecordsComponent implements OnInit {
     }
   }
   submitImmunization(){
-    if (!this.addBody.valid) {
-      this.bodyError = true
+    if (!this.addImmunization.valid) {
+    
     }
     else{
-      this.bodyError = false
+  
       this.modalRef.hide()
       this.appService.showLoader=true 
-      let date=moment(this.addImmunization.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
-      const dateRes=date.split('/')
-      date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
+      let _date=moment(this.addImmunization.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=_date.split('/')
+      _date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
       let _dateNext=moment(this.addImmunization.controls['dateNext'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
-      const dateResNext=date.split('/')
+      const dateResNext=_dateNext.split('/')
       _dateNext=dateResNext[1]+'/'+dateResNext[0]+'/'+dateResNext[2]
       let immunization=new PatientImmunization()
-     immunization.date=date;
+     immunization.date=_date;
      immunization.nextDate=_dateNext;
-     immunization.administratedBy=_dateNext;
+     immunization.administratedBy=this.adminstrated.find(el=>el.id==this.addImmunization.controls['adminstrated'].value).value; 
+     immunization.vaccineName=this.userService.vaccines.find(el=>el.vaccineId==this.addImmunization.controls['vaccines'].value).name
+     immunization.vaccineId=this.addImmunization.controls['vaccines'].value;
       this.userService.addImmunization(
         immunization
       ).subscribe(()=>{
@@ -475,17 +477,12 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         
         break;
         case 'immunization':
-        this.appService.showLoader=true
-        this.userService.getAllData(type).subscribe(()=>{
-        this.appService.showLoader=false
-        this.router.navigate(['/Details']);
+     if(this.userService.patientImmunization.length){
+ this.router.navigate(['/Details']);
 
           this.myRecordsService.immunizationtSet=this.userService.patientImmunization
-
-        },()=>{
-        this.appService.showLoader=false
-
-        })
+     }
+       
         
         break;
         case 'pressure':

@@ -23,6 +23,9 @@ export class FilterPipe implements PipeTransform {
       else if(e.fullName){
         return  e.fullName.toLowerCase().indexOf(str.toLowerCase()) > -1
       }
+      else if(e.administratedBy){
+ return  (e.administratedBy.toLowerCase().indexOf(str.toLowerCase()) > -1)||( e.vaccineName.toLowerCase().indexOf(str.toLowerCase()) > -1)
+      }
     })
       return this.result
   }

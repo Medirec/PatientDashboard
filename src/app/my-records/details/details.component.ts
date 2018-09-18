@@ -19,13 +19,22 @@ declare let alertify:any;
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit ,OnDestroy{
+
+  adminstrated=[{
+    id:1,
+    value:'Hospital'
+  },{
+    id:2,
+    value:'Clinic'
+  }]
   filterChar:string
   searchDate;
+  administratedBy;
   editItem:PatientConditions=new PatientConditions()
   editContact:PatientContacts=new PatientContacts()
   bodyItem:PatientBody=new PatientBody()
   pressureItem:PatientPressure=new PatientPressure()
-  immunizationtem:PatientImmunization=new PatientImmunization()
+  immunizationItem:PatientImmunization=new PatientImmunization()
   contactError:boolean;
   modalRef: BsModalRef;
   addImmunization:FormGroup
@@ -47,6 +56,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   @ViewChild('medicalDevice') medicalDevice;
   @ViewChild('contact') contact;
   @ViewChild('body') body;
+  @ViewChild('immunization') immunization;
   name:string;
   ngOnDestroy(): void {
     this.myRecordsService.dataSet=[]
@@ -167,6 +177,10 @@ this.name='Allergies'
     this.modalRef = this.modalService.show(this.body);
         
         break;
+          case 'immunization':
+    this.modalRef = this.modalService.show(this.immunization);
+        
+        break;
       default:
         break;
     }
@@ -177,6 +191,39 @@ this.name='Allergies'
     this.modalRef.hide()
   
     
+  }
+   submitImmunization(){
+    if (!this.addImmunization.valid) {
+    
+    }
+    else{
+  
+      this.modalRef.hide()
+      this.appService.showLoader=true 
+      let _date=moment(this.addImmunization.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=_date.split('/')
+      _date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
+      let _dateNext=moment(this.addImmunization.controls['dateNext'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateResNext=_dateNext.split('/')
+      _dateNext=dateResNext[1]+'/'+dateResNext[0]+'/'+dateResNext[2]
+      let immunization=new PatientImmunization()
+     immunization.date=_date;
+     immunization.nextDate=_dateNext;
+     immunization.administratedBy=this.adminstrated.find(el=>el.id==this.addImmunization.controls['adminstrated'].value).value; 
+     immunization.vaccineName=this.userService.vaccines.find(el=>el.vaccineId==this.addImmunization.controls['vaccines'].value).name
+     immunization.vaccineId=this.addImmunization.controls['vaccines'].value;
+      this.userService.addImmunization(
+        immunization
+      ).subscribe(()=>{
+       this.appService.showLoader=false 
+    alertify.success('record successfully added'); 
+
+      },()=>{
+       this.appService.showLoader=false 
+       alertify.error('sorry, somthing went wrong'); 
+
+      })
+    }
   }
   submitAllergy() {
     if (!this.addAllergyForm.valid) {
@@ -324,6 +371,11 @@ onClick(condition){
   }else if(this.myRecordsService.pressureSet.length){
     this.pressureItem={...condition}
 
+  }else if(this.myRecordsService.immunizationtSet.length){
+    debugger
+    this.immunizationItem={...condition}
+    this.immunizationItem.vaccineId=this.userService.vaccines.find(el=>el.name==this.immunizationItem.vaccineName).vaccineId
+this.administratedBy=this.adminstrated.find(el=>el.value==this.immunizationItem.administratedBy).id; 
   }
   else {
     this.editItem={...condition}
@@ -344,6 +396,34 @@ if(this.editItem.id){
   this.userService.update(this.editItem,this.myRecordsService.type).subscribe(()=>{
     this.editItem=new PatientConditions()
     this.bodyItem=new PatientBody()
+    this.appService.showLoader=false
+
+    alertify.success('record successfully updated'); 
+
+  },()=>   {this.editItem=new PatientConditions()
+    this.bodyItem=new PatientBody()
+    this.editContact=new PatientContacts()
+    this.appService.showLoader=false
+
+    alertify.error('sorry, somthing went wrong'); 
+  })
+}
+else if(this.immunizationItem.id){
+  debugger
+   let _date=moment(this.immunizationItem.date, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=_date.split('/')
+      _date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
+      let _dateNext=moment(this.immunizationItem.nextDate, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateResNext=_dateNext.split('/')
+      _dateNext=dateResNext[1]+'/'+dateResNext[0]+'/'+dateResNext[2]
+      this.immunizationItem.date=_date
+      this.immunizationItem.nextDate=_dateNext
+     this.immunizationItem.administratedBy=  this.adminstrated.find(el=>el.id==this.administratedBy).value; 
+      this.immunizationItem.vaccineName=this.userService.vaccines.find(el=>el.vaccineId==this.immunizationItem.vaccineId).name
+  this.userService.update(this.immunizationItem,this.myRecordsService.type).subscribe(()=>{
+    this.editItem=new PatientConditions()
+    this.bodyItem=new PatientBody()
+    this.immunizationItem=new PatientImmunization()
     this.appService.showLoader=false
 
     alertify.success('record successfully updated'); 
@@ -413,6 +493,7 @@ cancel(){
   this.editContact=new PatientContacts()
   this.bodyItem=new PatientBody()
   this.pressureItem=new PatientPressure()
+  this.immunizationItem=new PatientImmunization()
 }
 delete(data){
   event.stopPropagation()
