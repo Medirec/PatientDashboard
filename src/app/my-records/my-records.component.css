@@ -76,6 +76,7 @@
 }
 .right-side-Container{
     flex: .8 1 20%;
+        margin-right: 3%;
 }
 .card-header{
     border-bottom: 1px solid #ccc;

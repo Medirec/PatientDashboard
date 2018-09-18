@@ -17,14 +17,14 @@ export class FilterPipe implements PipeTransform {
       return  e.name.toLowerCase().indexOf(str.toLowerCase()) > -1
 
       }
-      else if(e.date){
+      else if(e.date&&!e.vaccineName){
        return e.date.indexOf(str) > -1
       }
       else if(e.fullName){
         return  e.fullName.toLowerCase().indexOf(str.toLowerCase()) > -1
       }
-      else if(e.administratedBy){
- return  (e.administratedBy.toLowerCase().indexOf(str.toLowerCase()) > -1)||( e.vaccineName.toLowerCase().indexOf(str.toLowerCase()) > -1)
+      else if(e.vaccineName){
+ return  ( e.vaccineName.toLowerCase().indexOf(str.toLowerCase()) > -1)
       }
     })
       return this.result
