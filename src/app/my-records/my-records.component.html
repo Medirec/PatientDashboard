@@ -23,10 +23,10 @@
                 <header class="pressure-title" >
         
                    <div class="timeline-header">
-                    <a class="nav-link" (click)="openModal(body)"  style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
+                    <a class="nav-link" (click)="openModal(body)"  style="color: #5a5a5a;cursor: pointer;"  ><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
         
                      <div>Weight & Height</div>
-                    <a class="nav-link" [ngClass]="{'dimmed':!userService.patientBody}"  style="color: #5a5a5a;"   (click)="details('body')"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> Details</span></a>
+                    <a class="nav-link" [ngClass]="{'dimmed':!userService.patientBody}"  style="color: #5a5a5a;cursor: pointer;"   (click)="details('body')"><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText"> Details</span></a>
                    </div>
         
         
@@ -162,10 +162,10 @@
                         <header class="pressure-title" >
                 
                            <div class="timeline-header">
-                            <a class="nav-link" style="color: #5a5a5a;"  (click)="openModal(immunization)"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
+                            <a class="nav-link" style="color: #5a5a5a;cursor: pointer;"  (click)="openModal(immunization)"><i  aria-hidden="true" class="fa fa-plus"></i> <span class="addText">Add</span></a>
                 
                              <div>Immunization</div>
-                            <a class="nav-link"  style="color: #5a5a5a;" [ngClass]="{'dimmed':!userService.patientImmunization.length}"   (click)="details('immunization')" ><i  aria-hidden="true"class="fa fa-bars"></i><span class="addText"> Details</span></a>
+                            <a class="nav-link"  style="color: #5a5a5a;cursor: pointer;" [ngClass]="{'dimmed':!userService.patientImmunization.length}"   (click)="details('immunization')" ><i  aria-hidden="true"class="fa fa-bars"></i><span class="addText"> Details</span></a>
                            </div>
                 
                 
