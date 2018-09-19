@@ -479,10 +479,20 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         break;
         case 'immunization':
      if(this.userService.patientImmunization.length){
- this.router.navigate(['/Details']);
+        this.appService.showLoader=true
+        this.userService.getAllData(type).subscribe(()=>{
+        this.appService.showLoader=false
+        this.router.navigate(['/Details']);
 
-          this.myRecordsService.immunizationtSet=this.userService.patientImmunization
-     }
+                   this.myRecordsService.immunizationtSet=this.userService.patientImmunizations
+
+        },()=>{
+        this.appService.showLoader=false
+
+        })
+         }
+
+     
        
         
         break;

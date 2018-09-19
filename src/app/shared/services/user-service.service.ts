@@ -42,6 +42,7 @@ patientPressuresDetails:PatientPressure[]=[];
 patientContacts:PatientContacts[]=[];
 patientContactsDetails:PatientContacts[]=[];
 patientImmunization:PatientImmunization[]=[];
+patientImmunizations:PatientImmunization[]=[];
 patientCalculatedPressure:PatientPressure=new PatientPressure();
 resourcesCount:number=0;
 medicalDeviceCount:number=0;
@@ -760,15 +761,25 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       }).pipe(map((res) => {
         
         let immunization=this.patientImmunization.find(el=>el.id===data.id)
+        let immunizationAll=this.patientImmunizations.find(el=>el.id===data.id)
        
-        immunization.administratedBy=data.administratedBy
+        immunizationAll.administratedBy=data.administratedBy
+        immunizationAll.date=moment(data.date, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
+        immunizationAll.nextDate=moment(data.nextDate, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
+        immunizationAll.vaccineId=data.vaccineId
+        immunizationAll.vaccineName=data.vaccineName
+        immunizationAll.id=data.id
+        immunizationAll.userId=data.userId
+        if(immunization){
+           immunization.administratedBy=data.administratedBy
         immunization.date=moment(data.date, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
         immunization.nextDate=moment(data.nextDate, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
         immunization.vaccineId=data.vaccineId
         immunization.vaccineName=data.vaccineName
         immunization.id=data.id
         immunization.userId=data.userId
-        this.myRecordsService.immunizationtSet=this.patientImmunization
+        }
+        this.myRecordsService.immunizationtSet=this.patientImmunizations
       
         return res;
       }
@@ -789,6 +800,29 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     this.myRecordsService.dataSet=[]
     this.myRecordsService.pressureSet=[]
     this.myRecordsService.contactSet=[]
+    if(type==='immunization'){
+      let url = 'http://36765264api.medirec.me/api/GetImmunizationsDetails/1'
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.get(url, options).pipe(map((res:any[]) => {
+        res.forEach(element => {
+        let immunization=new PatientImmunization()
+        immunization.administratedBy=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.ADMINISTRATEDBY) || '';
+        immunization.userId=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.USERID) || '';
+        immunization.id=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.ID) || '';
+        immunization.date=moment(JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.DATE)).format('DD/MM/YYYY') || '';
+        immunization.nextDate=moment(JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.NEXTDATE)).format('DD/MM/YYYY')  || '';
+        immunization.vaccineId=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.VACCINEID) || '';
+        immunization.vaccineName=JsonQuery.value(element, JSON_PATHS.PATIENTIMMUNIZATION.VACCINENAME) || '';
+       this.patientImmunizations.push(immunization)
+       });
+      return res;
+    }
+      ), catchError(e => throwError(e)) );
+    }
     if(type==='allergy'){
       let url = 'http://36765264api.medirec.me/api/GetAllergiesDetails/1'
       let headers = new HttpHeaders();
@@ -1056,8 +1090,9 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       return this.http.delete(url, options).pipe(map((res) => {
         const index= this.patientImmunization.findIndex(el=>el.id==data.id);
         this.patientImmunization.splice(index,1)
-        this.immunizationsCount= this.patientImmunization.length
-        this.myRecordsService.immunizationtSet=this.patientImmunization
+        this.patientImmunizations.splice(index,1)
+        this.immunizationsCount= this.patientImmunizations.length
+        this.myRecordsService.immunizationtSet=this.patientImmunizations
 
         return res;
       }
@@ -1252,8 +1287,9 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
     
       this.patientImmunization.push(immunization)
+      this.patientImmunizations.push(immunization)
      this.immunizationsCount+=1;
-     this.myRecordsService.immunizationtSet=this.patientImmunization
+     this.myRecordsService.immunizationtSet=this.patientImmunizations
 
      return res;
     }

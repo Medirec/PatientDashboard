@@ -76,7 +76,7 @@
 }
 .right-side-Container{
     flex: .8 1 20%;
-        margin-right: 3%;
+    
 }
 .card-header{
     border-bottom: 1px solid #ccc;
@@ -351,6 +351,9 @@ position: relative;
                 width: 49%;
             }
             @media only screen and (max-width : 830px) {
+                .left-side-Container{
+    margin-right: 0px
+}
                 .AVG-pressure{
                     display: block;
                 }
@@ -363,6 +366,9 @@ position: relative;
             }
                 }
             @media only screen and (max-width : 1304px) {
+                              .left-side-Container{
+    margin-right: 0px
+}
                 .immunization{
                     width: 100%;
                 }
@@ -401,6 +407,9 @@ position: relative;
                     align-items: center;
                    }
                    @media only screen and (max-width : 558px) {
+                                     .left-side-Container{
+    margin-right: 0px
+}
                        .height-value-container{
                         left: 28%;
 
@@ -514,4 +523,7 @@ position: relative;
 .dimmed{
         color: #ffffff !important;
     background-color: #ccc!important;
+}
+.immunization-count{
+        margin: 10px 0px !important;
 }

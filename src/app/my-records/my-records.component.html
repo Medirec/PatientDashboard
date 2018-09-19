@@ -170,7 +170,9 @@
                 
                 
                         </header>
-                        <div class="card-body" style="padding-bottom: 30px;">
+                        <div class="card-body" style="padding-bottom: 30px;padding-top: 0px;">
+                            <div class="static-details count immunization-count"  *ngIf="userService.humanBodiesCount"><i class="fa fa-plus"> </i> <span class="details"> {{userService.immunizationsCount}}</span> </div>
+
                           <div class="scrollable" data-plugin-scrollable="" style="height: 350px;">
                             <div class="scrollable-content" tabindex="0">
                               <div class="timeline timeline-simple mt-3 mb-3">
