@@ -794,6 +794,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     this.patientMedicalDeviceDetails=[]
     this.patientMedicationDetails=[]
     this.patientPressuresDetails=[]
+    this.patientImmunizations=[]
     this.patientBodies=[]
     this.myRecordsService.bodySet=[]
     this.myRecordsService.immunizationtSet=[]
