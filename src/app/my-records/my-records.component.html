@@ -256,6 +256,7 @@
 
      </header>
     <div><div class="card-header">
+        <div class="static-details count immunization-count"   *ngIf="userService.humanBodiesCount"><i class="fa fa-plus"> </i> <span class="details"> {{userService.bloodPressureCount}}</span> </div>
       
       <div class="row pressure-date">
         <div class="col-lg-4 btn-pressure-container">
@@ -275,7 +276,6 @@
           
             <button (click)="getDate()" class="btn-pressure go">Go!</button>
           </div>
-          <div class="static-details count immunization-count" style="margin-right: 15px !important;"  *ngIf="userService.humanBodiesCount"><i class="fa fa-plus"> </i> <span class="details"> {{userService.bloodPressureCount}}</span> </div>
           
       </div>
       

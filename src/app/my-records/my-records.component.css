@@ -364,8 +364,13 @@ position: relative;
             .pressure-progress{
                 margin-left: 0px;
             }
+            .pressure-date{
+               
+                flex-wrap: wrap !important;
+              }
                 }
             @media only screen and (max-width : 1304px) {
+               
                               .left-side-Container{
     margin-right: 0px
 }
@@ -407,6 +412,10 @@ position: relative;
                     align-items: center;
                    }
                    @media only screen and (max-width : 558px) {
+                    .pressure-date{
+               
+                        flex-wrap: wrap !important;
+                      }
                                      .left-side-Container{
     margin-right: 0px
 }
@@ -479,8 +488,8 @@ position: relative;
               }
               .pressure-date{
                 justify-content: space-between;
-                margin-top: 13px;
                 padding-bottom: 12px;
+                flex-wrap: nowrap;
               }
               .input-pressure{
                 margin-right: 7px;
@@ -504,11 +513,14 @@ position: relative;
                 display: flex;
                 align-items: center;
                 margin: 6px;
+                margin-left: 12px;
+                margin-top: 15px;
+                text-align: center;
                 margin-bottom: 0px;
               }
               .btn-pressure-container{
                 text-align: center;
-                margin-top: 14px;
+                margin-top: 20px;
               }
               .clicked{
                 background: linear-gradient(to bottom, #8be8f703 0%, #66ccff42 200%);
