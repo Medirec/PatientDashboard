@@ -142,6 +142,10 @@ this.name='Allergies'
         this.name='Immunization'  
         
         break;
+        case 'pressure':
+        this.name='Pressure'  
+        
+        break;
       default:
         break;
     }
