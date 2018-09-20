@@ -484,6 +484,7 @@ position: relative;
               }
               .input-pressure{
                 margin-right: 7px;
+                text-align:center;
               }
               .label-pressure{
                 margin-right: 15px;
@@ -527,3 +528,11 @@ position: relative;
 .immunization-count{
         margin: 5px 0px !important;
 }
+.clicked{
+  
+    box-shadow: inset 0 0 6px 2px #5bc0de;
+    color: #1eafda;
+}
+button{
+    outline:none !important;
+ }

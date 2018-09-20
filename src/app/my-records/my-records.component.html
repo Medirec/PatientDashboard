@@ -250,7 +250,7 @@
          <a class="nav-link" (click)="openModal(pressure)" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-plus"></i><span class="addText">  Add</span></a>
 
           <div>Blood Pressure</div>
-         <a class="nav-link" (click)="details('pressure')" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
+         <a class="nav-link" [ngClass]="{'dimmed':!userService.patientPressures.length}" (click)="details('pressure')" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
         </div>
 
 
@@ -259,21 +259,21 @@
       
       <div class="row pressure-date">
         <div class="col-lg-4 btn-pressure-container">
-          <button class="btn-pressure" style="border-radius: 6px 0px 0px 6px;">7 days</button><button style="border-radius: 0px 6px 6px 0px;" class="btn-pressure">14 days</button>
+          <button [ngClass]="{'clicked':sevenDays}" class="btn-pressure" (click)="getSeven()" style="border-radius: 6px 0px 0px 6px;">last 7 days</button><button  [ngClass]="{'clicked':FourteenDays}" (click)="getFourteen()" style="border-radius: 0px 6px 6px 0px;" class="btn-pressure">last 14 days</button>
         </div>
         <div class="form-group pressure-top" >
           <div class="input-container">
-              <label class="label-pressure" for="contry">from</label>
-            <input class="input-pressure" type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="from" required />
+              <label class="label-pressure" for="contry">From</label>
+            <input class="input-pressure form-control"  type="text" placeholder="dd.mm.yyyy"  bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="from" required />
 
           </div>
           <div class="input-container">
-              <label class="label-pressure" for="contry">to</label>
-              <input class="input-pressure" type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="to" required />
+              <label class="label-pressure" for="contry">To</label>
+              <input class="input-pressure form-control" type="text" placeholder="dd.mm.yyyy"  bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="to" required />
   
           </div>
           
-            <button class="btn-pressure go">Go!</button>
+            <button (click)="getDate()" class="btn-pressure go">Go!</button>
           </div>
       </div>
       
@@ -283,17 +283,17 @@
     <div class="chart-container">
      <div class="AVG-pressure">
        <div class="left-side-pressure">     <div class="title-AVG" >
-          Blood Pressure: {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg
+          Blood Pressure: <span *ngIf="userService.patientPressures.length">{{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</span>
         </div>
         <div style="font-size: 13px;" class="static-details">AVG blood pressure last 7 days</div>
-        <div style="font-size: 13px;">Previous 7 days = {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</div>
+        <div style="font-size: 13px;" *ngIf="userService.patientPressures.length">Previous {{noOfDays}} days = {{AVGSystolic}}/{{AVGDiastolic}} mmHg</div>
        </div>
          <div class="pressure" style="padding-top:0px">
              <div class="pressure-data">
                  <div class="static-details">
                    Blood Pressure:
                  </div>
-                 <div style="font-size: 14px;"> 
+                 <div *ngIf="userService.patientPressures.length" style="font-size: 14px;"> 
                     <b> {{userService.patientCalculatedPressure?.systolicAVG}}/{{userService.patientCalculatedPressure.diastolicAVG}} mmHg</b>
                    </div>
              </div>
@@ -351,11 +351,11 @@
       <form [formGroup]="addPressure" novalidate (ngSubmit)="submitPressure()">
           <div class="form-group">
             <label for="formGroupExampleInput">Systolic</label>
-            <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="systolic" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Systolic">
+            <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="systolic" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Systolic">
           </div>
           <div class="form-group">
               <label for="formGroupExampleInput">Diastolic</label>
-              <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="diastolic" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Diastolic">
+              <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="diastolic" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Diastolic">
             </div>
             <div class="form-group">
               <label for="formGroupExampleInput">Date</label>

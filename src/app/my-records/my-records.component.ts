@@ -24,6 +24,7 @@ class Upload {
 
   constructor(file:File) {
     this.file = file;
+
   }
 }
 @Component({
@@ -65,6 +66,9 @@ export class MyRecordsComponent implements OnInit {
   to=new Date();
   sevenDays:boolean;
   FourteenDays:boolean;
+  AVGSystolic:number=0;
+  AVGDiastolic:number=0;
+  noOfDays:number=7;
   constructor(private myRecordsService:MyRecordsService, private router: Router,private formBuilder8: FormBuilder,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
@@ -102,6 +106,26 @@ export class MyRecordsComponent implements OnInit {
       phone2: ['',[Validators.pattern("^[0-9]{11}$")]],
       email: ['', [Validators.required,Validators.email]],
     });
+    let dates=[]
+     Array(7).fill(7).map((i, idx) =>{
+     
+    dates.push( moment().subtract(idx, "d").format("DD/MM/YYYY"))
+     });
+let count=0;
+dates.map(el=>{
+
+  if(this.userService.patientPressures.find(e=>e.date===el)){
+    count++;
+this.AVGSystolic+=+this.userService.patientPressures.find(e=>e.date===el).systolic
+this.AVGDiastolic+=+this.userService.patientPressures.find(e=>e.date===el).diastolic
+  }
+
+   })
+   if(this.AVGSystolic||this.AVGDiastolic){
+    this.AVGSystolic=Math.round(this.AVGSystolic/count)
+    this.AVGDiastolic=Math.round(this.AVGDiastolic/count)
+   }
+
    }
    dropzoneState($event: boolean) {
     this.dropzoneActive = $event;
@@ -519,8 +543,110 @@ this.userService.GetAreas(this.userService.patientMoreDetails.cityId).subscribe(
 
   }
   getSeven(){
+    this.sevenDays=true
+    this.FourteenDays=false
+    this.lineChartLabels.length = 0
+   Array(7).fill(7).map((i, idx) =>{
+     
+     this.lineChartLabels.push( moment().subtract(idx, "d").format("DD/MM/YYYY"))
+     });
+     this.lineChartLabels.reverse()
+       this.lineChartData=[]
+  this.lineChartData[0]={data:[],label:'Systolic'}
+  this.lineChartData[1]={data:[],label:'Diastolic'}
+this.lineChartLabels.map(el=>{
+
+  if(this.userService.patientPressures.find(e=>e.date===el)){
+this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
+this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
+  }
+  else{
+    this.lineChartData[0].data.push(0)
+this.lineChartData[1].data.push(0)
+  }
+})
   }
   getFourteen(){
+    this.sevenDays=false
+    this.FourteenDays=true
+      this.lineChartLabels.length = 0
+   Array(14).fill(14).map((i, idx) =>{
+     
+     this.lineChartLabels.push( moment().subtract(idx, "d").format("DD/MM/YYYY"))
+     });
+     this.lineChartLabels.reverse()
+       this.lineChartData=[]
+  this.lineChartData[0]={data:[],label:'Systolic'}
+  this.lineChartData[1]={data:[],label:'Diastolic'}
+this.lineChartLabels.map(el=>{
+
+if(this.userService.patientPressures.find(e=>e.date===el)){
+this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
+this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
+  }
+  else{
+    this.lineChartData[0].data.push(0)
+this.lineChartData[1].data.push(0)
+  }
+})
+  }
+  getDate(){
+    
+    if(moment(this.to).format("DD/MM/YYYY")==moment(this.from).format("DD/MM/YYYY")){
+      this.lineChartLabels.length=0
+      this.lineChartLabels.push(moment(this.to).format("DD/MM/YYYY"))
+      this.lineChartData=[]
+ this.lineChartData[0]={data:[],label:'Systolic'}
+ this.lineChartData[1]={data:[],label:'Diastolic'}
+      if(this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY"))){
+        this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).systolic)
+        this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).diastolic)
+          }
+          else{
+            this.lineChartData[0].data.push(0)
+        this.lineChartData[1].data.push(0)
+          }
+    }
+    else if(!moment(this.to).diff(this.from, 'days')){
+      this.lineChartLabels.length=0
+      this.lineChartLabels.push(moment(this.from).format("DD/MM/YYYY"))
+      this.lineChartLabels.push(moment(this.from).add(1, "d").format("DD/MM/YYYY"))
+      this.lineChartData=[]
+ this.lineChartData[0]={data:[],label:'Systolic'}
+ this.lineChartData[1]={data:[],label:'Diastolic'}
+      if(this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY"))){
+        this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).systolic)
+        this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).diastolic)
+          }
+          else{
+            this.lineChartData[0].data.push(0)
+        this.lineChartData[1].data.push(0)
+          }
+    }
+    else if(moment(this.to).diff(this.from, 'days')+1>0){
+      this.lineChartLabels.length=0
+      Array(moment(this.to).diff(this.from, 'days')+1).fill(14).map((i, idx) =>{
+     
+        this.lineChartLabels.push( moment(this.from).add(idx, "d").format("DD/MM/YYYY"))
+        });
+          this.lineChartData=[]
+     this.lineChartData[0]={data:[],label:'Systolic'}
+     this.lineChartData[1]={data:[],label:'Diastolic'}
+   this.lineChartLabels.map(el=>{
+   
+   if(this.userService.patientPressures.find(e=>e.date===el)){
+   this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
+   this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
+     }
+     else{
+       this.lineChartData[0].data.push(0)
+   this.lineChartData[1].data.push(0)
+     }
+   })
+    }else{
+      alertify.error('sorry, wrong date please try again'); 
+
+    }
     
   }
 }

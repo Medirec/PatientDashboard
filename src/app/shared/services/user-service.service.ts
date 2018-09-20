@@ -199,7 +199,7 @@ date:any[]=[];
     this.patientPressures=[]
     this.patientPressuresDetails=[]
     this.date=[]
-    let url = 'http://36765264api.medirec.me/api/BloodPressure/1';
+    let url = 'http://36765264api.medirec.me/api/GetBloodPressureDetails/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -785,6 +785,30 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       }
       ), catchError(e => throwError(e)) );
     }
+        if(type==='pressure'){
+      url = `http://36765264api.medirec.me/api/BloodPressure/${data.id}`;
+      let body={
+        bloodPressureId:data.id,
+        userId:data.userId,
+        date:new Date(data.date),
+        diastolic:data.diastolic,
+        systolic:data.systolic,
+       }
+      return this.http.put(url, body,{
+        headers: headers,
+        responseType: 'text'
+      }).pipe(map((res) => {
+        
+        let pressure=this.patientPressuresDetails.find(el=>el.id===data.id)
+        let date=moment(data.date, "MM/DD/YYYY").subtract(1,'day').format("DD/MM/YYYY")
+        pressure.systolic=data.systolic
+        pressure.diastolic=data.diastolic
+        pressure.date=date
+      this.myRecordsService.pressureSet=this.patientPressuresDetails
+        return res;
+      }
+      ), catchError(e => throwError(e)) );
+    }
   }
   getAllData(type){
     this.patientAllergiesDetails=[]
@@ -1108,7 +1132,9 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       };
       return this.http.delete(url, options).pipe(map((res) => {
         const index= this.patientPressures.findIndex(el=>el.id==data.id);
+        const _index= this.patientPressuresDetails.findIndex(el=>el.id==data.id);
         this.patientPressures.splice(index,1)
+        this.patientPressuresDetails.splice(_index,1)
         this.bloodPressureCount= this.patientPressures.length
         this.myRecordsService.pressureSet=this.patientPressuresDetails
 
@@ -1308,23 +1334,34 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     return this.http.post(url, pressure, options).pipe(map((res) => 
    {
     
-     let pressure=new PatientPressure()
+     let pressureRes=new PatientPressure()
     
 
-     pressure.id=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.ID) || '';
-     pressure.userId=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
-     pressure.diastolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
-     pressure.systolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
-     pressure.date=moment(pressure.date).format("DD/MM/YYYY") || '';
+     pressureRes.id=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.ID) || '';
+     pressureRes.userId=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.USERID) || '';
+     pressureRes.diastolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC) || '';
+     pressureRes.systolic=JsonQuery.value(res, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC) || '';
+     pressureRes.date=moment(pressure.date).subtract(1,'day').format("DD/MM/YYYY") || '';
      
 
     
-      this.patientPressures.push(pressure)
-      this.patientPressuresDetails.push(pressure)
-       this.date.push(pressure.date)
-      this.PressureCalculaion()
-     this.bloodPressureCount+=1;
-     this.myRecordsService.pressureSet=this.patientPressuresDetails
+     
+if(this.patientPressures.find(el=>pressureRes.date==el.date)){
+  this.patientPressures.find(el=>pressureRes.date==el.date).diastolic=( +this.patientPressures.find(el=>pressureRes.date==el.date).diastolic+(+pressureRes.diastolic))/2+'';
+  this.patientPressures.find(el=>pressureRes.date==el.date).systolic=( +this.patientPressures.find(el=>pressureRes.date==el.date).systolic+(+pressureRes.systolic))/2+'';
+}
+else{
+  this.patientPressures.push(pressureRes)
+
+  
+  this.diastolic.push(+pressureRes.diastolic)
+  this.systolic.push(+pressureRes.systolic)
+ this.bloodPressureCount+=1;
+  this.date.push(pressureRes.date)
+}
+this.patientPressuresDetails.push(pressureRes)
+this.PressureCalculaion()
+this.myRecordsService.pressureSet=this.patientPressuresDetails
 
      return res;
     }
@@ -1353,7 +1390,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     ), catchError(e => throwError(e)) );
     
   }
-  GetAreas(cityId: string) {
+  GetAreas(cityId) {
 
     let url = `http://36765264api.medirec.me/api/Areas/${cityId}`;
     let headers = new HttpHeaders();
@@ -1380,7 +1417,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     ), catchError(e => throwError(e)) );
     
   }
-  GetCities(countryId?: string) {
+  GetCities(countryId?) {
 
     let url = 'http://36765264api.medirec.me/api/Cities';
     let headers = new HttpHeaders();

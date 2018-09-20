@@ -113,7 +113,7 @@
   </table>
 </div>
 </div>
-<div id="datatable-editable_wrapper" *ngIf="myRecordsService.pressureSet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+<div id="datatable-editable_wrapper"  class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
   <div class="row">
     <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
       <table class="table table-bordered table-striped mb-0 dataTable no-footer" id="datatable-editable" role="grid">
@@ -131,10 +131,10 @@
       <td style="padding: 5px 20px;" *ngIf="pressureItem.id!==data.id" class="">{{data.diastolic}}</td>
       <td style="padding: 5px 20px;" *ngIf="pressureItem.id===data.id" class=""><input class="form-control" type="text" [(ngModel)]="pressureItem.diastolic"   ></td>
       <td style="padding: 5px 20px;" *ngIf="pressureItem.id!==data.id" class="">{{data.date}}</td>
-      <td style="padding: 5px 20px;" *ngIf="pressureItem.id===data.id" class=""><ng-datepicker  class="form-date" [(ngModel)]="pressureItem.date" ></ng-datepicker></td>
+      <td style="padding: 5px 20px;" *ngIf="pressureItem.id===data.id" class=""><input class="form-control" type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="pressureItem.date" required /></td>
       
       <td style="padding: 0px 20px;" class="actions">
-        <a style="font-size: 23px;margin-right: 25px"  *ngIf="pressureItem.id===data.id" class=" on-editing save-row" (click)="submitPressure()"><i class="fa fa-save"></i></a>
+        <a style="font-size: 23px;margin-right: 25px"  *ngIf="pressureItem.id===data.id" class=" on-editing save-row" (click)="submit()"><i class="fa fa-save"></i></a>
         <a style="font-size: 23px;margin-right: 25px" *ngIf="pressureItem.id===data.id" class=" on-editing cancel-row" (click)="cancel()"><i class="fa fa-times"></i></a>
         <a style="font-size: 23px;margin-right: 25px" *ngIf="pressureItem.id!==data.id" class="on-default edit-row" (click)="onClick(data)"><i class="fa fa-pencil"></i></a>
         <a style="font-size: 23px;margin-right: 25px"  *ngIf="pressureItem.id!==data.id" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
@@ -359,6 +359,31 @@
                 </form>
           </div>
         </ng-template> 
-  
+        <ng-template #pressure>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">Blood Pressure</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="addPressure" novalidate (ngSubmit)="submitPressure()">
+                  <div class="form-group">
+                    <label for="formGroupExampleInput">Systolic</label>
+                    <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="systolic" type="number"class="form-control" id="formGroupExampleInput" placeholder="Enter Systolic">
+                  </div>
+                  <div class="form-group">
+                      <label for="formGroupExampleInput">Diastolic</label>
+                      <input [ngClass]="{'error':showErrorMsgCondition}" (keyup)="medicationNameChange()" formControlName="diastolic" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Diastolic">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Date</label>
+                    <input type="text" placeholder="dd.mm.yyyy" class="form-control" bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" formControlName="date" [(ngModel)]="date" required />
+                    </div>
+              
+                  <button [disabled]="!addPressure.valid" type="submit" class="btn btn-edit">Submit</button>
+                </form>
+          </div>
+        </ng-template>
   </section>
   

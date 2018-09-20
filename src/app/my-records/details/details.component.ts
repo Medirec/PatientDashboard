@@ -57,6 +57,7 @@ export class DetailsComponent implements OnInit ,OnDestroy{
   @ViewChild('contact') contact;
   @ViewChild('body') body;
   @ViewChild('immunization') immunization;
+  @ViewChild('pressure') pressure;
   name:string;
   ngOnDestroy(): void {
     this.myRecordsService.dataSet=[]
@@ -181,6 +182,10 @@ this.name='Allergies'
     this.modalRef = this.modalService.show(this.immunization);
         
         break;
+        case 'pressure':
+        this.modalRef = this.modalService.show(this.pressure);
+            
+            break;
       default:
         break;
     }
@@ -433,6 +438,31 @@ else if(this.immunizationItem.id){
 
     alertify.error('sorry, somthing went wrong'); 
   })
+}else if(this.pressureItem.id){
+   let _date=moment(this.pressureItem.date, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+      const dateRes=_date.split('/')
+      _date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
+     
+      this.pressureItem.date=_date;
+     
+  this.userService.update(this.pressureItem,this.myRecordsService.type).subscribe(()=>{
+    this.editItem=new PatientConditions()
+    this.bodyItem=new PatientBody()
+    this.immunizationItem=new PatientImmunization()
+    this.pressureItem=new PatientPressure()
+    this.appService.showLoader=false
+
+    alertify.success('record successfully updated'); 
+
+  },()=>   {this.editItem=new PatientConditions()
+    this.bodyItem=new PatientBody()
+    this.editContact=new PatientContacts()
+    this.pressureItem=new PatientPressure()
+
+    this.appService.showLoader=false
+
+    alertify.error('sorry, somthing went wrong'); 
+  })
 }
   else{
     let date=moment(this.bodyItem.date, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
@@ -501,18 +531,48 @@ delete(data){
     this.editItem=new PatientConditions()
     this.editContact=new PatientContacts()
     this.bodyItem=new PatientBody()
+    this.pressureItem=new PatientPressure()
     this.appService.showLoader=false
 
     alertify.success('record successfully deleted'); 
 
   },()=>   {this.editItem=new PatientConditions()
-  this.editContact=new PatientContacts()
-  this.bodyItem=new PatientBody()
+    this.editItem=new PatientConditions()
+    this.editContact=new PatientContacts()
+    this.bodyItem=new PatientBody()
+    this.pressureItem=new PatientPressure()
   this.appService.showLoader=false
 
   alertify.error('sorry, somthing went wrong'); 
 })
   
 }
+submitPressure(){
+  if (!this.addPressure.valid) {
 
+  }
+  else{
+    
+
+    this.modalRef.hide()
+    this.appService.showLoader=true 
+    let date=moment(this.addPressure.controls['date'].value, "DD/MM/YYYY").add(1,'day').format("DD/MM/YYYY")
+    const dateRes=date.split('/')
+    date=dateRes[1]+'/'+dateRes[0]+'/'+dateRes[2]
+    this.userService.addPressure({
+      userId:1,
+      diastolic:this.addPressure.controls['diastolic'].value,
+      systolic:this.addPressure.controls['systolic'].value,
+      date:new Date(date)
+    }).subscribe(()=>{
+     this.appService.showLoader=false 
+  alertify.success('record successfully added'); 
+
+    },()=>{
+     this.appService.showLoader=false 
+     alertify.error('sorry, somthing went wrong'); 
+
+    })
+  }
+}
 }
