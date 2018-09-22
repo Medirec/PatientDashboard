@@ -265,7 +265,7 @@
         <div class="form-group pressure-top" >
           <div class="input-container">
               <label class="label-pressure" for="contry">From</label>
-            <input class="input-pressure form-control"  type="text" placeholder="dd.mm.yyyy"  bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"  [(ngModel)]="from" required />
+            <input class="input-pressure form-control"  type="text" placeholder="dd.mm.yyyy"  bsDatepicker [outsideClick]="true" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"   (ngModelChange)="dateChange()" [(ngModel)]="from" required />
 
           </div>
           <div class="input-container">

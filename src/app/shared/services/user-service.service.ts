@@ -146,6 +146,19 @@ date:any[]=[];
     }
     ), catchError(e => throwError(e)) );
   }
+  GetPatientResources(userId?: string) {
+    let url = 'http://36765264api.medirec.me/api/Resources/1'
+    let headers = new HttpHeaders();
+    headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+    const options = {
+      headers: headers
+    };
+    return this.http.get(url, options).pipe(map((res:any[]) => {
+      console.log(res) 
+      return res;
+    }
+    ), catchError(e => throwError(e)) );
+  }
   GetPatientImmunization(userId?: string) {
     this.patientImmunization=[]
     let url = 'http://36765264api.medirec.me/api/Immunizations/1'

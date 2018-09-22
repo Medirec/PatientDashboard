@@ -42,6 +42,7 @@ export class MyRecordsComponent implements OnInit {
     id:2,
     value:'Clinic'
   }]
+  change:boolean;
   dateNext= new Date();
   date=new Date();
   contactError:boolean;
@@ -566,6 +567,10 @@ this.lineChartData[1].data.push(0)
   }
 })
   }
+  dateChange(){
+   
+    this.change=true
+  }
   getFourteen(){
     this.sevenDays=false
     this.FourteenDays=true
@@ -607,7 +612,7 @@ this.lineChartData[1].data.push(0)
         this.lineChartData[1].data.push(0)
           }
     }
-    else if(!moment(this.to).diff(this.from, 'days')){
+    else if(moment(this.to).diff(this.from, 'days')==0){
       this.lineChartLabels.length=0
       this.lineChartLabels.push(moment(this.from).format("DD/MM/YYYY"))
       this.lineChartLabels.push(moment(this.from).add(1, "d").format("DD/MM/YYYY"))
@@ -625,8 +630,14 @@ this.lineChartData[1].data.push(0)
     }
     else if(moment(this.to).diff(this.from, 'days')+1>0){
       this.lineChartLabels.length=0
-      Array(moment(this.to).diff(this.from, 'days')+1).fill(14).map((i, idx) =>{
-     
+      console.log(moment(this.to).diff(this.from, 'days')+1);
+      console.log(moment(this.to).diff(this.from, 'days'));
+      let len=(moment(this.to,"DD/MM/YYYY").diff(moment(this.from,"DD/MM/YYYY"), 'days'))+1
+      if(!this.change){
+
+        len+=1;
+      }
+      Array(len).fill(14).map((i, idx) =>{
         this.lineChartLabels.push( moment(this.from).add(idx, "d").format("DD/MM/YYYY"))
         });
           this.lineChartData=[]
