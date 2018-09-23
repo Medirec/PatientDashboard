@@ -247,10 +247,10 @@
     <header class="pressure-title" >
 
         <div class="timeline-header">
-         <a class="nav-link" (click)="openModal(pressure)" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-plus"></i><span class="addText">  Add</span></a>
+         <a class="nav-link" (click)="openModal(pressure)" style="color: #5a5a5a;cursor: pointer;"  ><i  aria-hidden="true" class="fa fa-plus"></i><span class="addText">  Add</span></a>
 
           <div>Blood Pressure</div>
-         <a class="nav-link" [ngClass]="{'dimmed':!userService.patientPressures.length}" (click)="details('pressure')" style="color: #5a5a5a;"  ><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
+         <a class="nav-link" [ngClass]="{'dimmed':!userService.patientPressures.length}" (click)="details('pressure')" style="color: #5a5a5a;cursor: pointer;"  ><i  aria-hidden="true" class="fa fa-bars"></i><span class="addText">  More Details</span></a>
         </div>
 
 
