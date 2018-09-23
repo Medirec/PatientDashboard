@@ -114,14 +114,14 @@ export class MyRecordsComponent implements OnInit {
      });
 let count=0;
 dates.map(el=>{
-
   if(this.userService.patientPressures.find(e=>e.date===el)){
-    count++;
+    count+=1;
 this.AVGSystolic+=+this.userService.patientPressures.find(e=>e.date===el).systolic
 this.AVGDiastolic+=+this.userService.patientPressures.find(e=>e.date===el).diastolic
   }
 
    })
+   
    if(this.AVGSystolic||this.AVGDiastolic){
     this.AVGSystolic=Math.round(this.AVGSystolic/count)
     this.AVGDiastolic=Math.round(this.AVGDiastolic/count)
@@ -553,9 +553,15 @@ this.userService.GetAreas(this.userService.patientMoreDetails.cityId).subscribe(
        this.lineChartData=[]
   this.lineChartData[0]={data:[],label:'Systolic'}
   this.lineChartData[1]={data:[],label:'Diastolic'}
-this.lineChartLabels.map(el=>{
-
-  if(this.userService.patientPressures.find(e=>e.date===el)){
+  let count=0
+  this.userService.patientCalculatedPressure.systolicAVG=0
+  this.userService.patientCalculatedPressure.diastolicAVG=0
+ this.lineChartLabels.map(el=>{
+ 
+ if(this.userService.patientPressures.find(e=>e.date===el)){
+  count+=1
+  this.userService.patientCalculatedPressure.systolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).systolic
+  this.userService.patientCalculatedPressure.diastolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).diastolic
 this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
 this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
   }
@@ -564,6 +570,10 @@ this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.dat
 this.lineChartData[1].data.push(0)
   }
 })
+this.userService.patientCalculatedPressure.systolicAVG=Math.round(this.userService.patientCalculatedPressure.systolicAVG/count)
+   this.userService.patientCalculatedPressure.diastolicAVG=Math.round(this.userService.patientCalculatedPressure.diastolicAVG/count)
+   this.userService.patientCalculatedPressure.systolic=((this.userService.patientCalculatedPressure.diastolicAVG)/140)*100+"%"
+  this.userService.patientCalculatedPressure.diastolic=((this.userService.patientCalculatedPressure.diastolicAVG)/90)*100+"%"
   }
   dateChange(){
     this.change=true
@@ -580,9 +590,15 @@ this.lineChartData[1].data.push(0)
        this.lineChartData=[]
   this.lineChartData[0]={data:[],label:'Systolic'}
   this.lineChartData[1]={data:[],label:'Diastolic'}
-this.lineChartLabels.map(el=>{
-
-if(this.userService.patientPressures.find(e=>e.date===el)){
+  let count=0
+  this.userService.patientCalculatedPressure.systolicAVG=0
+  this.userService.patientCalculatedPressure.diastolicAVG=0
+ this.lineChartLabels.map(el=>{
+ 
+ if(this.userService.patientPressures.find(e=>e.date===el)){
+  count+=1
+  this.userService.patientCalculatedPressure.systolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).systolic
+  this.userService.patientCalculatedPressure.diastolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).diastolic
 this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
 this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
   }
@@ -591,6 +607,10 @@ this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.dat
 this.lineChartData[1].data.push(0)
   }
 })
+this.userService.patientCalculatedPressure.systolicAVG=Math.round(this.userService.patientCalculatedPressure.systolicAVG/count)
+   this.userService.patientCalculatedPressure.diastolicAVG=Math.round(this.userService.patientCalculatedPressure.diastolicAVG/count)
+   this.userService.patientCalculatedPressure.systolic=((this.userService.patientCalculatedPressure.diastolicAVG)/140)*100+"%"
+  this.userService.patientCalculatedPressure.diastolic=((this.userService.patientCalculatedPressure.diastolicAVG)/90)*100+"%"
   }
   getDate(){
     
@@ -638,9 +658,15 @@ this.lineChartData[1].data.push(0)
           this.lineChartData=[]
      this.lineChartData[0]={data:[],label:'Systolic'}
      this.lineChartData[1]={data:[],label:'Diastolic'}
+     let count=0
+    this.userService.patientCalculatedPressure.systolicAVG=0
+    this.userService.patientCalculatedPressure.diastolicAVG=0
    this.lineChartLabels.map(el=>{
    
    if(this.userService.patientPressures.find(e=>e.date===el)){
+     count+=1
+     this.userService.patientCalculatedPressure.systolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).systolic
+     this.userService.patientCalculatedPressure.diastolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).diastolic
    this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
    this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
      }
@@ -649,6 +675,12 @@ this.lineChartData[1].data.push(0)
    this.lineChartData[1].data.push(0)
      }
    })
+   
+   this.userService.patientCalculatedPressure.systolicAVG=Math.round(this.userService.patientCalculatedPressure.systolicAVG/count)
+   this.userService.patientCalculatedPressure.diastolicAVG=Math.round(this.userService.patientCalculatedPressure.diastolicAVG/count)
+   this.userService.patientCalculatedPressure.systolic=((this.userService.patientCalculatedPressure.diastolicAVG)/140)*100+"%"
+  this.userService.patientCalculatedPressure.diastolic=((this.userService.patientCalculatedPressure.diastolicAVG)/90)*100+"%"
+
     }else{
       alertify.error('sorry, wrong date please try again'); 
 
