@@ -568,7 +568,6 @@ this.lineChartData[1].data.push(0)
 })
   }
   dateChange(){
-   
     this.change=true
   }
   getFourteen(){
