@@ -16,6 +16,8 @@ import { MyRecordsService } from '../../my-records/my-records.service';
 import { PatientVaccines } from '../model/patient-vaccines.model';
 import { City } from '../model/cities.model';
 import { Area } from '../model/area.model';
+import { PatientResources } from '../model/patient-resources.model';
+import _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,8 @@ patientContacts:PatientContacts[]=[];
 patientContactsDetails:PatientContacts[]=[];
 patientImmunization:PatientImmunization[]=[];
 patientImmunizations:PatientImmunization[]=[];
+patientResources:PatientResources[]=[];
+patientResourcesDetails:PatientResources[]=[];
 patientCalculatedPressure:PatientPressure=new PatientPressure();
 resourcesCount:number=0;
 medicalDeviceCount:number=0;
@@ -147,6 +151,7 @@ date:any[]=[];
     ), catchError(e => throwError(e)) );
   }
   GetPatientResources(userId?: string) {
+    this.patientResources=[]
     let url = 'http://36765264api.medirec.me/api/Resources/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
@@ -154,6 +159,16 @@ date:any[]=[];
       headers: headers
     };
     return this.http.get(url, options).pipe(map((res:any[]) => {
+      res.forEach(element => {
+        let resource=new PatientResources()
+        resource.name=JsonQuery.value(element, JSON_PATHS.RESOURCES.NAME) || '';
+        resource.imageUrl=JsonQuery.value(element, JSON_PATHS.RESOURCES.IMAGEURL) || '';
+        resource.date=JsonQuery.value(element, JSON_PATHS.RESOURCES.Date) || '';
+        resource.resourcesId=JsonQuery.value(element, JSON_PATHS.RESOURCES.ID) || '';
+        resource.userId=JsonQuery.value(element, JSON_PATHS.RESOURCES.USERID) || '';
+       
+       this.patientResources.push(resource)
+       });
       return res;
     }
     ), catchError(e => throwError(e)) );
@@ -229,8 +244,8 @@ date:any[]=[];
         this.patientPressuresDetails.push(pressureDetails)
        let pressure=this.patientPressures.find(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM/YYYY'))
         if(pressure){
-          pressure.diastolic=((+pressure.diastolic+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DIASTOLIC)) /2)+""
-          pressure.systolic=((+pressure.systolic+JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.SYSTOLIC)) /2)+""
+          pressure.diastolic=Math.round(_.sumBy(this.patientPressuresDetails.filter(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM/YYYY')),'diastolic')/this.patientPressuresDetails.filter(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM/YYYY')).length)+''
+          pressure.systolic=Math.round(_.sumBy(this.patientPressuresDetails.filter(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM/YYYY')),'systolic')/this.patientPressuresDetails.filter(el=>el.date===moment(JsonQuery.value(element, JSON_PATHS.PATIENTPRESSURE.DATE)).format('DD/MM/YYYY')).length)+''
         }
         else{
           pressure=new PatientPressure();

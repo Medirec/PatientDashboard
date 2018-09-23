@@ -516,7 +516,14 @@
                     <progress class="progress is-success" min=1 max=100 value="{{ currentUpload?.progress }}"></progress>
                     Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
                 </div> -->
-                <div class="box" >
+                <ul *ngIf="userService.patientResources.length">
+                    <li *ngFor="let medication of userService.patientResources"> <a    style="cursor: pointer;" class="email" [href]="medication?.imageUrl" target="_blank">{{medication?.name}}</a></li>
+                    
+                  </ul>
+                  <hr *ngIf="userService.patientResources.length">
+                  <button *ngIf="userService.patientResources.length" type="button" class="btn-modal" (click)="openModal(medication)">Add</button>
+                  <button *ngIf="userService.patientResources.length" type="button" class="btn-modal btn-details" [disabled]="!userService.patientMedication.length" (click)="details('medication')">Details</button>
+                <div *ngIf="!userService.patientResources.length" class="box" >
                 
                     <div class="file-upload">File Uploads</div>
                 
