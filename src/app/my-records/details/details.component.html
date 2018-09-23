@@ -113,7 +113,7 @@
   </table>
 </div>
 </div>
-<div id="datatable-editable_wrapper"  class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+<div id="datatable-editable_wrapper"  *ngIf="myRecordsService.pressureSet.length" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
   <div class="row">
     <div class="col-lg-6"><div class="dataTables_length" id="datatable-editable_length"></div></div>
         <div class="col-lg-6"><div id="datatable-editable_filter" class="dataTables_filter"><label><input type="search" [(ngModel)]="filterChar" class="form-control pull-right" placeholder="Search..." aria-controls="datatable-editable"></label></div></div></div><div class="table-responsive">

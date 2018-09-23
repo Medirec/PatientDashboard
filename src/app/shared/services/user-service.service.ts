@@ -154,7 +154,6 @@ date:any[]=[];
       headers: headers
     };
     return this.http.get(url, options).pipe(map((res:any[]) => {
-      console.log(res) 
       return res;
     }
     ), catchError(e => throwError(e)) );

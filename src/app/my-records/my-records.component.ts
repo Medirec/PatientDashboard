@@ -396,11 +396,9 @@ this.AVGDiastolic+=+this.userService.patientPressures.find(e=>e.date===el).diast
 
   // events
   public chartClicked(e:any):void {
-    console.log(e);
   }
  
   public chartHovered(e:any):void {
-    console.log(e);
   }
 
   public editContact(){
@@ -629,8 +627,6 @@ this.lineChartData[1].data.push(0)
     }
     else if(moment(this.to).diff(this.from, 'days')+1>0){
       this.lineChartLabels.length=0
-      console.log(moment(this.to).diff(this.from, 'days')+1);
-      console.log(moment(this.to).diff(this.from, 'days'));
       let len=(moment(this.to,"DD/MM/YYYY").diff(moment(this.from,"DD/MM/YYYY"), 'days'))+1
       if(!this.change){
 

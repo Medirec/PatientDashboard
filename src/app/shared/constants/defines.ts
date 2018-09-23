@@ -86,5 +86,12 @@ export const JSON_PATHS = {
         NAMEAR: '$.nameAr',
         CITYID: '$.cityId',
         CODE: '$.areaCode',
+      },
+      RESOURCES: {
+        ID: '$.resourcesId',
+        NAME: '$.name',
+        USERID: '$.userId',
+        Date: '$.date',
+        IMAGEURL: '$.imageUrl',
       }
 }
