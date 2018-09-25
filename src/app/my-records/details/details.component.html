@@ -54,13 +54,11 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of myRecordsService.resourceSet|filter:filterChar" data-item-id="25" role="row" >
-        <td style="padding: 5px 20px;" *ngIf="editItem.resourcesId!==data.resourcesId" class=""> <a    style="cursor: pointer;" class="email" [href]="data?.imageUrl" target="_blank">{{data?.name}}</a></td>
-        <td style="padding: 5px 20px;" *ngIf="editItem.resourcesId===data.resourcesId" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
-        <td style="padding: 5px 20px;" *ngIf="editItem.resourcesId!==data.resourcesId" class=""> {{data?.date}}</td>
-        <td style="padding: 5px 20px;" *ngIf="editItem.resourcesId===data.resourcesId" class=""><input class="form-control" type="text" [(ngModel)]="editItem.name"   ></td>
+        <td style="padding: 5px 20px;"  class=""> <a    style="cursor: pointer;" class="email" [href]="data?.imageUrl" target="_blank">{{data?.name}}</a></td>
+        <td style="padding: 5px 20px;" class=""> {{data?.date}}</td>
         <td style="padding: 0px 20px;" class="actions">
 
-          <a style="font-size: 23px;margin-right: 25px"  *ngIf="editItem.resourcesId!==data.resourcesId" class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
+          <a style="font-size: 23px;margin-right: 25px"   class="on-default remove-row" (click)="delete(data)"><i class="fa fa-trash-o"></i></a>
         </td>
       </tr>
     </tbody>
