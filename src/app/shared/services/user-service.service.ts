@@ -1246,7 +1246,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       userId:contact.userId,
       fullName:contact.fullName,
       phoneNumber01:contact.phoneNumber01,
-      phoneNumber02:contact.phoneNumber02,
+      phoneNumber02:contact.phoneNumber02||null,
       typeOfRelation:contact.typeOfRelation,
     }
     
