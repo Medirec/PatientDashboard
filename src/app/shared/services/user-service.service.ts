@@ -163,8 +163,7 @@ date:any[]=[];
         let resource=new PatientResources()
         resource.name=JsonQuery.value(element, JSON_PATHS.RESOURCES.NAME) || '';
         resource.imageUrl=JsonQuery.value(element, JSON_PATHS.RESOURCES.IMAGEURL) || '';
-        resource.date=JsonQuery.value(element, JSON_PATHS.RESOURCES.Date) || '';
-        resource.resourcesId=JsonQuery.value(element, JSON_PATHS.RESOURCES.ID) || '';
+        resource.date=JsonQuery.value(element, JSON_PATHS.RESOURCES.Date)?moment(JsonQuery.value(element, JSON_PATHS.RESOURCES.Date)).format('DD/MM/YYYY') : '';         resource.resourcesId=JsonQuery.value(element, JSON_PATHS.RESOURCES.ID) || '';
         resource.userId=JsonQuery.value(element, JSON_PATHS.RESOURCES.USERID) || '';
        
        this.patientResources.push(resource)
@@ -340,7 +339,9 @@ this.myRecordsService.dataSet=this.patientAllergiesDetails
   this.allergiesCount+=1
   return res;
   }
-  ))
+  ),catchError(e => {
+    this.myRecordsService.dataSet=this.patientAllergiesDetails
+  return throwError(e)}))
   }
   addConditions(condition) {
     
@@ -365,7 +366,8 @@ this.myRecordsService.dataSet=this.patientConditionsDetails
    this.conditionsCount+=1
    return res;
   }
-  ))
+  ),catchError(e => {this.myRecordsService.dataSet=this.patientConditionsDetails
+    return throwError(e)}))
   }
   GetPatientMedication(userId?: string) {
     this.patientMedication=[]
@@ -409,7 +411,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
    this.medicationCount+=1
    return res;}
-  ))
+  ), catchError(e => {this.myRecordsService.dataSet=this.patientMedicationDetails
+    return throwError(e)}) );
   }
   GetPatientMedicalDevice(userId?: string) {
     this.patientMedicalDevice=[]
@@ -454,7 +457,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
    this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
    this.medicalDeviceCount+=1
    return res;
-   }))
+   }),catchError(e =>  {this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
+    return throwError(e)}) );
   }
   GetPatientContacts(userId?: string) {
     this.patientContacts=[]
@@ -669,7 +673,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
        return res;
      }
-     ), catchError(e => throwError(e)) );
+     ), catchError(e =>{this.myRecordsService.dataSet=this.patientAllergiesDetails
+      return throwError(e)}) );
     }
     if(type==='condition'){
       url = `http://36765264api.medirec.me/api/Condations/${data.id}`;
@@ -694,7 +699,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>     {  this.myRecordsService.dataSet=this.patientConditionsDetails
+        return throwError(e)}) );
     }
     if(type==='medication'){
       url = `http://36765264api.medirec.me/api/medications/${data.id}`;
@@ -719,7 +725,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => {this.myRecordsService.dataSet=this.patientMedicationDetails
+        return throwError(e)}) );
     }
     if(type==='device'){
       url = `http://36765264api.medirec.me/api/MedicalDevices/${data.id}`;
@@ -744,7 +751,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>{ this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
+        return throwError(e)}) );
     }
 
     if(type==='body'){
@@ -769,7 +777,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       this.myRecordsService.bodySet=this.patientBodies
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => {this.myRecordsService.bodySet=this.patientBodies
+        return throwError(e)}) );
     }
     if(type==='immunization'){
       url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
@@ -810,7 +819,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>  {this.myRecordsService.immunizationtSet=this.patientImmunizations
+        return throwError(e)}) );
     }
         if(type==='pressure'){
       url = `http://36765264api.medirec.me/api/BloodPressure/${data.id}`;
@@ -834,7 +844,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       this.myRecordsService.pressureSet=this.patientPressuresDetails
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => {this.myRecordsService.pressureSet=this.patientPressuresDetails
+        return throwError(e)}) );
     }
   }
   getAllData(type){
@@ -847,11 +858,34 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     this.patientPressuresDetails=[]
     this.patientImmunizations=[]
     this.patientBodies=[]
+    this.patientResourcesDetails=[]
     this.myRecordsService.bodySet=[]
     this.myRecordsService.immunizationtSet=[]
     this.myRecordsService.dataSet=[]
     this.myRecordsService.pressureSet=[]
-    this.myRecordsService.contactSet=[]
+    this.myRecordsService.resourceSet=[]
+    if(type==='resource'){
+      let url = 'http://36765264api.medirec.me/api/GetResourcesDetails/1'
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.get(url, options).pipe(map((res:any[]) => {
+        res.forEach(element => {
+          let resource=new PatientResources()
+          resource.name=JsonQuery.value(element, JSON_PATHS.RESOURCES.NAME) || '';
+          resource.imageUrl=JsonQuery.value(element, JSON_PATHS.RESOURCES.IMAGEURL) || '';
+          resource.date=JsonQuery.value(element, JSON_PATHS.RESOURCES.Date)?moment(JsonQuery.value(element, JSON_PATHS.RESOURCES.Date)).format('DD/MM/YYYY') : ''; 
+          resource.resourcesId=JsonQuery.value(element, JSON_PATHS.RESOURCES.ID) || '';
+          resource.userId=JsonQuery.value(element, JSON_PATHS.RESOURCES.USERID) || '';
+         
+         this.patientResourcesDetails.push(resource)
+       });
+      return res;
+    }
+      ), catchError(e => throwError(e)) );
+    }
     if(type==='immunization'){
       let url = 'http://36765264api.medirec.me/api/GetImmunizationsDetails/1'
       let headers = new HttpHeaders();
@@ -1042,7 +1076,27 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
     return res
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>  {this.myRecordsService.dataSet=this.patientAllergiesDetails
+        return throwError(e)}) );
+    }
+    if(type==='resource'){
+      let url = `http://36765264api.medirec.me/api/Resources/${data.resourcesId}`
+      let headers = new HttpHeaders();
+      headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
+      const options = {
+        headers: headers
+      };
+      return this.http.delete(url, options).pipe(map((res) => {
+        const index= this.patientResourcesDetails.findIndex(el=>el.resourcesId==data.resourcesId);
+        this.patientResourcesDetails.splice(index,1)
+        this.patientResources.splice(index,1)
+        this.conditionsCount= this.patientResourcesDetails.length
+    this.myRecordsService.resourceSet=this.patientResourcesDetails
+
+        return res;
+      }
+      ), catchError(e => {this.myRecordsService.resourceSet=this.patientResourcesDetails
+        return throwError(e) }     ) );
     }
     if(type==='condition'){
       let url = `http://36765264api.medirec.me/api/Condations/${data.id}`
@@ -1060,7 +1114,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => {this.myRecordsService.dataSet=this.patientConditionsDetails
+        return throwError(e)}) );
     }
     if(type==='medication'){
       let url = `http://36765264api.medirec.me/api/medications/${data.id}`;
@@ -1078,7 +1133,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>  {this.myRecordsService.dataSet=this.patientMedicationDetails
+        return throwError(e)}) );
     }
     if(type==='device'){
       let url = `http://36765264api.medirec.me/api/MedicalDevices/${data.id}`;
@@ -1096,7 +1152,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => { this.myRecordsService.dataSet=this.patientMedicalDeviceDetails
+        return throwError(e)}) );
     }
     if(type==='contact'){
       let url = `http://36765264api.medirec.me/api/Contacts/${data.id}`;
@@ -1114,7 +1171,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>  {this.myRecordsService.contactSet=this.patientContactsDetails
+        return throwError(e)}) );
     }
     if(type==='body'){
       let url = `http://36765264api.medirec.me/api/HumanBodies/${data.id}`;
@@ -1130,7 +1188,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         this.myRecordsService.bodySet=this.patientBodies
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => {this.myRecordsService.bodySet=this.patientBodies
+        return throwError(e)}) );
     }
     if(type==='immunization'){
       let url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
@@ -1148,7 +1207,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e => { this.myRecordsService.immunizationtSet=this.patientImmunizations   
+        return throwError(e)}   ) );
     }
     if(type==='pressure'){
       let url = `http://36765264api.medirec.me/api/BloodPressure/${data.id}`;
@@ -1167,7 +1227,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
         return res;
       }
-      ), catchError(e => throwError(e)) );
+      ), catchError(e =>  {this.myRecordsService.pressureSet=this.patientPressuresDetails
+        return throwError(e)}) );
     }
   }
   editContact(contact:PatientContacts){
@@ -1211,7 +1272,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
      this.myRecordsService.contactSet=this.patientContactsDetails
     
    
-   }))
+   }), catchError(e =>   {  this.myRecordsService.contactSet=this.patientContactsDetails
+    return throwError(e)}) );
   }
   addContact(contact){
     const url = `http://36765264api.medirec.me/api/Contacts`
@@ -1241,7 +1303,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
      return res;
    
-   }))
+   }), catchError(e =>   {  this.myRecordsService.contactSet=this.patientContactsDetails
+    return throwError(e)}   ) );
   }
   editPatient(patient:PatientDetails){
     const url = `http://36765264api.medirec.me/api/patients/6`
@@ -1309,7 +1372,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
      this.humanBodiesCount+=1;
      return res;
     }
-    ), catchError(e => throwError(e)) );
+    ), catchError(e =>{  this.myRecordsService.bodySet=this.patientBodies
+      return throwError(e)}) );
   }
   addImmunization(immunization:PatientImmunization){
     const url = `http://36765264api.medirec.me/api/Immunizations`
@@ -1347,7 +1411,8 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
      return res;
     }
-    ), catchError(e => throwError(e)) );
+    ), catchError(e => {this.myRecordsService.immunizationtSet=this.patientImmunizations
+      return throwError(e)}) );
   }
   addPressure(pressure){
     const url = `http://36765264api.medirec.me/api/BloodPressure`
@@ -1392,7 +1457,8 @@ this.myRecordsService.pressureSet=this.patientPressuresDetails
 
      return res;
     }
-    ), catchError(e => throwError(e)) );
+    ), catchError(e =>{ this.myRecordsService.pressureSet=this.patientPressuresDetails
+      return throwError(e)}) );
   }
   GetVaccines(userId?: string) {
     this.vaccines=[]

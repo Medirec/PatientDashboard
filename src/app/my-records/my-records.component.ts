@@ -70,7 +70,53 @@ export class MyRecordsComponent implements OnInit {
   AVGSystolic:number=0;
   AVGDiastolic:number=0;
   noOfDays:number=7;
+  lineChartLegend:boolean;
+  lineChartType:string;
+  lineChartData:Array<any>=[];
+  lineChartLabels:Array<any>=[];
+  lineChartOptions:any;
+  lineChartColors:Array<any> =[]
   constructor(private myRecordsService:MyRecordsService, private router: Router,private formBuilder8: FormBuilder,private formBuilder7: FormBuilder,private formBuilder6: FormBuilder,private formBuilder5: FormBuilder,private formBuilder4: FormBuilder,private formBuilder3: FormBuilder,private formBuilder2: FormBuilder,private formBuilder: FormBuilder,private userService:UserService,private modalService: BsModalService,private appService:AppService) {
+    this.lineChartData = [
+      {data: this.userService.systolic, label: 'Systolic'},
+      {data:  this.userService.diastolic, label: 'Diastolic'},
+    ];
+    this.lineChartLabels = this.userService.date;
+    this.lineChartOptions = {
+      responsive: true, scales : { yAxes: [{ ticks: { steps : 40, stepValue : 40, max : 140,min:0 } }] } ,
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            
+            const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+            return  datasetLabel + ': ' + tooltipItem.yLabel ;
+          }
+        }
+      },
+      
+    };
+    this.lineChartColors= [
+      { // grey
+        backgroundColor: '#33bdb836',
+        borderColor: '#33bdb8',
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#33bdb8',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      },
+      { // dark grey
+        backgroundColor: '#33bdb836',
+        borderColor: '#33bdb8',
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#33bdb8',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,83,96,1)'
+      },
+  
+    ];
+     this.lineChartLegend = false;
+     this.lineChartType = 'line';
+   
     this.addAllergyForm = formBuilder.group({
       name: ['', [Validators.required]],
     });
@@ -352,47 +398,7 @@ this.AVGDiastolic+=+this.userService.patientPressures.find(e=>e.date===el).diast
       })
     }
   }
-  // lineChart
-  public lineChartData:Array<any> = [
-    {data: this.userService.systolic, label: 'Systolic'},
-    {data:  this.userService.diastolic, label: 'Diastolic'},
-  ];
-  public lineChartLabels:Array<any> = this.userService.date;
-  public lineChartOptions:any = {
-    responsive: true, scales : { yAxes: [{ ticks: { steps : 40, stepValue : 40, max : 140,min:0 } }] } ,
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem, data) {
-          
-          const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-          return  datasetLabel + ': ' + tooltipItem.yLabel ;
-        }
-      }
-    },
-    
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: '#33bdb836',
-      borderColor: '#33bdb8',
-      pointBackgroundColor: '#fff',
-      pointBorderColor: '#33bdb8',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: '#33bdb836',
-      borderColor: '#33bdb8',
-      pointBackgroundColor: '#fff',
-      pointBorderColor: '#33bdb8',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
 
-  ];
-  public lineChartLegend:boolean = false;
-  public lineChartType:string = 'line';
- 
 
   // events
   public chartClicked(e:any):void {
@@ -500,6 +506,21 @@ this.userService.addContact(this.editContant).subscribe(()=>{
         })
          }
         break;
+        case 'resource':
+        if(this.userService.patientResources){
+       this.appService.showLoader=true
+       this.userService.getAllData(type).subscribe(()=>{
+       this.appService.showLoader=false
+       this.router.navigate(['/Details']);
+
+         this.myRecordsService.resourceSet=this.userService.patientResourcesDetails
+
+       },()=>{
+       this.appService.showLoader=false
+
+       })
+        }
+       break;
         case 'immunization':
      if(this.userService.patientImmunization.length){
         this.appService.showLoader=true
@@ -625,6 +646,11 @@ if(this.userService.patientCalculatedPressure.systolicAVG||this.userService.pati
     
     if(moment(this.to).format("DD/MM/YYYY")==moment(this.from).format("DD/MM/YYYY")){
       this.lineChartLabels.length=0
+      this.userService.patientCalculatedPressure.systolicAVG=0
+      this.userService.patientCalculatedPressure.diastolicAVG=0
+      this.userService.patientCalculatedPressure.systolic='0%'
+      this.userService.patientCalculatedPressure.diastolic='0%'
+    this.userService.patientCalculatedPressure.diastolic=((this.userService.patientCalculatedPressure.diastolicAVG)/90)*100+"%"
       this.lineChartLabels.push(moment(this.to).format("DD/MM/YYYY"))
       this.lineChartData=[]
  this.lineChartData[0]={data:[],label:'Systolic'}
@@ -632,6 +658,10 @@ if(this.userService.patientCalculatedPressure.systolicAVG||this.userService.pati
       if(this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY"))){
         this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).systolic)
         this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).diastolic)
+        this.userService.patientCalculatedPressure.systolicAVG=Math.round(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).systolic)
+        this.userService.patientCalculatedPressure.diastolicAVG=Math.round(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).diastolic)
+        this.userService.patientCalculatedPressure.systolic=((this.userService.patientCalculatedPressure.diastolicAVG)/140)*100+"%"
+       this.userService.patientCalculatedPressure.diastolic=((this.userService.patientCalculatedPressure.diastolicAVG)/90)*100+"%"
           }
           else{
             this.lineChartData[0].data.push(0)
@@ -640,19 +670,36 @@ if(this.userService.patientCalculatedPressure.systolicAVG||this.userService.pati
     }
     else if(moment(this.to).diff(this.from, 'days')==0){
       this.lineChartLabels.length=0
+      let count=0
+      this.userService.patientCalculatedPressure.systolicAVG=0
+      this.userService.patientCalculatedPressure.diastolicAVG=0
+    this.userService.patientCalculatedPressure.systolic='0%'
+    this.userService.patientCalculatedPressure.diastolic='0%'
       this.lineChartLabels.push(moment(this.from).format("DD/MM/YYYY"))
       this.lineChartLabels.push(moment(this.from).add(1, "d").format("DD/MM/YYYY"))
       this.lineChartData=[]
  this.lineChartData[0]={data:[],label:'Systolic'}
  this.lineChartData[1]={data:[],label:'Diastolic'}
-      if(this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY"))){
-        this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).systolic)
-        this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===moment(this.to).format("DD/MM/YYYY")).diastolic)
-          }
-          else{
-            this.lineChartData[0].data.push(0)
-        this.lineChartData[1].data.push(0)
-          }
+ this.lineChartLabels.map(el=>{
+ 
+  if(this.userService.patientPressures.find(e=>e.date===el)){
+   count+=1
+   this.userService.patientCalculatedPressure.systolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).systolic
+   this.userService.patientCalculatedPressure.diastolicAVG+=+this.userService.patientPressures.find(e=>e.date===el).diastolic
+ this.lineChartData[0].data.push(+this.userService.patientPressures.find(e=>e.date===el).systolic)
+ this.lineChartData[1].data.push(+this.userService.patientPressures.find(e=>e.date===el).diastolic)
+   }
+   else{
+     this.lineChartData[0].data.push(0)
+ this.lineChartData[1].data.push(0)
+   }
+ })
+ if(this.userService.patientCalculatedPressure.systolicAVG||this.userService.patientCalculatedPressure.diastolicAVG){
+   this.userService.patientCalculatedPressure.systolicAVG=Math.round(this.userService.patientCalculatedPressure.systolicAVG/count)
+   this.userService.patientCalculatedPressure.diastolicAVG=Math.round(this.userService.patientCalculatedPressure.diastolicAVG/count)
+   this.userService.patientCalculatedPressure.systolic=((this.userService.patientCalculatedPressure.diastolicAVG)/140)*100+"%"
+  this.userService.patientCalculatedPressure.diastolic=((this.userService.patientCalculatedPressure.diastolicAVG)/90)*100+"%"
+ }
     }
     else if(moment(this.to).diff(this.from, 'days')+1>0){
       this.lineChartLabels.length=0

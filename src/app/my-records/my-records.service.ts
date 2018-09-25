@@ -4,6 +4,7 @@ import { PatientContacts } from '../shared/model/patient-contacts.model';
 import { PatientBody } from '../shared/model/patient-body.model';
 import { PatientImmunization } from '../shared/model/patient-immunization.model';
 import { PatientPressure } from '../shared/model/patient-pressure.model';
+import { PatientResources } from '../shared/model/patient-resources.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ contactSet:PatientContacts[]=[]
 immunizationtSet:PatientImmunization[]=[]
 bodySet:PatientBody[]=[]
 pressureSet:PatientPressure[]=[]
+resourceSet:PatientResources[]=[]
   constructor() { }
   ConvertDate(str){
     var date = new Date(str);

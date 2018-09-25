@@ -144,7 +144,9 @@ this.name='Allergies'
         break;
         case 'pressure':
         this.name='Pressure'  
-        
+        break;
+        case 'resource':
+        this.name='Resources'  
         break;
       default:
         break;

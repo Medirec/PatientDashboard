@@ -91,7 +91,7 @@ export const JSON_PATHS = {
         ID: '$.resourcesId',
         NAME: '$.name',
         USERID: '$.userId',
-        Date: '$.date',
+        Date: '$.creadtedDateTime',
         IMAGEURL: '$.imageUrl',
       }
 }
