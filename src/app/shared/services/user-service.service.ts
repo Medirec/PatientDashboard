@@ -68,7 +68,7 @@ date:any[]=[];
    */
   GetPatientDetails(userId?: string) {
     this.patientDetails=new PatientDetails();
-    let url = 'http://36765264api.medirec.me/api/GetPatientsDetails/6'
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Patients/GetPatientsDetails/6'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -95,7 +95,7 @@ date:any[]=[];
   }
   GetPatientMoreDetails(userId?: string) {
     this.patientDetails=new PatientDetails();
-    let url = 'http://36765264api.medirec.me/api/patients/6'
+    let url = 'https://medirec-app-101.azurewebsites.net/api/patients/6'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -127,7 +127,7 @@ date:any[]=[];
    */
   GetPatientAllergies(userId?: string) {
     this.patientAllergies=[]
-    let url = 'http://36765264api.medirec.me/api/Allergies/1'
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Allergies/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -152,7 +152,7 @@ date:any[]=[];
   }
   GetPatientResources(userId?: string) {
     this.patientResources=[]
-    let url = 'http://36765264api.medirec.me/api/Resources/1'
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Resources/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -174,7 +174,7 @@ date:any[]=[];
   }
   GetPatientImmunization(userId?: string) {
     this.patientImmunization=[]
-    let url = 'http://36765264api.medirec.me/api/Immunizations/1'
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Immunizations/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -202,7 +202,7 @@ date:any[]=[];
    */
   GetPatientConditions(userId?: string) {
     this.patientConditions=[]
-    let url = 'http://36765264api.medirec.me/api/Condations/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Condations/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -225,7 +225,7 @@ date:any[]=[];
     this.patientPressures=[]
     this.patientPressuresDetails=[]
     this.date=[]
-    let url = 'http://36765264api.medirec.me/api/GetBloodPressureDetails/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/BloodPressure/GetBloodPressureDetails/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -300,7 +300,7 @@ this.diastolic.push( +el.diastolic)
   }
   GetPatientBodyInfo(userId?: string) {
     this.patientBody=new PatientBody();
-    let url = 'http://36765264api.medirec.me/api/HumanBodies/1'
+    let url = 'https://medirec-app-101.azurewebsites.net/api/HumanBodies/1'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -320,7 +320,7 @@ this.diastolic.push( +el.diastolic)
   addAllergies(allergy) {
     
 
-    const url = 'http://36765264api.medirec.me/api/Allergies'
+    const url = 'https://medirec-app-101.azurewebsites.net/api/Allergies'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -346,7 +346,7 @@ this.myRecordsService.dataSet=this.patientAllergiesDetails
   addConditions(condition) {
     
 
-    const url = 'http://36765264api.medirec.me/api/Condations'
+    const url = 'https://medirec-app-101.azurewebsites.net/api/Condations'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -371,7 +371,7 @@ this.myRecordsService.dataSet=this.patientConditionsDetails
   }
   GetPatientMedication(userId?: string) {
     this.patientMedication=[]
-    let url = 'http://36765264api.medirec.me/api/medications/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/medications/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -392,7 +392,7 @@ this.myRecordsService.dataSet=this.patientConditionsDetails
     ), catchError(e => throwError(e)) );
   }
   addMedication(medication){
-    const url = 'http://36765264api.medirec.me/api/medications'
+    const url = 'https://medirec-app-101.azurewebsites.net/api/medications'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -416,7 +416,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetPatientMedicalDevice(userId?: string) {
     this.patientMedicalDevice=[]
-    let url = 'http://36765264api.medirec.me/api/MedicalDevices/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/MedicalDevices/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -439,7 +439,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     ), catchError(e => throwError(e)) );
   }
   addMedicalDevice(medical){
-    const url = 'http://36765264api.medirec.me/api/MedicalDevices'
+    const url = 'https://medirec-app-101.azurewebsites.net/api/MedicalDevices'
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -462,7 +462,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetPatientContacts(userId?: string) {
     this.patientContacts=[]
-    let url = 'http://36765264api.medirec.me/api/Contacts/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Contacts/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -490,7 +490,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
 
   GetAllResources(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetResourcesCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Resources/GetResourcesCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -507,7 +507,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllContacts(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetContactsCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Contacts/GetContactsCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -524,7 +524,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllMedication(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetMedicationsCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Medications/GetMedicationsCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -541,7 +541,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllMedicalDevice(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetMedicalDevicesCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/MedicalDevices/GetMedicalDevicesCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -558,7 +558,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllHumanBody(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetHumanBodyCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/HumanBodies/GetHumanBodyCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -575,7 +575,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllCondition(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetCondationsCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Condations/GetCondationsCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -592,7 +592,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllBloodPressure(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetBloodPressureCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/BloodPressure/GetBloodPressureCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -609,7 +609,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllAllergies(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetAllergiesCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Allergies/GetAllergiesCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -626,7 +626,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   }
   GetAllImmunization(userId?: string) {
 
-    let url = 'http://36765264api.medirec.me/api/GetImmunizationsCount/1';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Immunization/GetImmunizationsCount/1';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -651,7 +651,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     };
     let url
     if(type==='allergy'){
-      url = `http://36765264api.medirec.me/api/Allergies/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/Allergies/${data.id}`;
  let allergy={
   allergiesId:data.id,
   userId:data.userId,
@@ -677,7 +677,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       return throwError(e)}) );
     }
     if(type==='condition'){
-      url = `http://36765264api.medirec.me/api/Condations/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/Condations/${data.id}`;
       let condition={
         condationsId:data.id,
         userId:data.userId,
@@ -703,7 +703,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='medication'){
-      url = `http://36765264api.medirec.me/api/medications/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/medications/${data.id}`;
       let medication={
         medicationsId:data.id,
         userId:data.userId,
@@ -729,7 +729,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='device'){
-      url = `http://36765264api.medirec.me/api/MedicalDevices/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/MedicalDevices/${data.id}`;
       let device={
         medicalDevicesId:data.id,
         userId:data.userId,
@@ -756,7 +756,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     }
 
     if(type==='body'){
-      url = `http://36765264api.medirec.me/api/HumanBodies/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/HumanBodies/${data.id}`;
       let body={
         humanBodyId:data.id,
         userId:data.userId,
@@ -781,7 +781,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='immunization'){
-      url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/Immunizations/${data.id}`;
       let body={
         immunizationId:data.id,
         userId:1,
@@ -823,7 +823,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
         if(type==='pressure'){
-      url = `http://36765264api.medirec.me/api/BloodPressure/${data.id}`;
+      url = `https://medirec-app-101.azurewebsites.net/api/BloodPressure/${data.id}`;
       let body={
         bloodPressureId:data.id,
         userId:data.userId,
@@ -865,7 +865,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     this.myRecordsService.pressureSet=[]
     this.myRecordsService.resourceSet=[]
     if(type==='resource'){
-      let url = 'http://36765264api.medirec.me/api/GetResourcesDetails/1'
+      let url = 'https://medirec-app-101.azurewebsites.net/api/Resources/GetResourcesDetails/1'
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -887,7 +887,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='immunization'){
-      let url = 'http://36765264api.medirec.me/api/GetImmunizationsDetails/1'
+      let url = 'https://medirec-app-101.azurewebsites.net/api/Immunization/GetImmunizationsDetails/1'
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -910,7 +910,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='allergy'){
-      let url = 'http://36765264api.medirec.me/api/GetAllergiesDetails/1'
+      let url = 'https://medirec-app-101.azurewebsites.net/api/Allergies/GetAllergiesDetails/1'
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -934,7 +934,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='condition'){
-      let url = 'http://36765264api.medirec.me/api/GetCondationsDetails/1'
+      let url = 'https://medirec-app-101.azurewebsites.net/api/Condations/GetCondationsDetails/1'
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -958,7 +958,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='medication'){
-      let url = 'http://36765264api.medirec.me/api/GetMedicationsDetails/1'
+      let url = 'https://medirec-app-101.azurewebsites.net/api/Medications/GetMedicationsDetails/1'
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -982,7 +982,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='device'){
-      let url = 'http://36765264api.medirec.me/api/GetMedicalDevicesDetails/1'
+      let url = 'https://medirec-app-101.azurewebsites.net/api/MedicalDevices/GetMedicalDevicesDetails/1'
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1006,7 +1006,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='contact'){
-      let url = 'http://36765264api.medirec.me/api/GetContactsDetails/1';
+      let url = 'https://medirec-app-101.azurewebsites.net/api/Contacts/GetContactsDetails/1';
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1032,7 +1032,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       ), catchError(e => throwError(e)) );
     }
     if(type==='body'){
-      let url = 'http://36765264api.medirec.me/api/GetHumanBodyDetails/1';
+      let url = 'https://medirec-app-101.azurewebsites.net/api/HumanBodies/GetHumanBodyDetails/1';
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1061,7 +1061,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
   DeleteData(type,data){
   
     if(type==='allergy'){
-      let url = `http://36765264api.medirec.me/api/Allergies/${data.id}`
+      let url = `https://medirec-app-101.azurewebsites.net/api/Allergies/${data.id}`
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1080,7 +1080,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='resource'){
-      let url = `http://36765264api.medirec.me/api/Resources/${data.resourcesId}`
+      let url = `https://medirec-app-101.azurewebsites.net/api/Resources/${data.resourcesId}`
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1099,7 +1099,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e) }     ) );
     }
     if(type==='condition'){
-      let url = `http://36765264api.medirec.me/api/Condations/${data.id}`
+      let url = `https://medirec-app-101.azurewebsites.net/api/Condations/${data.id}`
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1118,7 +1118,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='medication'){
-      let url = `http://36765264api.medirec.me/api/medications/${data.id}`;
+      let url = `https://medirec-app-101.azurewebsites.net/api/medications/${data.id}`;
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1137,7 +1137,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='device'){
-      let url = `http://36765264api.medirec.me/api/MedicalDevices/${data.id}`;
+      let url = `https://medirec-app-101.azurewebsites.net/api/MedicalDevices/${data.id}`;
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1156,7 +1156,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='contact'){
-      let url = `http://36765264api.medirec.me/api/Contacts/${data.id}`;
+      let url = `https://medirec-app-101.azurewebsites.net/api/Contacts/${data.id}`;
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1175,7 +1175,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='body'){
-      let url = `http://36765264api.medirec.me/api/HumanBodies/${data.id}`;
+      let url = `https://medirec-app-101.azurewebsites.net/api/HumanBodies/${data.id}`;
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1192,7 +1192,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}) );
     }
     if(type==='immunization'){
-      let url = `http://36765264api.medirec.me/api/Immunizations/${data.id}`;
+      let url = `https://medirec-app-101.azurewebsites.net/api/Immunizations/${data.id}`;
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1211,7 +1211,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
         return throwError(e)}   ) );
     }
     if(type==='pressure'){
-      let url = `http://36765264api.medirec.me/api/BloodPressure/${data.id}`;
+      let url = `https://medirec-app-101.azurewebsites.net/api/BloodPressure/${data.id}`;
       let headers = new HttpHeaders();
       headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
       const options = {
@@ -1232,7 +1232,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     }
   }
   editContact(contact:PatientContacts){
-    const url = `http://36765264api.medirec.me/api/Contacts/${contact.id}`
+    const url = `https://medirec-app-101.azurewebsites.net/api/Contacts/${contact.id}`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1276,7 +1276,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     return throwError(e)}) );
   }
   addContact(contact){
-    const url = `http://36765264api.medirec.me/api/Contacts`
+    const url = `https://medirec-app-101.azurewebsites.net/api/Contacts`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1307,7 +1307,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
     return throwError(e)}   ) );
   }
   editPatient(patient:PatientDetails){
-    const url = `http://36765264api.medirec.me/api/patients/6`
+    const url = `https://medirec-app-101.azurewebsites.net/api/patients/6`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1346,7 +1346,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
    }))
   }
   addBody(body){
-    const url = `http://36765264api.medirec.me/api/HumanBodies`
+    const url = `https://medirec-app-101.azurewebsites.net/api/HumanBodies`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1376,7 +1376,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       return throwError(e)}) );
   }
   addImmunization(immunization:PatientImmunization){
-    const url = `http://36765264api.medirec.me/api/Immunizations`
+    const url = `https://medirec-app-101.azurewebsites.net/api/Immunizations`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1415,7 +1415,7 @@ this.myRecordsService.dataSet=this.patientMedicationDetails
       return throwError(e)}) );
   }
   addPressure(pressure){
-    const url = `http://36765264api.medirec.me/api/BloodPressure`
+    const url = `https://medirec-app-101.azurewebsites.net/api/BloodPressure`
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     headers = headers.append('Content-Type', 'application/json');
@@ -1462,7 +1462,7 @@ this.myRecordsService.pressureSet=this.patientPressuresDetails
   }
   GetVaccines(userId?: string) {
     this.vaccines=[]
-    let url = 'http://36765264api.medirec.me/api/Vaccines';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Vaccines';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -1485,7 +1485,7 @@ this.myRecordsService.pressureSet=this.patientPressuresDetails
   }
   GetAreas(cityId) {
 
-    let url = `http://36765264api.medirec.me/api/Areas/${cityId}`;
+    let url = `https://medirec-app-101.azurewebsites.net/api/Areas/${cityId}`;
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
@@ -1512,7 +1512,7 @@ this.myRecordsService.pressureSet=this.patientPressuresDetails
   }
   GetCities(countryId?) {
 
-    let url = 'http://36765264api.medirec.me/api/Cities';
+    let url = 'https://medirec-app-101.azurewebsites.net/api/Cities';
     let headers = new HttpHeaders();
     headers = headers.append('MedKey', '736db36f-7d1e-463c-bcec-15f9b1ca77f6'  );
     const options = {
